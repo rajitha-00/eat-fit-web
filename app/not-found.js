@@ -25,8 +25,8 @@ const notFound = () => {
           </div>
         </div>
       </section>
-
-      <Cta />
+      {/* 
+      <Cta /> */}
     </FoodKingLayout>
   );
 };

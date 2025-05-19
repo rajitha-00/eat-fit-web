@@ -1,13 +1,10 @@
 import FoodBanerHome from "@/components/Home/FoodBanerHome";
 import FoodCategoryHome from "@/components/Home/FoodCategoryHome";
-import { FoodCategorySection } from "@/components/Home/FoodCategorySection";
 import Marquee from "@/components/Home/Marquee";
 import { HomeSlider3 } from "@/components/HomeSlider";
 import InstagramBannerSlider from "@/components/InstagramBannerSlider";
 import NextSaleBanner from "@/components/NextSaleBanner";
-import { TestimonialSlider3 } from "@/components/TestimonialSlider";
 import FoodKingLayout from "@/layouts/FoodKingLayout";
-import Link from "next/link";
 const page = () => {
   return (
     <FoodKingLayout header={2} footer={2}>
