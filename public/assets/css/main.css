@@ -12,8 +12,8 @@ Version: 1.0.0
   --black: #000;
   --white: #fff;
   --theme: #00813D;
-  --theme2: #D12525;
-  --theme3: #FFB936;
+  --theme2: #5DC08A;
+  --theme3: #ffffff;
   --header: #212121;
   --base: #00813D;
   --text: #5C5C5B;
@@ -21,7 +21,7 @@ Version: 1.0.0
   --border2: #ffffff2b;
   --button: #1C2539;
   --button2: #030734;
-  --ratting: #FF9F0D;
+  --ratting: #ffffff;
   --bg: #F4F1EA;
   --bg2: #DF0A0A0D;
 }
