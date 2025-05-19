@@ -1,0 +1,222 @@
+//--Hero Section Start--//
+.hero-section {
+    position: relative;
+
+    .swiper-dot {
+        position: absolute;
+        left: 50%;
+        bottom: 40px;
+        z-index: 9;
+        transform: translateX(-50%);
+    }
+}
+
+
+
+.hero-3 {
+    position: relative;
+
+    .frame-shape {
+        position: absolute;
+        top: 20%;
+        left: 60px;
+
+        @include breakpoint (max-lg){
+            display: none;
+        }
+    }
+
+    .frame-shape-2 {
+        position: absolute;
+        bottom: 13%;
+        left: 2%;
+
+        @include breakpoint (max-lg){
+            display: none;
+        }
+    }
+
+    .frame-shape-3 {
+        position: absolute;
+        top: 15%;
+        left: 47%;
+
+        @include breakpoint (max-lg){
+            display: none;
+        }
+    }
+
+    .frame-shape-4 {
+        position: absolute;
+        bottom: 5%;
+        left: 40%;
+
+        @include breakpoint (max-lg){
+            display: none;
+        }
+    }
+
+    .frame-shape-5 {
+        position: absolute;
+        top: 20%;
+        right: 70px;
+
+        @include breakpoint (max-lg){
+            display: none;
+        }
+    }
+
+    .frame-shape-6 {
+        position: absolute;
+        bottom: 13%;
+        right: 2%;
+
+        @include breakpoint (max-lg){
+            display: none;
+        }
+    }
+
+    .hero-content {
+        padding-top: 150px;
+        padding-bottom: 120px;
+        position: relative;
+        z-index: 9;
+
+        @include breakpoint (max-lg){
+           text-align: center;
+           padding-bottom: 0;
+           padding-top: 115px;
+        }
+
+        @include breakpoint (max-sm){
+            padding-top: 110px;
+        }
+
+        h1 {
+            font-size: 150px;
+            color: $white;
+            margin-bottom: 20px;
+
+            @include breakpoint(max-xxl){
+                font-size: 130px;
+            }
+
+            @include breakpoint(max-xl){
+                font-size: 100px;
+            }
+
+            @include breakpoint(max-lg){
+                font-size: 72px;
+            }
+
+            @include breakpoint(max-sm){
+                font-size: 50px;
+            }
+        }
+
+        h4 {
+            font-size: 24px;
+            color: $white;
+            text-transform: capitalize;
+
+            @include breakpoint(max-sm){
+                font-size: 22px;
+            }
+        }
+
+        .hero-button {
+            margin-top: 40px;
+
+            @include breakpoint(max-sm){
+                margin-top: 30px;
+            }
+        }
+    }
+
+    .pizza-image {
+        margin-left: 40px;
+        margin-top: 50px;
+        margin-bottom: -210px;
+        
+        img {
+            animation: cir36 25s infinite linear;
+        }
+
+        @include breakpoint (max-xl){
+          margin-top: 0;
+          margin-bottom: 0;
+        }
+
+        @include breakpoint (max-lg){
+            margin-left: 0;
+            padding-bottom: 80px;
+            text-align: center;
+
+            img {
+                width: 80% !important;
+            }
+        }
+
+        @include breakpoint (max-md){
+            padding-bottom: 70px;
+        }
+
+        @include breakpoint (max-sm){
+            margin-top: 0;
+            margin-bottom: 0;
+            width: 300px;
+            margin: 0 auto;
+            padding-bottom: 50px;
+        }
+
+        img {
+            @include imgw;
+        }
+    }
+
+   
+}
+
+.hero-section-3 {
+    position: relative;
+
+    .swiper {
+        overflow: initial !important
+    }
+
+    .pegi-wrp {
+        position: absolute;
+        bottom: 4%;
+        left: 17%;
+        z-index: 9;
+
+        @include breakpoint (max-xxl){
+            display: none;
+        }
+
+        .pegi-number {
+            font-size: 24px;
+            color: $white;
+            position: relative;
+            
+
+            &::before {
+                position: absolute;
+                content: "";
+                bottom: 12px;
+                left: 40px;
+                width: 80px;
+                height: 1px;
+                background-color: $white;
+            }
+
+            span {
+                margin-right: 140px;
+                &:not(:last-child){
+                    color: $white;
+                }
+            }
+        }
+    }
+}
+//--Hero Section End--//
