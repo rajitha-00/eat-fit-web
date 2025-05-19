@@ -5,6 +5,32 @@ import { HomeSlider3 } from "@/components/HomeSlider";
 import InstagramBannerSlider from "@/components/InstagramBannerSlider";
 import NextSaleBanner from "@/components/NextSaleBanner";
 import FoodKingLayout from "@/layouts/FoodKingLayout";
+const features = [
+  {
+    icon: "assets/img/icon/01.svg",
+    title: "Best Quality Food",
+    desc: "We use fresh, premium ingredients and chef-crafted recipes for a truly unforgettable meal.",
+    delay: ".3s",
+  },
+  {
+    icon: "assets/img/icon/02.svg",
+    title: "Fast Delivery",
+    desc: "Hot and fresh to your door in record time—your cravings satisfied before you know it.",
+    delay: ".5s",
+  },
+  {
+    icon: "assets/img/icon/03.svg",
+    title: "Money-Back Guarantee",
+    desc: "Not delighted? We’ll refund your order—no questions asked.",
+    delay: ".7s",
+  },
+  {
+    icon: "assets/img/icon/04.svg",
+    title: "100% Natural",
+    desc: "All dishes are made with organic, preservative-free ingredients for healthy eating.",
+    delay: ".9s",
+  },
+];
 const page = () => {
   return (
     <FoodKingLayout header={2} footer={2}>
@@ -92,70 +118,23 @@ const page = () => {
         <div className="container">
           <div className="food-icon-wrapper-2">
             <div className="row g-5">
-              <div
-                className="col-lg-3 col-md-6 col-sm-6 wow fadeInUp"
-                data-wow-delay=".3s"
-              >
-                <div className="single-food-icon">
-                  <div className="icon">
-                    <img src="assets/img/icon/01.svg" alt="icon-img" />
-                  </div>
-                  <div className="content">
-                    <h3>Best Quality Food</h3>
-                    <p>
-                      Sed ut perspiciatis unde omnis este natus sit voluptatem
-                    </p>
-                  </div>
-                </div>
-              </div>
-              <div
-                className="col-lg-3 col-md-6 col-sm-6 wow fadeInUp"
-                data-wow-delay=".5s"
-              >
-                <div className="single-food-icon">
-                  <div className="icon">
-                    <img src="assets/img/icon/02.svg" alt="icon-img" />
-                  </div>
-                  <div className="content">
-                    <h3>fast food delivery</h3>
-                    <p>
-                      Sed ut perspiciatis unde omnis este natus sit voluptatem
-                    </p>
+              {features.map(({ icon, title, desc, delay }, idx) => (
+                <div
+                  key={idx}
+                  className="col-lg-3 col-md-6 col-sm-6 wow fadeInUp"
+                  data-wow-delay={delay}
+                >
+                  <div className="single-food-icon">
+                    <div className="icon">
+                      <img src={icon} alt={title} />
+                    </div>
+                    <div className="content">
+                      <h3>{title}</h3>
+                      <p>{desc}</p>
+                    </div>
                   </div>
                 </div>
-              </div>
-              <div
-                className="col-lg-3 col-md-6 col-sm-6 wow fadeInUp"
-                data-wow-delay=".7s"
-              >
-                <div className="single-food-icon">
-                  <div className="icon">
-                    <img src="assets/img/icon/03.svg" alt="icon-img" />
-                  </div>
-                  <div className="content">
-                    <h3>money back guarantee</h3>
-                    <p>
-                      Sed ut perspiciatis unde omnis este natus sit voluptatem
-                    </p>
-                  </div>
-                </div>
-              </div>
-              <div
-                className="col-lg-3 col-md-6 col-sm-6 wow fadeInUp"
-                data-wow-delay=".9s"
-              >
-                <div className="single-food-icon">
-                  <div className="icon">
-                    <img src="assets/img/icon/04.svg" alt="icon-img" />
-                  </div>
-                  <div className="content">
-                    <h3>100% natural food</h3>
-                    <p>
-                      Sed ut perspiciatis unde omnis este natus sit voluptatem
-                    </p>
-                  </div>
-                </div>
-              </div>
+              ))}
             </div>
           </div>
         </div>
