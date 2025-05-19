@@ -1,7 +1,7 @@
 import AboutFoodItems from "@/components/AboutFoodItems";
 import InstagramBannerSlider from "@/components/InstagramBannerSlider";
 import Marque from "@/components/Marque";
-import { NextSaleBanner2 } from "@/components/NextSaleBanner";
+import NextSaleBanner from "@/components/NextSaleBanner";
 import PageBanner from "@/components/PageBanner";
 import TestimonialSlider from "@/components/TestimonialSlider";
 import FoodKingLayout from "@/layouts/FoodKingLayout";
@@ -232,7 +232,7 @@ const page = () => {
         <div className="today-best-sale-wrapper">
           <div className="row g-0">
             <div className="col-xl-8 col-lg-7">
-              <NextSaleBanner2 />
+              <NextSaleBanner />
             </div>
             <div className="col-xl-4 col-lg-5">
               <div
