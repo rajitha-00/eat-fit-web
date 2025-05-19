@@ -2,8 +2,11 @@ import React from "react";
 import Link from "next/link";
 
 const footerShapes = [
-  { className: "footer-shape", src: "assets/img/shape/footer-shape.png" },
-  { className: "footer-shape-2", src: "assets/img/shape/footer-shape-2.png" },
+  { className: "footer-shape", src: "assets/hero/chicken-teriyaki-bowl.svg" },
+  {
+    className: "footer-shape-2",
+    src: "assets/hero/Minced Chicken Noodles.svg",
+  },
 ];
 
 const socialLinks = [
