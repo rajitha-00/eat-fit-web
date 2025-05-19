@@ -14,108 +14,8 @@ const Menus = () => {
   return (
     <ul>
       <li className="active">
-        <Link href="/">Home Page</Link>
+        <Link href="/">Home</Link>
       </li>
-      {/* <li className="has-dropdown">
-        <Link href="shop">
-          Shop
-          <i className="fas fa-angle-down" />
-        </Link>
-        <ul className="submenu">
-          <li>
-            <Link href="shop">Shop Grid</Link>
-          </li>
-          <li>
-            <Link href="shop-list">Shop List</Link>
-          </li>
-          <li>
-            <Link href="shop-left-sidebar">Shop Left SideBar</Link>
-          </li>
-          <li>
-            <Link href="shop-right-sidebar">Shop Right SideBar</Link>
-          </li>
-          <li>
-            <Link href="shop-single">Shop Single</Link>
-          </li>
-          <li>
-            <Link href="shop-cart">Shop Cart</Link>
-          </li>
-          <li>
-            <Link href="checkout">checkout</Link>
-          </li>
-        </ul>
-      </li>
-      <li>
-        <Link href="news">
-          Blog
-          <i className="fas fa-angle-down" />
-        </Link>
-        <ul className="submenu">
-          <li>
-            <Link href="news">Blog</Link>
-          </li>
-          <li>
-            <Link href="news-details">Blog Details</Link>
-          </li>
-        </ul>
-      </li>
-      <li className="has-dropdown">
-        <Link href="news">
-          Pages
-          <i className="fas fa-angle-down" />
-        </Link>
-        <ul className="submenu">
-          <li>
-            <Link href="about">About Us</Link>
-          </li>
-          <li className="has-dropdown">
-            <Link href="team">
-              Chef Page
-              <i className="fas fa-angle-down" />
-            </Link>
-            <ul className="submenu">
-              <li>
-                <Link href="team">Chef</Link>
-              </li>
-              <li>
-                <Link href="team-details">Chef Details</Link>
-              </li>
-            </ul>
-          </li>
-          <li className="has-dropdown">
-            <Link href="food-menu">
-              Food Menu
-              <i className="fas fa-angle-down" />
-            </Link>
-            <ul className="submenu">
-              <li>
-                <Link href="food-menu">Food Menu 01</Link>
-              </li>
-              <li>
-                <Link href="food-menu-2">Food Menu 02</Link>
-              </li>
-            </ul>
-          </li>
-          <li>
-            <Link href="gallery">Gallery</Link>
-          </li>
-          <li>
-            <Link href="testimonial">testimonial</Link>
-          </li>
-          <li>
-            <Link href="reservation">Reservation</Link>
-          </li>
-          <li>
-            <Link href="faq">Faq's</Link>
-          </li>
-          <li>
-            <Link href="404">404 Page</Link>
-          </li>
-        </ul>
-      </li>
-      <li>
-        <Link href="contact">Contact</Link>
-      </li> */}
     </ul>
   );
 };
@@ -153,38 +53,6 @@ const Header2 = () => {
                     <i className="fal fa-search" />
                   </a>
                   <div className="menu-cart">
-                    {/* <div className="cart-box">
-                      <ul>
-                        <li>
-                          <img src="assets/img/shop-food/s2.png" alt="image" />
-                          <div className="cart-product">
-                            <a href="#0">grilled chiken</a>
-                            <span>168$</span>
-                          </div>
-                        </li>
-                      </ul>
-                      <ul>
-                        <li className="border-none">
-                          <img src="assets/img/shop-food/s3.png" alt="image" />
-                          <div className="cart-product">
-                            <a href="#0">grilled chiken</a>
-                            <span>168$</span>
-                          </div>
-                        </li>
-                      </ul>
-                      <div className="shopping-items d-flex align-items-center justify-content-between">
-                        <span>Shopping : $20.00</span>
-                        <span>Total : $168.00</span>
-                      </div>
-                      <div className="cart-button d-flex justify-content-between mb-4">
-                        <Link href="shop-cart" className="theme-btn">
-                          View Cart
-                        </Link>
-                        <Link href="checkout" className="theme-btn bg-red-2">
-                          Checkout
-                        </Link>
-                      </div>
-                    </div> */}
                     <Link href="shop-cart" className="cart-icon">
                       <i className="far fa-shopping-cart" />
                     </Link>

@@ -8,7 +8,7 @@ const products = [
     useAnchor: false,
     ratingCount: "(5k)",
     price: "1050",
-    img: "assets/img/food/burger-3.png",
+    img: "assets/img/menu/Chicken Pasta.png",
     delay: ".3s",
   },
   {
@@ -17,7 +17,7 @@ const products = [
     useAnchor: false,
     ratingCount: "(4k)",
     price: "1200",
-    img: "assets/img/food/pizza-4.png",
+    img: "assets/img/menu/Beef Pasta.png",
     delay: ".5s",
   },
   {
@@ -26,7 +26,7 @@ const products = [
     useAnchor: false,
     ratingCount: "(5k)",
     price: "1200",
-    img: "assets/img/food/main-food-4.png",
+    img: "assets/img/menu/Chicken Rice Bowl.png",
     delay: ".7s",
   },
   {
@@ -35,7 +35,7 @@ const products = [
     useAnchor: false,
     ratingCount: "(5k)",
     price: "1350",
-    img: "assets/img/food/fried-chicken.png",
+    img: "assets/img/menu/Beef Rice Bowl.png",
     delay: ".9s",
   },
   {
@@ -44,7 +44,7 @@ const products = [
     useAnchor: true,
     ratingCount: "(5k)",
     price: "1270",
-    img: "assets/img/food/seafood-dish.png",
+    img: "assets/img/menu/Minced Beef Rice Bowl.png",
     delay: ".3s",
   },
   {
@@ -53,7 +53,7 @@ const products = [
     useAnchor: false,
     ratingCount: "(4k)",
     price: "1000",
-    img: "assets/img/food/fresh-burger.png",
+    img: "assets/img/menu/Chicken Teriyaki Bowl.png",
     delay: ".5s",
   },
   {
@@ -62,7 +62,7 @@ const products = [
     useAnchor: true,
     ratingCount: "(5k)",
     price: "1050",
-    img: "assets/img/food/chicken-biryani.png",
+    img: "assets/img/menu/Butter Chicken Bowl.png",
     delay: ".7s",
   },
   {
@@ -71,7 +71,7 @@ const products = [
     useAnchor: false,
     ratingCount: "(5k)",
     price: "1120",
-    img: "assets/img/food/pizza-creamy.png",
+    img: "assets/img/menu/Chicken Burger Bowl.png",
     delay: ".9s",
   },
 ];

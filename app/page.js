@@ -8,7 +8,6 @@ import FoodKingLayout from "@/layouts/FoodKingLayout";
 const page = () => {
   return (
     <FoodKingLayout header={2} footer={2}>
-      {/* Hero Section Start */}
       <HomeSlider3 />
       <section className="main-cta-banner-3 fix section-padding pt-0">
         <div className="container">
@@ -72,85 +71,14 @@ const page = () => {
         </div>
       </section>
 
-      {/* Marque Section Start */}
       <Marquee />
-      {/* Food Banner Section Start */}
+
       <FoodBanerHome />
-      {/* Food Catagory Section Start */}
+
       <FoodCategoryHome />
-      {/* Marque Section Start */}
-      {/* Today Nest Sale Banner Start */}
+
       <NextSaleBanner />
-      {/* Food Catagory Section Start */}
-      {/* <FoodCategorySection /> */}
-      {/* Marque Section Start */}
-      {/* <div className="marque-section fix">
-        <div className="marquee-wrapper style-3 text-slider">
-          <div className="marquee-inner to-left">
-            <ul className="marqee-list d-flex">
-              <li className="marquee-item">
-                <span className="text-slider text-color">Clients</span>
-                <span className="text-slider" />{" "}
-                <span className="text-slider text-color">testimonials</span>
-                <span className="text-slider">
-                  <img src="assets/img/star.svg" alt="icon-img" />
-                </span>{" "}
-                <span className="text-slider" />{" "}
-                <span className="text-slider text-color">food</span>
-                <span className="text-slider text-color">reviews</span>{" "}
-                <img src="assets/img/star.svg" alt="icon-img" />{" "}
-                <span className="text-slider" />{" "}
-                <span className="text-slider text-color">our</span>
-                <span className="text-slider text-color">feedback</span>{" "}
-                <span className="text-slider" />
-                <span className="text-slider">
-                  <img src="assets/img/star.svg" alt="icon-img" />
-                </span>{" "}
-                <span className="text-slider" />{" "}
-                <span className="text-slider text-color">Clients</span>
-                <span className="text-slider text-color">testimonials</span>
-                <span className="text-slider" />{" "}
-                <span className="text-slider text-color">food</span>
-                <span className="text-slider">
-                  <img src="assets/img/star.svg" alt="icon-img" />
-                </span>{" "}
-                <span className="text-slider" />{" "}
-                <span className="text-slider text-color">reviews</span>
-                <span className="text-slider text-color">our</span>{" "}
-                <img src="assets/img/star.svg" alt="icon-img" />{" "}
-                <span className="text-slider" />{" "}
-                <span className="text-slider text-color">feedback</span>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div> */}
-      {/* Testimonial Section Start */}
-      {/* <TestimonialSlider3 /> */}
-      {/* Video Section Start */}
-      {/* <div
-        className="video-section-2 fix bg-cover"
-        style={{ backgroundImage: 'url("assets/img/bg-image/bg-shape.png")' }}
-      >
-        <div className="container">
-          <div
-            className="video-wrapper bg-cover"
-            style={{
-              backgroundImage: 'url("assets/img/banner/video-bg-2.jpg")',
-            }}
-          >
-            <div className="video-btn video-pulse center">
-              <a
-                className="video-popup"
-                href="https://www.youtube.com/watch?v=Cn4G2lZ_g2I"
-              >
-                <i className="fas fa-play" />
-              </a>
-            </div>
-          </div>
-        </div>
-      </div> */}
-      {/* Choose Us Section Start */}
+
       <section
         className="choose-us-2 fix section-padding bg-cover"
         style={{ backgroundImage: 'url("assets/img/bg-image/bg-shape.png")' }}
@@ -226,105 +154,7 @@ const page = () => {
           </div>
         </div>
       </section>
-      {/* News Section Start */}
-      {/* <section className="news-section fix section-padding">
-        <div className="container">
-          <div className="section-title text-center">
-            <span className="wow fadeInUp">news &amp; blog</span>
-            <h2 className="wow fadeInUp" data-wow-delay=".3s">
-              Explore news &amp; blog
-            </h2>
-          </div>
-          <div className="row">
-            <div
-              className="col-xl-4 col-lg-6 col-md-6 wow fadeInUp"
-              data-wow-delay=".3s"
-            >
-              <div className="single-news-items style-2">
-                <div
-                  className="news-image bg-cover"
-                  style={{ backgroundImage: 'url("assets/img/news/04.jpg")' }}
-                />
-                <div className="news-content">
-                  <ul className="post-date d-flex align-items-center justify-content-between">
-                    <li>Fast Food</li>
-                    <li>
-                      <span>15 December 2024</span>
-                    </li>
-                  </ul>
-                  <h3>
-                    <Link href="news-details">
-                      Culinary Chronicles Exploring Gastronomic Wonders at
-                      foodking Restaurant
-                    </Link>
-                  </h3>
-                  <Link href="news-details" className="link-btn style-2">
-                    read more <i className="fas fa-arrow-right" />
-                  </Link>
-                </div>
-              </div>
-            </div>
-            <div
-              className="col-xl-4 col-lg-6 col-md-6 wow fadeInUp"
-              data-wow-delay=".5s"
-            >
-              <div className="single-news-items style-2">
-                <div
-                  className="news-image bg-cover"
-                  style={{ backgroundImage: 'url("assets/img/news/05.jpg")' }}
-                />
-                <div className="news-content">
-                  <ul className="post-date d-flex align-items-center justify-content-between">
-                    <li>Health Care</li>
-                    <li>
-                      <span>15 December 2024</span>
-                    </li>
-                  </ul>
-                  <h3>
-                    <Link href="news-details">
-                      Taste Sensations: Navigating the Epicurean Landscape of
-                      Restaurant Name
-                    </Link>
-                  </h3>
-                  <Link href="news-details" className="link-btn style-2">
-                    read more <i className="fas fa-arrow-right" />
-                  </Link>
-                </div>
-              </div>
-            </div>
-            <div
-              className="col-xl-4 col-lg-6 col-md-6 wow fadeInUp"
-              data-wow-delay=".7s"
-            >
-              <div className="single-news-items style-2">
-                <div
-                  className="news-image bg-cover"
-                  style={{ backgroundImage: 'url("assets/img/news/06.jpg")' }}
-                />
-                <div className="news-content">
-                  <ul className="post-date d-flex align-items-center justify-content-between">
-                    <li>Restaurants</li>
-                    <li>
-                      <span>15 December 2024</span>
-                    </li>
-                  </ul>
-                  <h3>
-                    <Link href="news-details">
-                      Epicurean Insights Blogging Odyss through Restaurant Name
-                      Culinary Universe
-                    </Link>
-                  </h3>
-                  <Link href="news-details" className="link-btn style-2">
-                    read more <i className="fas fa-arrow-right" />
-                  </Link>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section> */}
-      {/* Main Cta Banner Section Start */}
-      {/* Testimonial Section Start */}
+
       <section className="testimonial-section-3 section-padding fix">
         <div className="container">
           <div className="testimonial-wrapper-3">
@@ -379,7 +209,6 @@ const page = () => {
           </div>
         </div>
       </section>
-      {/* Instagram Banner Section Start */}
       <InstagramBannerSlider />
     </FoodKingLayout>
   );
