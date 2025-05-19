@@ -26,42 +26,48 @@ const page = () => {
             <div className="frame-shape-2">
               <img src="assets/img/shape/frame-5.png" alt="shape-img" />
             </div>
+
             <div className="row justify-content-between">
               <div className="col-xl-6 col-lg-6">
                 <div className="cta-content">
                   <h3 className="wow fadeInUp" data-wow-delay=".3s">
-                    subscribe our newsletter <br />
-                    to get more offers
+                    Subscribe to our <br />
+                    Reward Program
                   </h3>
                   <p className="wow fadeInUp" data-wow-delay=".5s">
-                    At vero eos et accusamus et iusto odio dignissimos ducimus
-                    quie blanditiis praesentium voluptatum deleniti atque
+                    Join now and start earning points on every order. Redeem
+                    rewards, special offers, and exclusive perks.
                   </p>
                 </div>
               </div>
+
               <div
                 className="col-xl-5 col-lg-5 mt-4 mt-lg-0 wow fadeInUp"
                 data-wow-delay=".4s"
               >
                 <div className="newsletter-items">
                   <form action="#">
-                    <input type="email" placeholder="Enter email address" />
+                    <input
+                      type="email"
+                      placeholder="Enter your email to join rewards"
+                    />
                     <div className="icon">
                       <i className="fas fa-envelope" />
                     </div>
                     <button className="theme-btn bg-red mt-3" type="submit">
-                      <span>subscribe now</span>
+                      <span>Join Now</span>
                     </button>
                   </form>
+
                   <div className="input-save d-flex align-items-center">
                     <input
                       type="checkbox"
                       className="form-check-input"
-                      name="save-for-next"
-                      id="saveForNext"
+                      name="agree-rewards"
+                      id="agreeRewards"
                     />
-                    <label htmlFor="saveForNext">
-                      I Agree to the <a href="#">Privacy Policy.</a>
+                    <label htmlFor="agreeRewards">
+                      I agree to the <a href="#">Reward Program Terms</a>.
                     </label>
                   </div>
                 </div>
