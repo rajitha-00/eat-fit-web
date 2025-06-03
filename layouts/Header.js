@@ -14,7 +14,34 @@ const Menus = () => {
   return (
     <ul>
       <li className="active">
-        <Link href="/">Home</Link>
+        <Link href="/">Home Page</Link>
+      </li>
+      <li className="has-dropdown">
+        <Link href="shop-left-sidebar">Shop</Link>
+      </li>
+      <li>
+        <Link href="shop-single">Shop Single</Link>
+      </li>
+      <li>
+        <Link href="news">Blog</Link>
+      </li>
+      <li>
+        <Link href="news-details">Blog Details</Link>
+      </li>
+      <li>
+        <Link href="about">About Us</Link>
+      </li>
+      <li>
+        <Link href="food-menu">Food Menu 01</Link>
+      </li>
+      <li>
+        <Link href="faq">Faq's</Link>
+      </li>
+      <li>
+        <Link href="gallery">Gallery</Link>
+      </li>
+      <li>
+        <Link href="testimonial">Testimonial</Link>
       </li>
     </ul>
   );
