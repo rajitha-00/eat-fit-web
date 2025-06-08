@@ -6,14 +6,6 @@ const ProductTopBar = ({ mb0 = false }) => {
     <div className={`woocommerce-notices-wrapper ${mb0 ? "mb-0" : ""}`}>
       <div className="product-showing">
         <h5>
-          <Link href="/shop">
-            <span>
-              <img src="assets/img/filter.png" alt="img" />
-            </span>{" "}
-            Filtering
-          </Link>
-        </h5>
-        <h5>
           Showing <span>1–12</span> of 27 results
         </h5>
       </div>
@@ -25,16 +17,6 @@ const ProductTopBar = ({ mb0 = false }) => {
           </Link>
         </h6>
         <NiceSelect />
-        <div className="icon">
-          <Link href="/shop-right-sidebar">
-            <i className="fas fa-th" />
-          </Link>
-        </div>
-        <div className="icon-2">
-          <Link href="/shop-list">
-            <i className="fas fa-list" />
-          </Link>
-        </div>
       </div>
     </div>
   );

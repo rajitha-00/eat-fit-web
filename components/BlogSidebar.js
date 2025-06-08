@@ -1,182 +1,291 @@
+"use client";
 import Link from "next/link";
+import { useState } from "react";
+
+// You can move this to its own file and import if you want!
+const CATEGORY_DATA = [
+  {
+    name: "Weight Gain",
+    icon: "flaticon-burger",
+    count: 23,
+    description: (
+      <>
+        <b>Getting Thick Never Tasted This Good</b>
+        <br />
+        More muscle, less mess. These meals are built to help you bulk clean—no
+        burnout.
+        <br />
+        Great for post-workout recovery and hungry hustlers.
+      </>
+    ),
+    href: "/shop-single",
+  },
+  {
+    name: "Weight Loss",
+    icon: "flaticon-chicken",
+    count: 24,
+    description: (
+      <>
+        <b>Fit Looks, Better Bowl</b>
+        <br />
+        You don’t need to starve to feel light. Our portion-smart meals give you
+        the glow-up without the guesswork.
+        <br />
+        Perfect for busy bees and glow-getters.
+      </>
+    ),
+    href: "/shop-single",
+  },
+  {
+    name: "Shakes",
+    icon: "flaticon-french-fries",
+    count: 11,
+    description: (
+      <>
+        <b>Protein Packed. Shaky Vibe Approved.</b>
+        <br />
+        Thick, creamy, and loaded with clean gains. Post-workout or breakfast
+        on-the-go.
+      </>
+    ),
+    href: "/shop-single",
+  },
+  {
+    name: "Protein Wraps",
+    icon: "flaticon-pizza",
+    count: 5,
+    description: (
+      <>
+        <b>Wrapped in Goodness.</b>
+        <br />
+        Our wraps bring the gains and the taste. Wrapped in protein, packed with
+        goodness. Just bold flavors and clean diet.
+      </>
+    ),
+    href: "/shop-single",
+  },
+  {
+    name: "Deserts",
+    icon: "flaticon-sandwich",
+    count: 6,
+    description: (
+      <>
+        <b>Sugar Rush, Treat Yourself!</b>
+        <br />
+        Sweet, satisfying, low regret, and 100% full-on flavor. These desserts
+        are here to crush cravings.
+      </>
+    ),
+    href: "/shop-single",
+  },
+  {
+    name: "Cheat Meals",
+    icon: "flaticon-bread",
+    count: 10,
+    description: (
+      <>
+        <b>Cheat Day? More Like Flavor Bombs with Fit Energy.</b>
+        <br />
+        Eat cheaty, stay clean. These meals give you the taste and the balance.
+        Treat yourself without throwing off your track.
+      </>
+    ),
+    href: "/shop-single",
+  },
+  {
+    name: "Protein Kottu",
+    icon: "flaticon-rice",
+    count: 13,
+    description: (
+      <>
+        <b>Kottu Gains – Where Cravings Meet Clean Eating</b>
+        <br />
+        Kottu, but make it gym-approved. Packed with lean protein and clean
+        carbs. This protein-packed kottu hits hard on flavors.
+      </>
+    ),
+    href: "/shop-single",
+  },
+  {
+    name: "Hot Dog",
+    icon: "flaticon-hotdog",
+    count: 7,
+    description: (
+      <>
+        <b>Hot Dog, Healthy Twist!</b>
+        <br />
+        Enjoy your classic favorite with lean protein and a healthy touch.
+      </>
+    ),
+    href: "/shop-single",
+  },
+];
 
 const BlogSidebar = () => {
+  const [openIdx, setOpenIdx] = useState(-1);
+
   return (
     <div className="col-12 col-lg-4">
-      <div className="main-sidebar">
+      <div className="main-sidebar rounded-3 bg-white shadow-sm p-0">
+        {/* Categories Accordion */}
         <div className="single-sidebar-widget">
-          <div className="wid-title">
-            <h4>Search</h4>
+          <div className="wid-title px-3 pt-3 pb-2">
+            <h4
+              className="text-uppercase fw-bold mb-0"
+              style={{ letterSpacing: 1 }}
+            >
+              Categories
+            </h4>
           </div>
-          <div className="search_widget">
-            <form action="#">
-              <input type="text" placeholder="Search your keyword..." />
-              <button type="submit">
-                <i className="fal fa-search" />
-              </button>
-            </form>
-          </div>
-        </div>
-        <div className="single-sidebar-widget">
-          <div className="wid-title">
-            <h4>Popular Feeds</h4>
-          </div>
-          <div className="popular-posts">
-            <div className="single-post-item">
+          <div
+            className="modern-accordion"
+            style={{ padding: "0 0.5rem 1rem 0.5rem" }}
+          >
+            {CATEGORY_DATA.map((cat, idx) => (
               <div
-                className="thumb bg-cover"
+                key={cat.name}
+                className="accordion-card mb-2 rounded-2 bg-gray-50"
                 style={{
-                  backgroundImage: 'url("assets/img/news/pp1.jpg")',
+                  boxShadow:
+                    openIdx === idx ? "0 2px 16px rgba(50,50,50,0.08)" : "none",
+                  border:
+                    openIdx === idx
+                      ? "1.5px solid #59c98d"
+                      : "1.5px solid #e9ecef",
+                  background: openIdx === idx ? "#f7fcfa" : "#fff",
+                  transition: "all 0.17s cubic-bezier(.39,.58,.57,1)",
                 }}
-              />
-              <div className="post-content">
-                <h5>
-                  <Link href="/news-details">
-                    Budget Issues Force The Our To Become
+              >
+                <button
+                  className="accordion-toggle d-flex align-items-center w-100 px-3 py-3 border-0 bg-transparent"
+                  style={{
+                    fontWeight: 600,
+                    color: "#232323",
+                    fontSize: "1rem",
+                    outline: "none",
+                    cursor: "pointer",
+                  }}
+                  onClick={() => setOpenIdx(openIdx === idx ? -1 : idx)}
+                  aria-expanded={openIdx === idx}
+                  aria-controls={`cat-panel-${idx}`}
+                  type="button"
+                >
+                  <i
+                    className={`${cat.icon} me-2 fs-5`}
+                    style={{ minWidth: 26, color: "#43a047" }}
+                  />
+                  {cat.name}
+                  <span
+                    className="badge ms-2"
+                    style={{
+                      background: "#e0f3e8",
+                      color: "#43a047",
+                      borderRadius: "12px",
+                      padding: "0.1em 0.7em",
+                      fontSize: "0.92em",
+                      fontWeight: 500,
+                    }}
+                  >
+                    {cat.count}
+                  </span>
+                  <span
+                    className="ms-auto"
+                    style={{
+                      transform:
+                        openIdx === idx ? "rotate(90deg)" : "rotate(0)",
+                      transition: "transform 0.22s cubic-bezier(.4,2,.5,1)",
+                      color: "#888",
+                      fontSize: "1.3em",
+                      display: "flex",
+                      alignItems: "center",
+                    }}
+                  >
+                    <svg width={16} height={16} viewBox="0 0 16 16" fill="none">
+                      <path
+                        d="M6 4l4 4-4 4"
+                        stroke="currentColor"
+                        strokeWidth={2}
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                    </svg>
+                  </span>
+                </button>
+                <div
+                  id={`cat-panel-${idx}`}
+                  className="accordion-content px-3 pb-3"
+                  style={{
+                    maxHeight: openIdx === idx ? 300 : 0,
+                    overflow: "hidden",
+                    transition: "max-height 0.32s cubic-bezier(.4,2,.5,1)",
+                    opacity: openIdx === idx ? 1 : 0.2,
+                  }}
+                  aria-hidden={openIdx !== idx}
+                >
+                  <div
+                    className="small text-secondary mt-1 mb-2"
+                    style={{ fontSize: ".95em" }}
+                  >
+                    {cat.description}
+                  </div>
+                  <Link
+                    href={cat.href}
+                    className="btn btn-sm px-3 py-1 rounded-pill fw-semibold"
+                    style={{
+                      background: "#59c98d",
+                      color: "#fff",
+                      fontSize: ".98em",
+                      boxShadow: "0 2px 8px rgba(50,200,130,0.10)",
+                    }}
+                  >
+                    Shop {cat.name}
                   </Link>
-                </h5>
-                <div className="post-date">
-                  <i className="far fa-calendar-alt" />
-                  24th March 2024
                 </div>
               </div>
-            </div>
-            <div className="single-post-item">
-              <div
-                className="thumb bg-cover"
-                style={{
-                  backgroundImage: 'url("assets/img/news/pp2.jpg")',
-                }}
-              />
-              <div className="post-content">
-                <h5>
-                  <Link href="/news-details">
-                    The Best Products That Shape Fashion
-                  </Link>
-                </h5>
-                <div className="post-date">
-                  <i className="far fa-calendar-alt" />
-                  25th March 2024
-                </div>
-              </div>
-            </div>
-            <div className="single-post-item">
-              <div
-                className="thumb bg-cover"
-                style={{
-                  backgroundImage: 'url("assets/img/news/pp3.jpg")',
-                }}
-              />
-              <div className="post-content">
-                <h5>
-                  <Link href="/news-details">
-                    The Best Products That Shape Fashion
-                  </Link>
-                </h5>
-                <div className="post-date">
-                  <i className="far fa-calendar-alt" />
-                  26th March 2024
-                </div>
-              </div>
-            </div>
+            ))}
           </div>
         </div>
+
+        {/* Social Media */}
         <div className="single-sidebar-widget">
-          <div className="wid-title">
-            <h4>Categories</h4>
-          </div>
-          <div className="widget_categories">
-            <ul>
-              <li>
-                <Link href="/news">
-                  <i className="flaticon-burger" />
-                  burger <span>23</span>
-                </Link>
-              </li>
-              <li>
-                <Link href="/news">
-                  <i className="flaticon-chicken" />
-                  Fried Chiken <span>24</span>
-                </Link>
-              </li>
-              <li>
-                <Link href="/news">
-                  <i className="flaticon-french-fries" />
-                  French Fries <span>11</span>
-                </Link>
-              </li>
-              <li>
-                <Link href="/news">
-                  <i className="flaticon-pizza" />
-                  Hot Pizzas <span>05</span>
-                </Link>
-              </li>
-              <li>
-                <Link href="/news">
-                  <i className="flaticon-sandwich" />
-                  Sandwich <span>06</span>
-                </Link>
-              </li>
-              <li>
-                <Link href="/news">
-                  <i className="flaticon-bread" />
-                  Bread <span>10</span>
-                </Link>
-              </li>
-              <li>
-                <Link href="/news">
-                  <i className="flaticon-rice" />
-                  fried rice <span>13</span>
-                </Link>
-              </li>
-              <li>
-                <Link href="/news">
-                  <i className="flaticon-hotdog" />
-                  hot dog <span>07</span>
-                </Link>
-              </li>
-            </ul>
-          </div>
-        </div>
-        <div className="single-sidebar-widget">
-          <div className="wid-title">
+          <div className="wid-title px-3 pt-3 pb-2">
             <h4>Never Miss News</h4>
           </div>
-          <div className="social-link">
-            <a href="#">
+          <div className="social-link px-3 pb-3">
+            <a href="#" aria-label="Facebook">
               <i className="fab fa-facebook-f" />
             </a>
-            <a href="#">
+            <a href="#" aria-label="Twitter">
               <i className="fab fa-twitter" />
             </a>
-            <a href="#">
+            <a href="#" aria-label="Instagram">
               <i className="fab fa-instagram" />
             </a>
-            <a href="#">
+            <a href="#" aria-label="LinkedIn">
               <i className="fab fa-linkedin-in" />
             </a>
-            <a href="#">
+            <a href="#" aria-label="YouTube">
               <i className="fab fa-youtube" />
             </a>
           </div>
         </div>
-        <div className="single-sidebar-widget">
-          <div className="wid-title">
-            <h4>Popular Tags</h4>
-          </div>
-          <div className="tagcloud">
-            <Link href="/news">burger</Link>
-            <Link href="/news-details">hot dog</Link>
-            <Link href="/news-details">french fry</Link>
-            <Link href="/news-details">chiken</Link>
-            <Link href="/news-details">pasta</Link>
-            <Link href="/news-details">Sandwich</Link>
-            <Link href="/news-details">landing</Link>
-            <Link href="/news-details">fast food</Link>
-          </div>
-        </div>
       </div>
+      {/* Modern Accordion Inline Styling (scoped) */}
+      <style jsx>{`
+        .modern-accordion .accordion-toggle:focus-visible {
+          outline: 2px solid #59c98d;
+        }
+        .modern-accordion .accordion-toggle:hover {
+          background: #f2f8f6;
+        }
+        @media (max-width: 991px) {
+          .main-sidebar {
+            margin-bottom: 1.5rem;
+          }
+        }
+      `}</style>
     </div>
   );
 };
+
 export default BlogSidebar;

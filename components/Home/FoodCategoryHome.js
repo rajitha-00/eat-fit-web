@@ -1,7 +1,7 @@
 import React from "react";
 import Link from "next/link";
 
-const products = [
+export const products = [
   {
     title: "Chicken Pasta",
     titleHref: "shop-single",
@@ -76,7 +76,7 @@ const products = [
   },
 ];
 
-const icons = [
+export const icons = [
   { href: "/shop-cart", iconClass: "far fa-heart" },
   {
     href: "/shop-cart",
@@ -118,19 +118,25 @@ const FoodCategoryHome = () => (
               <div className="product-content">
                 <h4>
                   {prod.useAnchor ? (
-                    <a href={prod.titleHref}>{prod.title}</a>
+                    <a
+                      href={prod.titleHref}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      {prod.title}
+                    </a>
                   ) : (
-                    <Link href={prod.titleHref}>{prod.title}</Link>
+                    <Link href={`/${prod.titleHref}`}>{prod.title}</Link>
                   )}
                 </h4>
-                {/* <div className="star">
+                <div className="star">
                   {Array(5)
                     .fill(0)
                     .map((_, idx) => (
                       <i key={idx} className="fas fa-star" />
                     ))}
                   <span>{prod.ratingCount}</span>
-                </div> */}
+                </div>
                 <h5>price Rs.{prod.price}</h5>
               </div>
 

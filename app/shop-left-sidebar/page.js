@@ -1,34 +1,22 @@
+"use client";
 import Cta from "@/components/Cta";
+import { products } from "@/components/Home/FoodCategoryHome";
 import PageBanner from "@/components/PageBanner";
-import ProductCard from "@/components/Product";
 import ProductSidebar from "@/components/ProductSidebar";
 import ProductTopBar from "@/components/ProductTopBar";
 import FoodKingLayout from "@/layouts/FoodKingLayout";
-const PRODUCTS = [
-  {
-    image: "assets/img/food/pasta-2.png",
-    name: "Chiness pasta",
-    price: "$30.52",
-    discountPrice: "$28.52",
-    discountPercent: "-5%",
-    link: "/shop-single",
-    addToCartLink: "/shop-cart",
-    rating: 5,
-  },
-  {
-    image: "assets/img/food/burger-2.png",
-    name: "Whopper Burger King",
-    price: "$30.52",
-    discountPrice: "$28.52",
-    discountPercent: "-5%",
-    link: "/shop-single",
-    addToCartLink: "/shop-cart",
-    rating: 5,
-    isActive: true,
-  },
-  // ...other products
-];
-const page = () => {
+import Link from "next/link";
+import { useState } from "react";
+
+const Page = () => {
+  const [cart, setCart] = useState([]);
+
+  const handleAddToCart = (prod) => {
+    setCart((prev) => [...prev, prod]);
+    // You can show a toast/snackbar here if you want
+    alert(`${prod.title} added to cart!`);
+  };
+
   return (
     <FoodKingLayout>
       <PageBanner pageName={"Shop Left Sidebar"} />
@@ -38,14 +26,80 @@ const page = () => {
             <ProductSidebar />
             <div className="col-xl-9 col-lg-8 order-1 order-md-2">
               <ProductTopBar />
-              {PRODUCTS.map((prod, idx) => (
-                <div
-                  className="col-xl-4 col-lg-6 col-md-6"
-                  key={prod.name + idx}
-                >
-                  <ProductCard {...prod} />
-                </div>
-              ))}
+              <div className="row">
+                {products.map((prod, idx) => (
+                  <div
+                    className="col-xl-4 col-lg-6 col-md-6"
+                    key={prod.title + idx}
+                  >
+                    <div className="catagory-product-card shadow-style text-center">
+                      <div className="icon">
+                        <Link href="/shop-cart">
+                          <i className="far fa-heart" />
+                        </Link>
+                      </div>
+                      <div className="catagory-product-image">
+                        <img
+                          src={prod.img}
+                          alt={prod.title}
+                          style={{
+                            width: "100%",
+                            maxHeight: "180px",
+                            objectFit: "contain",
+                            background: "#fafafa",
+                          }}
+                        />
+                      </div>
+                      <div className="catagory-product-content">
+                        <div className="catagory-button">
+                          <button
+                            className="theme-btn-2"
+                            onClick={() => handleAddToCart(prod)}
+                          >
+                            <i className="far fa-shopping-basket" />
+                            Add To Cart
+                          </button>
+                        </div>
+                        <div className="info-price d-flex align-items-center justify-content-center">
+                          {prod.discount && <p>{prod.discount}</p>}
+                          <h6 style={{ color: "#43a047", margin: "0 4px" }}>
+                            Rs {prod.price}
+                          </h6>
+                          {prod.oldPrice && (
+                            <span
+                              style={{
+                                color: "#888",
+                                textDecoration: "line-through",
+                              }}
+                            >
+                              Rs {prod.oldPrice}
+                            </span>
+                          )}
+                        </div>
+                        <h4>
+                          <Link href={`/${prod.titleHref}`}>{prod.title}</Link>
+                        </h4>
+                        <div className="star">
+                          {[...Array(5)].map((_, i) => (
+                            <span
+                              key={i}
+                              className={
+                                i < Math.round(prod.rating)
+                                  ? "fas fa-star"
+                                  : "far fa-star"
+                              }
+                            />
+                          ))}
+                        </div>
+                        <div style={{ fontSize: 12, color: "#888" }}>
+                          {prod.ratingCount} ratings
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+              {/* Pagination */}
               <div className="page-nav-wrap mt-5 text-center">
                 <ul>
                   <li>
@@ -75,4 +129,5 @@ const page = () => {
     </FoodKingLayout>
   );
 };
-export default page;
+
+export default Page;

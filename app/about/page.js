@@ -1,4 +1,3 @@
-import AboutFoodItems from "@/components/AboutFoodItems";
 import InstagramBannerSlider from "@/components/InstagramBannerSlider";
 import NextSaleBanner from "@/components/NextSaleBanner";
 import PageBanner from "@/components/PageBanner";
@@ -9,100 +8,131 @@ import Link from "next/link";
 const page = () => {
   return (
     <FoodKingLayout>
-      <PageBanner pageName={"About us"} />
-      {/* About Section Start */}
-      <section className="about-section fix section-padding section-bg">
+      <PageBanner pageName={"About Us"} />
+
+      {/* Hero About Section */}
+      <section
+        className="about-section fix section-padding section-bg"
+        style={{ background: "#f7fcfa" }}
+      >
         <div className="container">
           <div className="about-wrapper">
             <div className="row align-items-center">
-              <div
-                className="col-xl-6 col-lg-6 wow fadeInUp"
-                data-wow-delay=".3s"
-              >
-                <div className="about-image">
-                  <img src="assets/img/about/burger.png" alt="about-img" />
-                  <div className="burger-text">
-                    <img
-                      src="assets/img/about/burger-text.png"
-                      alt="shape-img"
-                    />
-                  </div>
-                  <div className="price">
-                    <h2>
-                      $<span className="count">4,99</span>
-                    </h2>
-                  </div>
-                  <div
-                    className="since-text bg-cover"
+              {/* Left: Big modern hero image */}
+              <div className="col-xl-6 col-lg-6 mb-5 mb-lg-0">
+                <div className="about-image position-relative">
+                  <img
+                    src="https://img.freepik.com/free-photo/top-view-table-full-delicious-food-composition_23-2149141340.jpg"
+                    alt="About healthy food"
+                    className="img-fluid rounded-4 shadow"
                     style={{
-                      backgroundImage: 'url("assets/img/shape/food-shape.png")',
+                      objectFit: "cover",
+                      width: "100%",
+                      minHeight: 420,
                     }}
-                  >
-                    <h3>since /1985</h3>
+                  />
+                  {/* Overlayed stat */}
+                  <div className="about-badge position-absolute top-0 end-0 p-3">
+                    <div
+                      style={{
+                        background: "#59c98d",
+                        color: "#fff",
+                        borderRadius: "1.5rem",
+                        padding: "0.6rem 1.7rem",
+                        fontWeight: 700,
+                        boxShadow: "0 2px 12px rgba(89,201,141,0.10)",
+                        fontSize: "1.3rem",
+                      }}
+                    >
+                      10+ Years of Taste!
+                    </div>
                   </div>
                 </div>
               </div>
-              <div className="col-xl-6 col-lg-6 mt-5 mt-lg-0">
-                <div className="about-content">
-                  <div className="section-title">
-                    <span className="wow fadeInUp">about our food</span>
-                    <h2 className="wow fadeInUp" data-wow-delay=".3s">
-                      Where Quality Meet Excellent <span>Service.</span>
+              {/* Right: Modern About Content */}
+              <div className="col-xl-6 col-lg-6">
+                <div className="about-content ps-lg-4">
+                  <div className="section-title mb-3">
+                    <span
+                      className="fw-bold"
+                      style={{ color: "#59c98d", fontWeight: 600 }}
+                    >
+                      About Our Food Journey
+                    </span>
+                    <h2 className="fw-bold mb-3" style={{ lineHeight: 1.23 }}>
+                      Nourishing Communities,
+                      <br />
+                      One <span style={{ color: "#59c98d" }}>
+                        Fresh Plate
+                      </span>{" "}
+                      at a Time
                     </h2>
                   </div>
-                  <p className="wow fadeInUp" data-wow-delay=".5s">
-                    It's the perfect dining experience where every dish is
-                    crafted with fresh, high-quality Experience quick and
-                    efficient service that ensures your food is servead fresh
-                    It's the dining experience where every dish is crafted with
-                    fresh, high-quality ingredients
+                  <p className="lead mb-4" style={{ color: "#4b4b4b" }}>
+                    At <b>FoodKing</b>, food is more than a meal—it's our
+                    passion, our promise, and our way to make the world
+                    healthier, one plate at a time.
+                    <br />
+                    <br />
+                    Sourced from local farmers and crafted by skilled chefs,
+                    every dish is a celebration of freshness, taste, and
+                    community. Whether you crave hearty classics or modern
+                    nutrition, we make healthy eating exciting and accessible
+                    for everyone.
                   </p>
-                  <div className="icon-area">
-                    <div
-                      className="icon-items d-flex wow fadeInUp"
-                      data-wow-delay=".3s"
-                    >
-                      <div className="icon">
-                        <i className="flaticon-quality" />
+                  {/* Mission/Values */}
+                  <div className="row g-2 mb-4">
+                    <div className="col-6 d-flex align-items-start">
+                      <div className="about-icon me-3">
+                        <i
+                          className="flaticon-quality"
+                          style={{ fontSize: 32, color: "#43a047" }}
+                        />
                       </div>
-                      <div className="content">
-                        <h4>super quality food</h4>
-                        <p>
-                          A team of dreamers and doers build unique interactive
-                          music and art
-                        </p>
+                      <div>
+                        <h5 className="mb-1 fw-semibold">Farm Fresh</h5>
+                        <div style={{ fontSize: ".97em", color: "#888" }}>
+                          Sourced daily for unbeatable taste and nutrition.
+                        </div>
                       </div>
                     </div>
-                    <div
-                      className="icon-items d-flex wow fadeInUp"
-                      data-wow-delay=".5s"
-                    >
-                      <div className="icon">
-                        <i className="flaticon-reputation" />
+                    <div className="col-6 d-flex align-items-start">
+                      <div className="about-icon me-3">
+                        <i
+                          className="flaticon-reputation"
+                          style={{ fontSize: 32, color: "#43a047" }}
+                        />
                       </div>
-                      <div className="content">
-                        <h4>well reputation</h4>
-                        <p>
-                          A team of dreamers and doers build unique interactive
-                          music and art
-                        </p>
+                      <div>
+                        <h5 className="mb-1 fw-semibold">Awarded Quality</h5>
+                        <div style={{ fontSize: ".97em", color: "#888" }}>
+                          Trusted by thousands—loved by families.
+                        </div>
                       </div>
                     </div>
                   </div>
-                  <div className="info-area d-flex align-items-center">
+                  <div className="d-flex align-items-center gap-3">
                     <Link
                       href="/about"
-                      className="theme-btn style-line-height wow fadeInUp"
-                      data-wow-delay=".3s"
+                      className="theme-btn style-line-height px-4 py-2"
+                      style={{
+                        background: "#59c98d",
+                        color: "#fff",
+                        fontWeight: 600,
+                        borderRadius: "1.8rem",
+                        fontSize: "1.13em",
+                        letterSpacing: ".5px",
+                      }}
                     >
-                      more about us
+                      More About Us
                     </Link>
-                    <div
-                      className="info-content wow fadeInUp"
-                      data-wow-delay=".5s"
-                    >
-                      <span>BRENDON GARREY</span>
-                      <h6>Customer's experience is our highest priority.</h6>
+                    <div className="info-content ms-3">
+                      <span className="fw-bold" style={{ color: "#43a047" }}>
+                        Priya, Founder
+                      </span>
+                      <div style={{ color: "#555", fontSize: ".99em" }}>
+                        “We don’t just cook—we care, and you can taste it.”
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -111,51 +141,8 @@ const page = () => {
           </div>
         </div>
       </section>
-      {/* Main Cta Banner Section Start */}
-      <section
-        className="main-cta-banner-2 section-padding bg-cover"
-        style={{
-          backgroundImage: 'url("assets/img/banner/main-cta-bg-2.jpg")',
-        }}
-      >
-        <div className="tomato-shape-left float-bob-y">
-          <img src="assets/img/tomato.png" alt="shape-img" />
-        </div>
-        <div className="chili-shape-right float-bob-y">
-          <img src="assets/img/chilli.png" alt="shape-img" />
-        </div>
-        <div className="container">
-          <div className="main-cta-banner-wrapper-2 d-flex align-items-center justify-content-between">
-            <div className="section-title mb-0">
-              <span className="theme-color-3 wow fadeInUp">
-                crispy, every bite taste
-              </span>
-              <h2 className="text-white wow fadeInUp" data-wow-delay=".3s">
-                30 minutes fast <br />
-                <span className="theme-color-3">delivery</span> challage
-              </h2>
-            </div>
-            <Link
-              href="/shop-single"
-              className="theme-btn bg-white wow fadeInUp"
-              data-wow-delay=".5s"
-            >
-              <span className="button-content-wrapper d-flex align-items-center">
-                <span className="button-icon">
-                  <i className="flaticon-delivery" />
-                </span>
-                <span className="button-text">order now</span>
-              </span>
-            </Link>
-            <div className="delivery-man">
-              <img src="assets/img/delivery-man-2.png" alt="img" />
-            </div>
-          </div>
-        </div>
-      </section>
-      {/* About Food Section Start */}
-      <AboutFoodItems />
-      {/* Food Banner Section Start */}
+
+      {/* Food Banner Section (Today's Special) */}
       <section className="food-banner-section fix section-padding section-bg pt-0">
         <div className="container">
           <div className="row justify-content-center">
@@ -164,14 +151,21 @@ const page = () => {
                 className="burger-banner-items bg-cover"
                 style={{
                   backgroundImage: "url(assets/img/banner/burger-bg.png)",
+                  borderRadius: 16,
+                  boxShadow: "0 8px 24px rgba(80,130,60,0.10)",
                 }}
               >
                 <div className="burger-content text-center">
-                  <h3>today</h3>
-                  <h2>special</h2>
+                  <h3
+                    className="fw-light"
+                    style={{ letterSpacing: 2, color: "#59c98d" }}
+                  >
+                    today
+                  </h3>
+                  <h2 className="fw-bold text-dark">special</h2>
                   <h4>
                     <Link href="/shop" className="text-white">
-                      beef <span>burger</span>
+                      beef <span style={{ color: "#ffc107" }}>burger</span>
                     </Link>
                   </h4>
                 </div>
@@ -194,12 +188,14 @@ const page = () => {
                 className="single-offer-items style-2 bg-cover"
                 style={{
                   backgroundImage: 'url("assets/img/banner/pepsi-bg.png")',
+                  borderRadius: 16,
+                  boxShadow: "0 8px 24px rgba(90,160,90,0.10)",
                 }}
               >
                 <div className="offer-content">
-                  <h5>crispy, every bite taste</h5>
+                  <h5 style={{ color: "#59c98d" }}>crispy, every bite taste</h5>
                   <h3>
-                    FASH FOOD <br />
+                    FAST FOOD <br />
                     MEAL
                   </h3>
                   <p>
@@ -224,255 +220,23 @@ const page = () => {
           </div>
         </div>
       </section>
-      {/* Marque Section Start */}
-      {/* Today Nest Sale Banner Start */}
+
+      {/* Next Sale Banner */}
       <section className="today-best-sale fix">
         <div className="today-best-sale-wrapper">
           <div className="row g-0">
-            <div className="col-xl-8 col-lg-7">
-              <NextSaleBanner />
-            </div>
-            <div className="col-xl-4 col-lg-5">
-              <div
-                className="best-sale-content style-2 bg-cover"
-                style={{ backgroundImage: 'url("assets/img/shape.png")' }}
-              >
-                <div className="burger-shape">
-                  <img src="assets/img/shape/fry-shape-4.png" alt="shape-img" />
-                </div>
-                <div className="fry-shape">
-                  <img
-                    src="assets/img/shape/burger-shape-4.png"
-                    alt="shape-img"
-                  />
-                </div>
-                <h4 className="wow fadeInUp">Deal Of The Day</h4>
-                <h2 className="wow fadeInUp" data-wow-delay=".3s">
-                  TODAY'S the hamburger' DAY
-                </h2>
-                <h3 className="wow fadeInUp" data-wow-delay=".5s">
-                  <span>special price</span> $55
-                </h3>
-                <p className="wow fadeInUp" data-wow-delay=".7s">
-                  Savor the perfect symphony of flavors It's the perfect dining
-                  experience where Experience quick and efficient with our
-                  signature hamburger, a culinary
-                </p>
-                <div className="button-area wow fadeInUp" data-wow-delay=".9s">
-                  <Link
-                    href="/shop-single"
-                    className="theme-btn bg-transparent"
-                  >
-                    <span className="button-content-wrapper d-flex align-items-center">
-                      <span className="button-icon">
-                        <i className="flaticon-delivery" />
-                      </span>
-                      <span className="button-text">order now</span>
-                    </span>
-                  </Link>
-                </div>
-              </div>
-            </div>
+            <NextSaleBanner />
           </div>
         </div>
       </section>
-      {/* Team Section Start */}
-      <section className="team-section section-padding section-bg fix">
-        <div className="container">
-          <div className="section-title text-center">
-            <span className="wow fadeInUp">about our food</span>
-            <h2 className="wow fadeInUp" data-wow-delay=".3s">
-              MEET OUR EXPERT CHEFS
-            </h2>
-          </div>
-          <div className="row">
-            <div
-              className="col-xl-4 col-lg-6 col-md-6 wow fadeInUp"
-              data-wow-delay=".3s"
-            >
-              <div className="single-team-items">
-                <div className="team-image">
-                  <img src="assets/img/team/01.jpg" alt="team-img" />
-                  <div className="social-link">
-                    <a href="#">
-                      <i className="fab fa-facebook-f" />
-                    </a>
-                    <a href="#">
-                      <i className="fab fa-twitter" />
-                    </a>
-                    <a href="#">
-                      <i className="fab fa-linkedin-in" />
-                    </a>
-                    <a href="#">
-                      <i className="fab fa-youtube" />
-                    </a>
-                  </div>
-                </div>
-                <div className="team-content">
-                  <p>head chef</p>
-                  <h3>
-                    <Link href="/team-details">Leslie Alexander</Link>
-                  </h3>
-                </div>
-              </div>
-            </div>
-            <div
-              className="col-xl-4 col-lg-6 col-md-6 wow fadeInUp"
-              data-wow-delay=".5s"
-            >
-              <div className="single-team-items active">
-                <div className="team-image">
-                  <img src="assets/img/team/02.jpg" alt="team-img" />
-                  <div className="social-link">
-                    <a href="#">
-                      <i className="fab fa-facebook-f" />
-                    </a>
-                    <a href="#">
-                      <i className="fab fa-twitter" />
-                    </a>
-                    <a href="#">
-                      <i className="fab fa-linkedin-in" />
-                    </a>
-                    <a href="#">
-                      <i className="fab fa-youtube" />
-                    </a>
-                  </div>
-                </div>
-                <div className="team-content">
-                  <p>sr table manager</p>
-                  <h3>
-                    <Link href="/team-details">Henry Lucas</Link>
-                  </h3>
-                </div>
-              </div>
-            </div>
-            <div
-              className="col-xl-4 col-lg-6 col-md-6 wow fadeInUp"
-              data-wow-delay=".7s"
-            >
-              <div className="single-team-items">
-                <div className="team-image">
-                  <img src="assets/img/team/03.jpg" alt="team-img" />
-                  <div className="social-link">
-                    <a href="#">
-                      <i className="fab fa-facebook-f" />
-                    </a>
-                    <a href="#">
-                      <i className="fab fa-twitter" />
-                    </a>
-                    <a href="#">
-                      <i className="fab fa-linkedin-in" />
-                    </a>
-                    <a href="#">
-                      <i className="fab fa-youtube" />
-                    </a>
-                  </div>
-                </div>
-                <div className="team-content">
-                  <p>senoir cooker</p>
-                  <h3>
-                    <Link href="/team-details">Mateo Levi</Link>
-                  </h3>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div
-            className="team-button text-center mt-5 wow fadeInUp"
-            data-wow-delay=".4s"
-          >
-            <Link href="/team" className="theme-btn">
-              meet our team
-            </Link>
-          </div>
-        </div>
-      </section>
-      {/* Food Processing Section Start */}
-      <section
-        className="food-processing-section section-padding fix bg-cover"
-        style={{
-          backgroundImage: 'url("assets/img/shape/about-food-bg.png")',
-        }}
-      >
-        <div className="container">
-          <div className="section-title text-center">
-            <span className="wow fadeInUp">food processing</span>
-            <h2 className="wow fadeInUp" data-wow-delay=".3s">
-              how we serve you?
-            </h2>
-          </div>
-          <div className="food-processing-wrapper">
-            <div className="row">
-              <div
-                className="col-xl-4 col-md-6 wow fadeInUp"
-                data-wow-delay=".3s"
-              >
-                <div className="food-processing-items style-2 center">
-                  <div className="food-processing-image">
-                    <img src="assets/img/choose/01.png" alt="img" />
-                    <div className="number">
-                      <span>01</span>
-                    </div>
-                  </div>
-                  <div className="food-processing-content">
-                    <h3>cooking with care</h3>
-                    <p>
-                      It's the perfect dining experience where Experience quick
-                      and efficient
-                    </p>
-                  </div>
-                </div>
-              </div>
-              <div
-                className="col-xl-4 col-md-6 wow fadeInUp"
-                data-wow-delay=".5s"
-              >
-                <div className="food-processing-items style-2 center active">
-                  <div className="food-processing-image">
-                    <img src="assets/img/choose/02.png" alt="img" />
-                    <div className="number">
-                      <span>02</span>
-                    </div>
-                  </div>
-                  <div className="food-processing-content">
-                    <h3>quickly delivery</h3>
-                    <p>
-                      It's the perfect dining experience where Experience quick
-                      and efficient
-                    </p>
-                  </div>
-                </div>
-              </div>
-              <div
-                className="col-xl-4 col-md-6 wow fadeInUp"
-                data-wow-delay=".7s"
-              >
-                <div className="food-processing-items style-2 center">
-                  <div className="food-processing-image">
-                    <img src="assets/img/choose/03.png" alt="img" />
-                    <div className="number">
-                      <span>03</span>
-                    </div>
-                  </div>
-                  <div className="food-processing-content">
-                    <h3>choose food</h3>
-                    <p>
-                      It's the perfect dining experience where Experience quick
-                      and efficient
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-      {/* Testimonial Section Start */}
-      <TestimonialSlider />
-      {/* Booking Section Start */}
+
+      {/* Testimonial Section */}
       <section
         className="booking-section mt-0 fix section-padding bg-cover"
-        style={{ backgroundImage: 'url("assets/img/banner/main-bg.jpg")' }}
+        style={{
+          backgroundImage: 'url("assets/img/banner/main-bg.jpg")',
+          backgroundPosition: "center",
+        }}
       >
         <div className="container">
           <div className="booking-wrapper">
@@ -480,93 +244,44 @@ const page = () => {
               <div className="col-lg-6">
                 <div className="booking-content">
                   <div className="section-title">
-                    <span className="wow fadeInUp">
+                    <span className="fw-bold" style={{ color: "#ffa726" }}>
                       crispy, every bite taste
                     </span>
                     <h2
-                      className="text-white wow fadeInUp"
-                      data-wow-delay=".3s"
+                      className="text-white fw-bold"
+                      style={{ fontSize: "2.15em" }}
                     >
-                      need booking? <br />
-                      reserve your table?
+                      Need booking? <br />
+                      Reserve your table?
                     </h2>
                   </div>
-                  <div
-                    className="icon-items d-flex align-items-center wow fadeInUp"
-                    data-wow-delay=".5s"
-                  >
+                  <div className="icon-items d-flex align-items-center mt-4">
                     <div className="icon">
                       <i className="flaticon-phone-call-2" />
                     </div>
                     <div className="content">
-                      <h5>24/7 Support center</h5>
+                      <h5 style={{ color: "#fff" }}>24/7 Support center</h5>
                       <h3>
-                        <a href="tel:+1718-904-4450">+1718-904-4450</a>
+                        <a href="tel:+1718-904-4450" style={{ color: "#fff" }}>
+                          +1718-904-4450
+                        </a>
                       </h3>
                     </div>
                   </div>
                 </div>
               </div>
-              <div
-                className="col-lg-5 mt-5 mt-lg-0 wow fadeInUp"
-                data-wow-delay=".4s"
-              >
-                <div
-                  className="booking-contact bg-cover"
-                  style={{
-                    backgroundImage:
-                      'url("assets/img/shape/booking-shape.png")',
-                  }}
-                >
-                  <h4 className="text-center text-white">
-                    create an reservation
-                  </h4>
-                  <div className="booking-items">
-                    <div className="form-clt">
-                      <div className="nice-select" tabIndex={0}>
-                        <span className="current">no of person</span>
-                        <ul className="list">
-                          <li data-value={1} className="option selected">
-                            no of person
-                          </li>
-                          <li data-value={1} className="option">
-                            no of person
-                          </li>
-                          <li data-value={1} className="option">
-                            no of person
-                          </li>
-                        </ul>
-                      </div>
-                    </div>
-                    <div className="form-clt">
-                      <input
-                        type="text"
-                        name="number"
-                        id="number"
-                        placeholder="phone number"
-                      />
-                      <div className="icon">
-                        <i className="fas fa-phone" />
-                      </div>
-                    </div>
-                    <div className="form-clt">
-                      <input type="date" id="calendar" name="calendar" />
-                    </div>
-                    <div className="form-clt">
-                      <Link href="/reservation" className="theme-btn bg-yellow">
-                        booking now
-                      </Link>
-                    </div>
-                  </div>
-                </div>
+              <div className="col-lg-5 d-none d-lg-block">
+                <TestimonialSlider />
               </div>
             </div>
           </div>
         </div>
       </section>
-      {/* Instagram Banner Section Start */}
+
+      {/* Instagram Banner Section */}
       <InstagramBannerSlider />
     </FoodKingLayout>
   );
 };
+
 export default page;

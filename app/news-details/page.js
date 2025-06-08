@@ -3,10 +3,11 @@ import Cta from "@/components/Cta";
 import PageBanner from "@/components/PageBanner";
 import FoodKingLayout from "@/layouts/FoodKingLayout";
 import Link from "next/link";
+
 const page = () => {
   return (
     <FoodKingLayout>
-      <PageBanner pageName={"blog single"} />
+      <PageBanner pageName={"Blog Single"} />
       <section className="blog-wrapper news-wrapper section-padding section-bg">
         <div className="container">
           <div className="news-area">
@@ -16,114 +17,113 @@ const page = () => {
                   <div className="single-blog-post post-details mt-0">
                     <div className="post-content pt-0">
                       <h2 className="mt-0">
-                        QUICK CRAVINGS: UNRAVELING FAST FOOD DELIGHTS
+                        The Science of Healthy Food: How to Build Your Perfect
+                        Plate
                       </h2>
                       <div className="post-meta mt-3">
                         <span>
                           <i className="fal fa-user" />
-                          Shikhon .Ha
+                          Priya Fernando
                         </span>
                         <span>
                           <i className="fal fa-comments" />
-                          15 Comments
+                          22 Comments
                         </span>
                         <span>
                           <i className="fal fa-calendar-alt" />
-                          4th February 2024
+                          10th June 2025
                         </span>
                       </div>
                       <p>
-                        There are many variations of passages of Lorem Ipsum
-                        available, but majority have suffered Lorem haca
-                        ullamcorper donec ante habi believable. If you are going
-                        to use a passage of Lorem Ipsum cibo mundi ea duo donec
-                        imperdiet eturpis varius per a augue magna hac. dolor
-                        sit amet, teration in some form, by injected humour, or
-                        randomised words which don't look ev
+                        Eating well isn’t about strict limitations, staying
+                        unrealistically thin, or depriving yourself of the foods
+                        you love. It’s about feeling great, having more energy,
+                        and stabilizing your mood.
                       </p>
                       <p>
-                        When Food is a Love Language Food is a powerful way to
-                        show love. That's especially true in many Asian American
-                        and Pacific Islander (AAPI) cultures, where it's more
-                        common to show care through actions rather than
-                        words—and especially through food.
+                        A healthy diet doesn’t have to be complicated. The
+                        cornerstone of a good diet is to replace processed food
+                        with real food whenever possible. Eating food that is as
+                        close as possible to the way nature made it can make a
+                        huge difference to the way you think, look, and feel.
                       </p>
+                      {/* FREEPIK IMAGE 1 */}
                       <img
-                        src="assets/img/news/post-4.jpg"
-                        alt="blog__img"
+                        src="https://img.freepik.com/free-photo/table-filled-with-healthy-food-vegetables-fruits-top-view_2829-17718.jpg"
+                        alt="Healthy food table"
                         className="single-post-image"
+                        style={{
+                          borderRadius: "10px",
+                          margin: "30px 0",
+                          width: "100%",
+                          maxHeight: 420,
+                          objectFit: "cover",
+                        }}
                       />
-                      <h4>
-                        The people who give you their food give you their heart
-                      </h4>
+                      <h4>Key Principles of Healthy Eating</h4>
                       <p>
-                        This shortage is being seen in both the airline and the
-                        cargo industries. With such a small pool of applicants
-                        to choose from, these two sectors are battling to get
-                        the most qualified available candidates. Many pilots are
-                        increasingly being wooed to get behind the controls of
-                        passenger planes over cargo flights—frankly, it’s tough
-                        to compete with jobs perks like fixed schedules and free
-                        flights for your family across the world.
+                        Try to eat a rainbow of vegetables and fruits every day.
+                        Choose whole grains over refined, and don’t be afraid of
+                        healthy fats like nuts, seeds, and olive oil. Hydration
+                        matters too—aim for at least 8 glasses of water per day.
                       </p>
                       <blockquote>
-                        Your time is limited, so don’t waste it living someone
-                        else’s life. Don’t be trapped by dogma – which is living
-                        with the results
+                        “Let food be thy medicine and medicine be thy food.” —
+                        Hippocrates
                       </blockquote>
                       <p>
-                        Lorem ipsum dolor sit amet, consectetur adipisicing
-                        elit, sed do eiusmod tempor incidid unt ut labore et
-                        dolore magna aliqua. Ut enim ad minim veniam, quis
-                        nostrud exercitation ullamco laboris nisi ut aliquip ex
-                        ea commodo consequat. Duis aute.
+                        Cooking at home gives you more control over ingredients
+                        and portions. Aim to fill half your plate with
+                        vegetables, one quarter with lean protein, and one
+                        quarter with whole grains.
                       </p>
                       <ul className="checked-list mb-4">
-                        <li>Cooking is love made visible</li>
-                        <li>We’re an open book</li>
-                        <li>100% goes to the field</li>
-                        <li>Received the highest grades</li>
+                        <li>Half your plate veggies & fruits</li>
+                        <li>Lean proteins every meal</li>
+                        <li>Whole grains instead of refined</li>
+                        <li>Healthy fats in moderation</li>
                       </ul>
-                      <h5>People who love to eat are always the best people</h5>
+                      <h5>Sample Day on a Healthy Diet</h5>
                       <p>
-                        Just as we’ve found with the truck driver shortage, the
-                        impetus behind skilled labor leaving is many-fold.
-                        Demographics play a large role—a massive amount of
-                        pilots are expected to hang up their hats in the next
-                        few years as they reach the mandatory commercial pilot
-                        retirement age of 65. And there’s no large group of
-                        applicants sitting waiting to replace them.This is
-                        likely because it’s becoming considerably more difficult
-                        to obtain a pilot license than it was ten years ago.
+                        <b>Breakfast:</b> Oats with berries and nuts
+                        <br />
+                        <b>Lunch:</b> Grilled chicken salad with olive oil
+                        dressing
+                        <br />
+                        <b>Snack:</b> Greek yogurt with honey
+                        <br />
+                        <b>Dinner:</b> Brown rice, stir-fried veggies, and tofu
+                        or salmon
                       </p>
+                      {/* FREEPIK IMAGE 2 */}
                       <img
                         className="alignleft"
-                        src="assets/img/news/post-inner.jpg"
-                        alt="blog__img"
+                        src="https://img.freepik.com/free-photo/top-view-healthy-lunch-box-composition_23-2148723311.jpg"
+                        alt="Healthy lunch box"
+                        style={{
+                          borderRadius: "10px",
+                          margin: "15px 30px 15px 0",
+                          width: "320px",
+                          float: "left",
+                          maxWidth: "100%",
+                          objectFit: "cover",
+                        }}
                       />
                       <p>
-                        This is a constantly updated list of hand-curated food
-                        quotes from popular chefs, cooks, and quotes from
-                        notable writers. Feel free to share these food quotes on
-                        Pinterest, Facebook, Twitter, Instagram, etc.
-                      </p>
-                      <p>
-                        When Food is a Love Language Food is a powerful way to
-                        show love. That's especially true in many Asian American
-                        and Pacific Islander (AAPI) cultures, where it's more
-                        common to show care through actions rather than
-                        words—and especially through food. I watch cooking
-                        change the cook, just as it transforms the food
+                        Remember: eating healthy is not about perfection. It’s
+                        about consistency. Enjoy your meals, savor your food,
+                        and make healthy eating a lifelong habit!
                       </p>
                     </div>
                   </div>
                   <div className="row tag-share-wrap">
                     <div className="col-lg-8 col-12">
-                      <h4>Releted Tags</h4>
+                      <h4>Related Tags</h4>
                       <div className="tagcloud">
-                        <Link href="/news-details">Design</Link>
-                        <Link href="/news-details">apps</Link>
-                        <Link href="/news-details">data</Link>
+                        <Link href="/news-details">Healthy</Link>
+                        <Link href="/news-details">Meal Prep</Link>
+                        <Link href="/news-details">Nutrition</Link>
+                        <Link href="/news-details">Wellness</Link>
                       </div>
                     </div>
                     <div className="col-lg-4 col-12 mt-3 mt-lg-0 text-lg-end">
@@ -145,128 +145,6 @@ const page = () => {
                     </div>
                   </div>
                   {/* comments section wrap start */}
-                  <div className="comments-section-wrap pt-40">
-                    <div className="comments-heading">
-                      <h3>03 Comments</h3>
-                    </div>
-                    <ul className="comments-item-list">
-                      <li className="single-comment-item">
-                        <div className="author-img">
-                          <img
-                            src="assets/img/news/author_img2.jpg"
-                            alt="img"
-                          />
-                        </div>
-                        <div className="author-info-comment">
-                          <div className="info">
-                            <h5>
-                              <a href="#">Rosalina Kelian</a>
-                            </h5>
-                            <span>19th May 2024</span>
-                            <a href="#" className="theme-btn minimal-btn">
-                              <i className="fal fa-reply" />
-                              Reply
-                            </a>
-                          </div>
-                          <div className="comment-text">
-                            <p>
-                              Lorem ipsum dolor sit amet, consectetur
-                              adipisicing elit, sed do eiusmod tempor incididunt
-                              ut labore et dolore magna. Ut enim ad minim
-                              veniam, quis nostrud laboris nisi ut aliquip ex ea
-                              commodo consequat.
-                            </p>
-                          </div>
-                        </div>
-                      </li>
-                      <li className="single-comment-item">
-                        <div className="author-img">
-                          <img
-                            src="assets/img/news/author_img3.jpg"
-                            alt="img"
-                          />
-                        </div>
-                        <div className="author-info-comment">
-                          <div className="info">
-                            <h5>
-                              <a href="#">Arista Williamson</a>
-                            </h5>
-                            <span>21th Feb 2024</span>
-                            <a href="#" className="theme-btn minimal-btn">
-                              <i className="fal fa-reply" />
-                              Reply
-                            </a>
-                          </div>
-                          <div className="comment-text">
-                            <p>
-                              Lorem ipsum dolor sit amet, consectetur
-                              adipisicing elit, sed do eiusmod tempor incididunt
-                              ut labore et dolore magna aliqua. Ut enim ad minim
-                              veniam, quis nostrud exercitation ullamco nisi ut
-                              aliquip ex ea commodo consequat.
-                            </p>
-                          </div>
-                        </div>
-                        <ul className="replay-comment">
-                          <li className="single-comment-item">
-                            <div className="author-img">
-                              <img
-                                src="assets/img/news/author_img4.jpg"
-                                alt="img"
-                              />
-                            </div>
-                            <div className="author-info-comment">
-                              <div className="info">
-                                <h5>
-                                  <a href="#">Salman Ahmed</a>
-                                </h5>
-                                <span>29th Jan 2021</span>
-                                <a href="#" className="theme-btn minimal-btn">
-                                  <i className="fal fa-reply" />
-                                  Reply
-                                </a>
-                              </div>
-                              <div className="comment-text">
-                                <p>
-                                  Lorem ipsum dolor sit amet, consectetur
-                                  adipisicing elit, sed do eiusmod tempor
-                                  incididunt ut labore et dolore magna aliqua.
-                                  Ut enim ad minim veniam..
-                                </p>
-                              </div>
-                            </div>
-                          </li>
-                        </ul>
-                      </li>
-                    </ul>
-                  </div>
-                  <div className="comment-form-wrap mt-40">
-                    <h3>Post Comment</h3>
-                    <form action="#" className="comment-form">
-                      <div className="single-form-input">
-                        <textarea
-                          placeholder="Type your comments...."
-                          defaultValue={""}
-                        />
-                      </div>
-                      <div className="single-form-input">
-                        <input type="text" placeholder="Type your name...." />
-                      </div>
-                      <div className="single-form-input">
-                        <input type="email" placeholder="Type your email...." />
-                      </div>
-                      <div className="single-form-input">
-                        <input
-                          type="text"
-                          placeholder="Type your website...."
-                        />
-                      </div>
-                      <button className="theme-btn center" type="submit">
-                        <i className="fal fa-comments" />
-                        Post Comment
-                      </button>
-                    </form>
-                  </div>
                 </div>
               </div>
               <BlogSidebar />
@@ -278,4 +156,5 @@ const page = () => {
     </FoodKingLayout>
   );
 };
+
 export default page;
