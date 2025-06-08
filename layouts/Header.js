@@ -37,9 +37,9 @@ const Menus = () => (
     <li>
       <Link href="/gallery">Gallery</Link>
     </li>
-    <li>
+    {/* <li>
       <Link href="/contact">Contact</Link>
-    </li>
+    </li> */}
   </ul>
 );
 
@@ -215,9 +215,9 @@ const MobileMenu = ({ setToggle }) => {
               <Link href="/faq">Faq's</Link>
             </li>
             {/* Contact */}
-            <li className="mean-last">
+            {/* <li className="mean-last">
               <Link href="/contact">Contact</Link>
-            </li>
+            </li> */}
           </ul>
         </nav>
       </div>
