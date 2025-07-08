@@ -1,7 +1,5 @@
 "use client";
 import Cta from "@/components/Cta";
-import PageBanner from "@/components/PageBanner";
-import FoodKingLayout from "@/layouts/FoodKingLayout";
 import Link from "next/link";
 import { useState } from "react";
 
@@ -56,8 +54,7 @@ const page = () => {
   };
 
   return (
-    <FoodKingLayout>
-      <PageBanner pageName={"Cart"} />
+    <>
       <section className="py-5" style={{ background: "#fafbfc" }}>
         <div className="container" style={{ maxWidth: 1100 }}>
           <div className="row g-4">
@@ -200,14 +197,11 @@ const page = () => {
                   Checkout
                 </Link>
               </div>
-              <div className="mt-4">
-                <Cta />
-              </div>
             </div>
           </div>
         </div>
       </section>
-    </FoodKingLayout>
+    </>
   );
 };
 

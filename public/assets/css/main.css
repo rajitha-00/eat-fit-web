@@ -1529,7 +1529,7 @@ input.main-search-input::placeholder {
   left: 0;
   width: 100%;
   z-index: 99;
-  background-color: transparent;
+  background-color: #1f221f;
   border-bottom: 1px solid var(--border2);
   padding: 0 60px;
 }

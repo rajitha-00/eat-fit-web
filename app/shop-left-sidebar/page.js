@@ -18,8 +18,7 @@ const Page = () => {
   };
 
   return (
-    <FoodKingLayout>
-      <PageBanner pageName={"Shop Left Sidebar"} />
+    <FoodKingLayout header={2} footer={2}>
       <section className="food-category-section fix section-padding">
         <div className="container">
           <div className="row g-4">

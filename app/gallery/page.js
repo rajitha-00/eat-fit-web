@@ -36,8 +36,7 @@ const GALLERY_IMAGES = [
 
 const page = () => {
   return (
-    <FoodKingLayout>
-      <PageBanner pageName={"Gallery"} />
+    <FoodKingLayout header={2} footer={2}>
       {/* Amazing Gallery Section Start */}
       <section className="gallery-section section-bg section-padding">
         <div className="container">

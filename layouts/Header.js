@@ -29,9 +29,6 @@ const Menus = () => (
       <Link href="/about">About Us</Link>
     </li>
     <li>
-      <Link href="/food-menu">Food Menu</Link>
-    </li>
-    <li>
       <Link href="/faq">Faq's</Link>
     </li>
     <li>

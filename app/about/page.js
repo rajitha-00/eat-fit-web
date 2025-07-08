@@ -1,15 +1,12 @@
 import InstagramBannerSlider from "@/components/InstagramBannerSlider";
 import NextSaleBanner from "@/components/NextSaleBanner";
-import PageBanner from "@/components/PageBanner";
 import TestimonialSlider from "@/components/TestimonialSlider";
 import FoodKingLayout from "@/layouts/FoodKingLayout";
 import Link from "next/link";
 
 const page = () => {
   return (
-    <FoodKingLayout>
-      <PageBanner pageName={"About Us"} />
-
+    <FoodKingLayout header={2} footer={2}>
       {/* Hero About Section */}
       <section
         className="about-section fix section-padding section-bg"

@@ -84,8 +84,7 @@ const page = () => {
   const [active, setActive] = useState(FAQS[0].id);
 
   return (
-    <FoodKingLayout>
-      <PageBanner pageName={"FAQ"} />
+    <FoodKingLayout header={2} footer={2}>
       <section
         className="faq-section fix section-padding"
         style={{ background: "#f8fbfa" }}

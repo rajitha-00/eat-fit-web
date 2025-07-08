@@ -54,8 +54,7 @@ const blogPosts = [
 
 const page = () => {
   return (
-    <FoodKingLayout>
-      <PageBanner pageName={"Blog Page"} />
+    <FoodKingLayout header={2} footer={2}>
       <section className="blog-wrapper news-wrapper section-padding section-bg">
         <div className="container">
           <div className="news-area">
