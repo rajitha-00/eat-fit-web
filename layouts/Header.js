@@ -1,8 +1,8 @@
 "use client";
 import Link from "next/link";
-import { Fragment, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 
-// Main Header Export
+// Header Switcher
 const Header = ({ header }) => {
   switch (header) {
     case 2:
@@ -13,211 +13,311 @@ const Header = ({ header }) => {
 };
 export default Header;
 
-// Top-level Menus for desktop
-const Menus = () => (
-  <ul>
-    <li className="active">
-      <Link href="/">Home Page</Link>
-    </li>
-    <li className="has-dropdown">
-      <Link href="/shop-left-sidebar">Shop</Link>
-    </li>
-    <li>
-      <Link href="/news">Blog</Link>
-    </li>
-    <li>
-      <Link href="/about">About Us</Link>
-    </li>
-    <li>
-      <Link href="/faq">Faq's</Link>
-    </li>
-    <li>
-      <Link href="/gallery">Gallery</Link>
-    </li>
-    {/* <li>
-      <Link href="/contact">Contact</Link>
-    </li> */}
-  </ul>
+// Top Menus
+const Menus = ({ textColor }) => (
+  <>
+    {[
+      { label: "Home", href: "/" },
+      { label: "Shop", href: "/shop-left-sidebar" },
+      { label: "Blog", href: "/news" },
+      { label: "About Us", href: "/about" },
+      { label: "Faq's", href: "/faq" },
+      { label: "Gallery", href: "/gallery" },
+    ].map((item, index) => (
+      <li key={index}>
+        <Link
+          href={item.href}
+          style={{
+            color: textColor,
+            fontWeight: 500,
+            textDecoration: "none",
+            transition: "color 0.2s",
+          }}
+        >
+          {item.label}
+        </Link>
+      </li>
+    ))}
+  </>
 );
 
-// Main Header2 including sidebar toggle
+// Header2 with Apple-Style
 const Header2 = () => {
   const [toggle, setToggle] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  // Scroll effect
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 10);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  const headerStyle = {
+    position: "fixed",
+    top: 0,
+    left: 0,
+    width: "100%",
+    zIndex: 1000,
+    backdropFilter: isScrolled ? "none" : "blur(12px)",
+    backgroundColor: isScrolled
+      ? "rgba(255,255,255,0.95)"
+      : "rgba(31,34,31,0.7)",
+    borderBottom: "1px solid rgba(255,255,255,0.1)",
+    transition: "all 0.3s ease-in-out",
+  };
+
+  const textColor = isScrolled ? "#1f1f1f" : "#ffffff";
 
   return (
     <Fragment>
-      <header>
-        <div id="header-sticky" className="header-2">
-          <div className="container-fluid">
-            <div className="mega-menu-wrapper">
-              <div className="header-main">
-                <div className="header-left">
-                  <div className="logo">
-                    <Link href="/" className="header-logo">
-                      <img src="assets/img/logo/logo-3.svg" alt="logo-img" />
-                    </Link>
-                  </div>
-                  <div className="logo-2">
-                    <Link href="/" className="header-logo">
-                      <img src="assets/img/logo/logo-3.svg" alt="logo-img" />
-                    </Link>
-                  </div>
-                </div>
-                <div className="header-right d-flex justify-content-end align-items-center">
-                  <div className="mean__menu-wrapper d-none d-lg-block">
-                    <div className="main-menu">
-                      <nav id="mobile-menu">
-                        <Menus />
-                      </nav>
-                    </div>
-                  </div>
-                  <a href="#0" className="search-trigger search-icon">
-                    <i className="fal fa-search" />
-                  </a>
-                  <div className="menu-cart">
-                    <Link href="/shop-cart" className="cart-icon">
-                      <i className="far fa-shopping-cart" />
-                    </Link>
-                  </div>
-                  <div className="header-button">
-                    <Link
-                      href="/shop-single"
-                      className="theme-btn bg-transparent"
-                    >
-                      <span className="button-content-wrapper d-flex align-items-center">
-                        <span className="button-icon">
-                          <i className="flaticon-delivery" />
-                        </span>
-                        <span className="button-text">order now</span>
-                      </span>
-                    </Link>
-                  </div>
-                  {/* Hamburger for mobile */}
-                  <div className="header__hamburger d-xl-block my-auto d-lg-none">
-                    <div
-                      className="sidebar__toggle"
-                      onClick={() => setToggle(true)}
-                      style={{ cursor: "pointer" }}
-                    >
-                      <img
-                        src="assets/img/logo/bar.svg"
-                        alt="bar-icon"
-                        className="bar-1"
-                      />
-                      <img
-                        src="assets/img/logo/bar-2.svg"
-                        alt="bar-icon"
-                        className="bar-2"
-                      />
-                    </div>
-                  </div>
-                </div>
+      <header style={headerStyle}>
+        <div className="container-fluid px-4">
+          <div
+            className="d-flex justify-content-between align-items-center"
+            style={{ height: "72px" }}
+          >
+            {/* Logo */}
+            <Link href="/" className="d-inline-block">
+              <img
+                src="/assets/img/logo/logo-3.svg"
+                alt="logo"
+                height="40"
+                style={{
+                  transition: "transform 0.3s ease",
+                  filter: isScrolled ? "none" : "brightness(100)",
+                }}
+                onMouseOver={(e) =>
+                  (e.currentTarget.style.transform = "scale(1.05)")
+                }
+                onMouseOut={(e) =>
+                  (e.currentTarget.style.transform = "scale(1)")
+                }
+              />
+            </Link>
+
+            {/* Menu */}
+            <nav className="d-none d-lg-block">
+              <ul
+                style={{
+                  listStyle: "none",
+                  display: "flex",
+                  gap: "32px",
+                  margin: 0,
+                  padding: 0,
+                  color: textColor,
+                }}
+              >
+                <Menus textColor={textColor} />
+              </ul>
+            </nav>
+
+            {/* Right Side */}
+            <div className="d-flex align-items-center gap-3">
+              {/* Cart */}
+              <Link
+                href="/shop-cart"
+                style={{ color: textColor, fontSize: "1.2rem" }}
+              >
+                <i className="far fa-shopping-cart"></i>
+              </Link>
+
+              {/* Order Now */}
+              <Link
+                href="/shop-single"
+                className="d-none d-md-block"
+                style={{
+                  backgroundColor: isScrolled
+                    ? "rgba(0,0,0,0.05)"
+                    : "rgba(255,255,255,0.05)",
+                  border: "1px solid rgba(255,255,255,0.2)",
+                  padding: "8px 20px",
+                  borderRadius: "9999px",
+                  color: textColor,
+                  fontWeight: 500,
+                  textDecoration: "none",
+                }}
+              >
+                <i className="flaticon-delivery me-2"></i> Order Now
+              </Link>
+
+              {/* Mobile Hamburger */}
+              <div
+                className="d-lg-none"
+                onClick={() => setToggle(true)}
+                style={{ cursor: "pointer" }}
+              >
+                <img
+                  src="/assets/img/logo/bar.svg"
+                  alt="menu"
+                  height="24"
+                  style={{
+                    filter: isScrolled ? "none" : "invert(100%)",
+                  }}
+                />
               </div>
             </div>
           </div>
         </div>
       </header>
+
       <Sidebar toggle={toggle} setToggle={setToggle} />
     </Fragment>
   );
 };
 
-// Sidebar Mobile Drawer
+// Sidebar / Mobile Drawer
 const Sidebar = ({ toggle, setToggle }) => {
   return (
     <Fragment>
-      <div className="fix-area">
-        <div className={`offcanvas__info ${toggle ? "info-open" : ""}`}>
-          <div className="offcanvas__wrapper">
-            <div className="offcanvas__content">
-              <div className="offcanvas__top mb-5 d-flex justify-content-between align-items-center">
-                <Link href="/" className="header-logo">
-                  <img src="assets/img/logo/logo-3.svg" alt="logo-img" />
-                </Link>
-                <div className="offcanvas__close">
-                  <button onClick={() => setToggle(false)}>
-                    <i className="fas fa-times" />
-                  </button>
-                </div>
-              </div>
-              <MobileMenu setToggle={setToggle} />
-              <div className="offcanvas__contact mt-4">
-                <div className="header-button mt-4">
-                  <Link href="/shop-single" className="theme-btn">
-                    <span className="button-content-wrapper d-flex align-items-center justify-content-center">
-                      <span className="button-icon">
-                        <i className="flaticon-delivery" />
-                      </span>
-                      <span className="button-text">order now</span>
-                    </span>
-                  </Link>
-                </div>
-              </div>
-            </div>
-          </div>
+      {/* Sidebar */}
+      <div
+        style={{
+          position: "fixed",
+          top: 0,
+          right: toggle ? 0 : "-100%",
+          height: "100vh",
+          width: "80%",
+          maxWidth: "300px",
+          backgroundColor: "rgba(31,34,31,0.95)",
+          backdropFilter: "blur(10px)",
+          transition: "right 0.3s ease-in-out",
+          zIndex: 1050,
+          padding: "1.5rem",
+          color: "#fff",
+        }}
+      >
+        <div className="d-flex justify-content-between align-items-center mb-4">
+          <Link href="/">
+            <img src="/assets/img/logo/logo-3.svg" alt="logo" height={36} />
+          </Link>
+          <button
+            onClick={() => setToggle(false)}
+            style={{
+              background: "transparent",
+              border: "none",
+              fontSize: "1.5rem",
+              color: "white",
+            }}
+          >
+            <i className="fas fa-times"></i>
+          </button>
+        </div>
+        <MobileMenu setToggle={setToggle} />
+        <div className="mt-4">
+          <Link
+            href="/shop-single"
+            style={{
+              display: "block",
+              textAlign: "center",
+              backgroundColor: "rgba(255,255,255,0.1)",
+              padding: "12px",
+              borderRadius: "9999px",
+              color: "#fff",
+              fontWeight: 500,
+              textDecoration: "none",
+            }}
+          >
+            <i className="flaticon-delivery me-2" /> Order Now
+          </Link>
         </div>
       </div>
+
+      {/* Overlay */}
       <div
-        className={`offcanvas__overlay ${toggle ? "overlay-open" : ""}`}
         onClick={() => setToggle(false)}
+        style={{
+          display: toggle ? "block" : "none",
+          position: "fixed",
+          top: 0,
+          left: 0,
+          height: "100vh",
+          width: "100vw",
+          backgroundColor: "rgba(0,0,0,0.5)",
+          zIndex: 1040,
+        }}
       />
     </Fragment>
   );
 };
 
-// MobileMenu with all menu items and working submenu toggles
+// Mobile Menu
 const MobileMenu = ({ setToggle }) => {
-  const [activeMenu, setActiveMenu] = useState("");
-  const [multiMenu, setMultiMenu] = useState("");
-
-  const handleMenuToggle = (value) =>
-    setActiveMenu(activeMenu === value ? "" : value);
-  const handleMultiMenuToggle = (value) =>
-    setMultiMenu(multiMenu === value ? "" : value);
-
-  const showStyle = (value, compare) =>
-    value === compare ? { display: "block" } : { display: "none" };
-
   return (
-    <div className="mobile-menu fix mb-3 mean-container d-block d-lg-none">
-      <div className="mean-bar">
-        <nav className="mean-nav">
-          <ul>
-            {/* Home - with submenu */}
-            <li className="active">
-              <Link href="/">
-                Home <i className="fas fa-angle-down" />
-              </Link>
-            </li>
-            {/* Shop - with submenu */}
-            <li className="has-dropdown">
-              <Link href="/shop-left-sidebar">Shop</Link>
-            </li>
-            {/* Blog - with submenu */}
-            <li>
-              <Link href="/news">
-                Blog <i className="fas fa-angle-down" />
-              </Link>
-            </li>
-            <li>
-              <Link href="/about">About Us</Link>
-            </li>{" "}
-            <li>
-              <Link href="/food-menu">Food Menu</Link>
-            </li>
-            <li>
-              <Link href="/gallery">Gallery</Link>
-            </li>
-            <li>
-              <Link href="/faq">Faq's</Link>
-            </li>
-            {/* Contact */}
-            {/* <li className="mean-last">
-              <Link href="/contact">Contact</Link>
-            </li> */}
-          </ul>
-        </nav>
-      </div>
-    </div>
+    <ul
+      style={{
+        listStyle: "none",
+        paddingLeft: 0,
+        display: "flex",
+        flexDirection: "column",
+        gap: "1rem",
+      }}
+    >
+      <li>
+        <Link
+          href="/"
+          onClick={() => setToggle(false)}
+          style={{ color: "white", textDecoration: "none" }}
+        >
+          Home
+        </Link>
+      </li>
+      <li>
+        <Link
+          href="/shop-left-sidebar"
+          onClick={() => setToggle(false)}
+          style={{ color: "white", textDecoration: "none" }}
+        >
+          Shop
+        </Link>
+      </li>
+      <li>
+        <Link
+          href="/news"
+          onClick={() => setToggle(false)}
+          style={{ color: "white", textDecoration: "none" }}
+        >
+          Blog
+        </Link>
+      </li>
+      <li>
+        <Link
+          href="/about"
+          onClick={() => setToggle(false)}
+          style={{ color: "white", textDecoration: "none" }}
+        >
+          About Us
+        </Link>
+      </li>
+      <li>
+        <Link
+          href="/gallery"
+          onClick={() => setToggle(false)}
+          style={{ color: "white", textDecoration: "none" }}
+        >
+          Gallery
+        </Link>
+      </li>
+      <li>
+        <Link
+          href="/faq"
+          onClick={() => setToggle(false)}
+          style={{ color: "white", textDecoration: "none" }}
+        >
+          Faq's
+        </Link>
+      </li>
+      <li>
+        <Link
+          href="/contact"
+          onClick={() => setToggle(false)}
+          style={{ color: "white", textDecoration: "none" }}
+        >
+          Contact
+        </Link>
+      </li>
+    </ul>
   );
 };

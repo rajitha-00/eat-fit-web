@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import Link from "next/link";
 
@@ -14,157 +15,260 @@ const socialLinks = [
   { href: "https://www.instagram.com/eatfit.sl/", icon: "fab fa-instagram" },
 ];
 
-const popularFoods = [
-  "Hamburger",
-  "Chicken pizza",
-  "Vegetable roll",
-  "Sea fish",
-  "Fried chicken",
-  "French fries",
-  "Onion rings",
-  "Chicken nuggets",
-  "Tacos Pizza",
-  "Hot Dogs",
-];
-const half = Math.ceil(popularFoods.length / 2);
-const popularLeft = popularFoods.slice(0, half);
-const popularRight = popularFoods.slice(half);
-
-const bottomLinks = [
-  { href: "/", text: "Privacy Policy" },
-  { href: "/", text: "Terms & Condition" },
-];
-
 const Footer = () => (
-  <footer className="footer-section section-bg-3 fix">
+  <footer
+    style={{
+      position: "relative",
+      backgroundColor: "#121212",
+      backgroundImage:
+        "linear-gradient(135deg, rgba(255 255 255 / 0.07) 0%, rgba(255 255 255 / 0.03) 40%, transparent 70%), linear-gradient(45deg, rgba(255 255 255 / 0.1) 0%, transparent 100%)",
+      fontFamily:
+        "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif",
+      color: "#ddd",
+      paddingTop: "4rem",
+      paddingBottom: "2rem",
+      userSelect: "none",
+      overflow: "hidden",
+      boxShadow:
+        "inset 0 0 10px rgba(255,255,255,0.05), inset 0 -3px 20px rgba(255,255,255,0.1)",
+    }}
+  >
+    {/* Decorative Shapes */}
     {footerShapes.map(({ className, src }) => (
-      <div key={className} className={className}>
-        <img src={src} alt="shape-img" />
+      <div
+        key={className}
+        style={{
+          position: "absolute",
+          pointerEvents: "none",
+          opacity: 0.12,
+          filter: "blur(10px)",
+          ...(className === "footer-shape"
+            ? { top: "-20%", left: "-10%", width: "250px", height: "auto" }
+            : { bottom: "-15%", right: "-5%", width: "300px", height: "auto" }),
+          zIndex: 0,
+          mixBlendMode: "screen",
+        }}
+      >
+        <img
+          src={src}
+          alt="shape-img"
+          style={{ width: "100%", height: "auto", userSelect: "none" }}
+          draggable={false}
+        />
       </div>
     ))}
 
-    <div className="container">
-      <div className="footer-widgets-wrapper style-2">
-        <div className="row">
-          {/* Logo & Social */}
-          <div
-            className="col-xl-4 col-lg-4 col-md-6 pe-md-2 wow fadeInUp"
-            data-wow-delay=".3s"
-          >
-            <div className="single-footer-widget pe-md-5 border-right">
-              <div className="widget-head">
-                <Link href="/" className="header-logo">
-                  <img src="assets/img/logo/logo-3.svg" alt="logo-img" />
-                </Link>
-              </div>
-              <div className="footer-content">
-                <p>
-                  Temporibus autem quibusdam officiis debitis aut rerum
-                  necessitatibus saepe eveniet voluta repudiandae molestiae
-                  recusandae Itaquear rerum hic tenetur sapiente delectus
-                </p>
-                <div className="social-icon d-flex align-items-center">
-                  {socialLinks.map(({ href, icon }, i) => (
-                    <a key={i} href={href}>
-                      <i className={icon} />
-                    </a>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Popular Food */}
-          {/* <div
-            className="col-xl-5 col-lg-4 col-md-6 ps-xl-5 pe-md-5 wow fadeInUp"
-            data-wow-delay=".5s"
-          >
-            <div className="single-footer-widget border-right">
-              <div className="widget-head">
-                <h4>popular food</h4>
-              </div>
-              <div className="list-area d-flex align-items-center">
-                <ul>
-                  {popularLeft.map((item, i) => (
-                    <li key={i}>
-                      <Link href="/shop-single">{item}</Link>
-                    </li>
-                  ))}
-                </ul>
-                <ul>
-                  {popularRight.map((item, i) => (
-                    <li key={i}>
-                      <Link href="/shop-single">{item}</Link>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </div>
-          </div> */}
-
-          {/* Contact Us */}
-          <div
-            className="col-xl-3 col-lg-4 col-md-6 ps-xl-5 wow fadeInUp"
-            data-wow-delay=".7s"
-          >
-            <div className="single-footer-widget">
-              <div className="widget-head">
-                <h4>contact us</h4>
-              </div>
-              <div className="footer-content ">
-                <p>
-                  Sri Jayawardanepura Mawatha, <br />
-                  Sri Jayewardenepura Kotte,
-                  <br /> Western
-                </p>
-                <a href="mailto:info.eatfitlk@gmail.com" className="link">
-                  info.eatfitlk@gmail.com
-                </a>
-                <br />
-                <a href="tel:+1718-904-4450" className="number">
-                  +94703364646
-                </a>
-                <ul className="info-date">
-                  <li>
-                    Everyday: <span>10:30am – 9:30pm</span>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div className="footer-bottom style-2">
+    <div
+      style={{
+        maxWidth: "1100px",
+        margin: "0 auto",
+        position: "relative",
+        zIndex: 1,
+        display: "flex",
+        flexWrap: "wrap",
+        gap: "3rem",
+        justifyContent: "space-between",
+      }}
+    >
+      {/* Logo & Social */}
       <div
-        id="scrollUp"
-        className="scroll-icon bg-cover"
-        style={{ backgroundImage: 'url("assets/img/shop-food/box.png")' }}
+        style={{
+          flex: "1 1 320px",
+          minWidth: "280px",
+          borderRight: "1px solid rgba(255,255,255,0.1)",
+          paddingRight: "2rem",
+        }}
       >
-        <i className="fas fa-arrow-alt-up" />
-      </div>
-      <div className="container">
-        <div className="footer-bottom-wrapper d-flex align-items-center justify-content-between">
-          <p className="wow fadeInLeft" data-wow-delay=".3s">
-            © Copyright <span className="theme-color-3">2025</span>{" "}
-            <Link href="/">EATFIT</Link>. All Rights Reserved.
-          </p>
-          <ul className="wow fadeInRight" data-wow-delay=".5s">
-            {bottomLinks.map(({ href, text }, i) => (
-              <li key={i}>
-                <Link href={href}>
-                  <span className="text-effect">
-                    <span className="effect-1">{text}</span>
-                    <span className="effect-1">{text}</span>
-                  </span>
-                </Link>
-              </li>
-            ))}
-          </ul>
+        <div style={{ marginBottom: "1.5rem" }}>
+          <Link href="/">
+            <div
+              style={{
+                display: "inline-block",
+                userSelect: "none",
+                filter: "brightness(0) invert(1)",
+              }}
+            >
+              <img
+                src="assets/img/logo/logo-3.svg"
+                alt="logo"
+                style={{ height: "40px", objectFit: "contain" }}
+                draggable={false}
+              />
+            </div>
+          </Link>
+        </div>
+        <p
+          style={{
+            fontSize: "0.95rem",
+            lineHeight: 1.5,
+            color: "rgba(255,255,255,0.75)",
+            marginBottom: "1.5rem",
+          }}
+        >
+          Temporibus autem quibusdam officiis debitis aut rerum necessitatibus
+          saepe eveniet voluta repudiandae molestiae recusandae Itaquear rerum
+          hic tenetur sapiente delectus
+        </p>
+        <div style={{ display: "flex", gap: "1rem", fontSize: "1.2rem" }}>
+          {socialLinks.map(({ href, icon }, i) => (
+            <a
+              key={i}
+              href={href}
+              style={{
+                color: "rgba(255,255,255,0.65)",
+                transition: "color 0.3s ease",
+                userSelect: "none",
+              }}
+              target="_blank"
+              rel="noopener noreferrer"
+              onMouseEnter={(e) => (e.currentTarget.style.color = "#0a84ff")}
+              onMouseLeave={(e) =>
+                (e.currentTarget.style.color = "rgba(255,255,255,0.65)")
+              }
+              aria-label={`Link to social media ${icon}`}
+            >
+              <i className={icon} />
+            </a>
+          ))}
         </div>
       </div>
+
+      {/* Contact Us */}
+      <div
+        style={{
+          flex: "1 1 320px",
+          minWidth: "280px",
+          paddingLeft: "2rem",
+        }}
+      >
+        <h4
+          style={{
+            fontWeight: 600,
+            fontSize: "1.25rem",
+            marginBottom: "1rem",
+            color: "#fff",
+          }}
+        >
+          Contact Us
+        </h4>
+        <p
+          style={{
+            fontSize: "0.95rem",
+            lineHeight: 1.5,
+            marginBottom: "0.8rem",
+            color: "rgba(255,255,255,0.7)",
+          }}
+        >
+          Sri Jayawardanepura Mawatha,
+          <br />
+          Sri Jayewardenepura Kotte,
+          <br />
+          Western
+        </p>
+        <a
+          href="mailto:info.eatfitlk@gmail.com"
+          style={{
+            color: "#0a84ff",
+            textDecoration: "none",
+            fontWeight: 500,
+            display: "inline-block",
+            marginBottom: "0.5rem",
+            userSelect: "text",
+          }}
+        >
+          info.eatfitlk@gmail.com
+        </a>
+        <br />
+        <a
+          href="tel:+94703364646"
+          style={{
+            color: "#0a84ff",
+            textDecoration: "none",
+            fontWeight: 500,
+            userSelect: "text",
+          }}
+        >
+          +94 703 364 646
+        </a>
+        <ul
+          style={{
+            listStyle: "none",
+            padding: 0,
+            marginTop: "1rem",
+            color: "rgba(255,255,255,0.5)",
+            fontSize: "0.9rem",
+          }}
+        >
+          <li>
+            Everyday: <span style={{ fontWeight: 600 }}>10:30am – 9:30pm</span>
+          </li>
+        </ul>
+      </div>
     </div>
+
+    {/* Footer Bottom */}
+    <div
+      style={{
+        marginTop: "3rem",
+        borderTop: "1px solid rgba(255,255,255,0.1)",
+        paddingTop: "1rem",
+        textAlign: "center",
+        fontSize: "0.9rem",
+        color: "rgba(255,255,255,0.5)",
+        userSelect: "none",
+      }}
+    >
+      © Copyright <span style={{ color: "#0a84ff" }}>2025</span>{" "}
+      <Link href="/">
+        <div
+          style={{
+            color: "#0a84ff",
+            textDecoration: "none",
+            fontWeight: 600,
+            cursor: "pointer",
+          }}
+        >
+          EATFIT
+        </div>
+      </Link>
+      . All Rights Reserved.
+    </div>
+
+    {/* Scroll to top button */}
+    <button
+      onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+      aria-label="Scroll to top"
+      style={{
+        position: "fixed",
+        bottom: "2rem",
+        right: "2rem",
+        width: "48px",
+        height: "48px",
+        borderRadius: "50%",
+        background: "linear-gradient(145deg, #0a84ff, #0061d5)",
+        border: "none",
+        boxShadow: "0 6px 16px rgba(10,132,255,0.6)",
+        color: "#fff",
+        fontSize: "1.25rem",
+        cursor: "pointer",
+        userSelect: "none",
+        zIndex: 9999,
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        transition: "background 0.3s ease",
+      }}
+      onMouseEnter={(e) =>
+        (e.currentTarget.style.background =
+          "linear-gradient(145deg, #0061d5, #004bb5)")
+      }
+      onMouseLeave={(e) =>
+        (e.currentTarget.style.background =
+          "linear-gradient(145deg, #0a84ff, #0061d5)")
+      }
+    >
+      <i className="fas fa-arrow-up" />
+    </button>
   </footer>
 );
 

@@ -1,3 +1,5 @@
+import { CeoMessage } from "@/components/Home/CeoMessage";
+import Features from "@/components/Home/Features";
 import FoodBanerHome from "@/components/Home/FoodBanerHome";
 import FoodCategoryHome from "@/components/Home/FoodCategoryHome";
 import Marquee from "@/components/Home/Marquee";
@@ -35,165 +37,124 @@ const page = () => {
   return (
     <FoodKingLayout header={2} footer={2}>
       <HomeSlider3 />
-      <section className="main-cta-banner-3 fix section-padding pt-0">
-        <div className="container">
+      <section
+        style={{
+          position: "relative",
+          width: "100%",
+          overflow: "hidden",
+          marginTop: "-20px", // overlap slightly with hero if needed
+        }}
+      >
+        <div
+          style={{
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+            height: "320px",
+            position: "relative",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            fontFamily:
+              "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif",
+          }}
+        >
+          {/* Optional gradient overlay */}
           <div
-            className="main-cta-banner-wrapper-3 bg-cover"
             style={{
-              backgroundImage: 'url("assets/img/banner/main-cta-bg-3.jpg")',
+              position: "absolute",
+              inset: 0,
+              background:
+                "linear-gradient(to bottom, rgba(0,0,0,0.01), rgba(0,0,0,0.07))",
+              zIndex: 1,
+            }}
+          />
+
+          {/* Statement Message */}
+          <div
+            style={{
+              position: "relative",
+              zIndex: 2,
+              backgroundColor: "rgba(255, 255, 255, 0.1)",
+              backdropFilter: "blur(10px)",
+              padding: "36px 48px",
+              borderRadius: "20px",
+              border: "1px solid rgba(255,255,255,0.2)",
+              boxShadow: "0 8px 32px rgba(0,0,0,0.2)",
+              textAlign: "center",
+              color: "white",
+              maxWidth: "700px",
+              width: "90%",
             }}
           >
-            <div className="fry-shape">
-              <img src="assets/img/shape/fry-shape-3.png" alt="shape-img" />
-            </div>
-            <div className="frame-shape">
-              <img src="assets/img/shape/frame-4.png" alt="shape-img" />
-            </div>
-            <div className="frame-shape-2">
-              <img src="assets/img/shape/frame-5.png" alt="shape-img" />
-            </div>
-
-            <div className="row justify-content-between">
-              <div className="col-xl-6 col-lg-6">
-                <div className="cta-content">
-                  <h3 className="wow fadeInUp" data-wow-delay=".3s">
-                    Subscribe to our <br />
-                    Reward Program
-                  </h3>
-                  <p className="wow fadeInUp" data-wow-delay=".5s">
-                    Join now and start earning points on every order. Redeem
-                    rewards, special offers, and exclusive perks.
-                  </p>
-                </div>
-              </div>
-
-              <div
-                className="col-xl-5 col-lg-5 mt-4 mt-lg-0 wow fadeInUp"
-                data-wow-delay=".4s"
-              >
-                <div className="newsletter-items">
-                  <form action="#">
-                    <input
-                      type="email"
-                      placeholder="Enter your email to join rewards"
-                    />
-                    <div className="icon">
-                      <i className="fas fa-envelope" />
-                    </div>
-                    <button className="theme-btn bg-red mt-3" type="submit">
-                      <span>Join Now</span>
-                    </button>
-                  </form>
-
-                  <div className="input-save d-flex align-items-center">
-                    <input
-                      type="checkbox"
-                      className="form-check-input"
-                      name="agree-rewards"
-                      id="agreeRewards"
-                    />
-                    <label htmlFor="agreeRewards">
-                      I agree to the <a href="#">Reward Program Terms</a>.
-                    </label>
-                  </div>
-                </div>
-              </div>
-            </div>
+            <h2
+              style={{
+                fontSize: "2.2rem",
+                fontWeight: 600,
+                marginBottom: "12px",
+                lineHeight: 1.3,
+              }}
+            >
+              Innovation Never Tasted This Good
+            </h2>
+            <p
+              style={{
+                fontSize: "1rem",
+                fontWeight: 300,
+                color: "rgba(1,1,1,1)",
+                maxWidth: "540px",
+                margin: "0 auto",
+              }}
+            >
+              A celebration of flavor, design, and culinary technology brought
+              to your plate with love and precision.
+            </p>
           </div>
+
+          {/* Decorative Shapes (optional) */}
+          <img
+            src="assets/img/shape/fry-shape-3.png"
+            alt="shape"
+            style={{
+              position: "absolute",
+              bottom: "0",
+              left: "8%",
+              height: "100px",
+              opacity: 0.8,
+              zIndex: 0,
+            }}
+          />
+          <img
+            src="assets/img/shape/frame-4.png"
+            alt="shape"
+            style={{
+              position: "absolute",
+              top: "10%",
+              right: "10%",
+              height: "80px",
+              opacity: 0.6,
+              zIndex: 0,
+            }}
+          />
+          <img
+            src="assets/img/shape/frame-5.png"
+            alt="shape"
+            style={{
+              position: "absolute",
+              bottom: "12%",
+              right: "6%",
+              height: "60px",
+              opacity: 0.4,
+              zIndex: 0,
+            }}
+          />
         </div>
       </section>
-
       <Marquee />
-
       <FoodBanerHome />
-
       <FoodCategoryHome />
-
       <NextSaleBanner />
-
-      <section
-        className="choose-us-2 fix section-padding bg-cover"
-        style={{ backgroundImage: 'url("assets/img/bg-image/bg-shape.png")' }}
-      >
-        <div className="container">
-          <div className="food-icon-wrapper-2">
-            <div className="row g-5">
-              {features.map(({ icon, title, desc, delay }, idx) => (
-                <div
-                  key={idx}
-                  className="col-lg-3 col-md-6 col-sm-6 wow fadeInUp"
-                  data-wow-delay={delay}
-                >
-                  <div className="single-food-icon">
-                    <div className="icon">
-                      <img src={icon} alt={title} />
-                    </div>
-                    <div className="content">
-                      <h3>{title}</h3>
-                      <p>{desc}</p>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section className="testimonial-section-3 section-padding fix">
-        <div className="container">
-          <div className="testimonial-wrapper-3">
-            <div className="row align-items-center">
-              <div
-                className="col-xl-5 col-lg-5 wow fadeInUp"
-                data-wow-delay=".3s"
-              >
-                <div
-                  className="testimonial-image bg-cover"
-                  style={{ backgroundImage: 'url("assets/img/client/04.jpg")' }}
-                >
-                  <div className="shape-image">
-                    <img
-                      src="assets/img/client/shape-img.png"
-                      alt="shape-img"
-                    />
-                  </div>
-                </div>
-              </div>
-              <div className="col-xl-6 col-lg-6 mt-5 mt-lg-0">
-                <div className="testimonial-content">
-                  <h4 className="wow fadeInUp" data-wow-delay=".3s">
-                    Learn Something EAT FIT
-                  </h4>
-                  <h3 className="wow fadeInUp" data-wow-delay=".5s">
-                    Where flavor and wellness unite. Located in Colombo, our
-                    menu of vibrant salads, grain bowls, wraps, and smoothies
-                    nourishes your body and delights your palate. Join us to
-                    discover the power of real food eat well, feel great, and
-                    learn something new with every bite.
-                  </h3>
-                  <div
-                    className="client-info d-flex align-items-center wow fadeInUp"
-                    data-wow-delay=".7s"
-                  >
-                    <div
-                      className="client-image bg-cover"
-                      style={{
-                        backgroundImage: 'url("assets/img/client/05.jpg")',
-                      }}
-                    />
-                    <div className="title">
-                      <h4>
-                        Sunethya Nandajeewa / <span>CEO &amp; Founder</span>
-                      </h4>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+      <Features features={features} />
+      <CeoMessage />
       <InstagramBannerSlider />
     </FoodKingLayout>
   );

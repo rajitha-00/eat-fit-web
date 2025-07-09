@@ -1,6 +1,6 @@
 "use client";
 import Cta from "@/components/Cta";
-import { products } from "@/components/Home/FoodCategoryHome";
+import { icons, products } from "@/components/Home/FoodCategoryHome";
 import PageBanner from "@/components/PageBanner";
 import ProductSidebar from "@/components/ProductSidebar";
 import ProductTopBar from "@/components/ProductTopBar";
@@ -25,75 +25,126 @@ const Page = () => {
             <ProductSidebar />
             <div className="col-xl-9 col-lg-8 order-1 order-md-2">
               <ProductTopBar />
-              <div className="row">
-                {products.map((prod, idx) => (
+              <div
+                style={{
+                  display: "grid",
+                  gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))",
+                  gap: "32px",
+                }}
+              >
+                {products.map((prod, i) => (
                   <div
-                    className="col-xl-4 col-lg-6 col-md-6"
-                    key={prod.title + idx}
+                    key={i}
+                    style={{
+                      backgroundColor: "#fff",
+                      borderRadius: "16px",
+                      boxShadow: "0 8px 24px rgba(0,0,0,0.05)",
+                      overflow: "hidden",
+                      transition: "transform 0.3s ease",
+                    }}
+                    onMouseEnter={(e) =>
+                      (e.currentTarget.style.transform = "translateY(-4px)")
+                    }
+                    onMouseLeave={(e) =>
+                      (e.currentTarget.style.transform = "translateY(0)")
+                    }
                   >
-                    <div className="catagory-product-card shadow-style text-center">
-                      <div className="icon">
-                        <Link href="/shop-cart">
-                          <i className="far fa-heart" />
-                        </Link>
-                      </div>
-                      <div className="catagory-product-image">
+                    {/* Product Image */}
+                    <div style={{ position: "relative" }}>
+                      <div
+                        style={{
+                          position: "relative",
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          height: "220px",
+                        }}
+                      >
                         <img
                           src={prod.img}
                           alt={prod.title}
                           style={{
-                            width: "100%",
-                            maxHeight: "180px",
-                            objectFit: "contain",
-                            background: "#fafafa",
+                            width: "220px",
+                            height: "220px",
+                            objectFit: "cover",
+                            borderTopLeftRadius: "16px",
+                            borderTopRightRadius: "16px",
                           }}
                         />
                       </div>
-                      <div className="catagory-product-content">
-                        <div className="catagory-button">
-                          <button
-                            className="theme-btn-2"
-                            onClick={() => handleAddToCart(prod)}
-                          >
-                            <i className="far fa-shopping-basket" />
-                            Add To Cart
-                          </button>
-                        </div>
-                        <div className="info-price d-flex align-items-center justify-content-center">
-                          {prod.discount && <p>{prod.discount}</p>}
-                          <h6 style={{ color: "#43a047", margin: "0 4px" }}>
-                            Rs {prod.price}
-                          </h6>
-                          {prod.oldPrice && (
-                            <span
-                              style={{
-                                color: "#888",
-                                textDecoration: "line-through",
-                              }}
-                            >
-                              Rs {prod.oldPrice}
-                            </span>
-                          )}
-                        </div>
-                        <h4>
-                          <Link href={`/${prod.titleHref}`}>{prod.title}</Link>
-                        </h4>
-                        <div className="star">
-                          {[...Array(5)].map((_, i) => (
-                            <span
-                              key={i}
-                              className={
-                                i < Math.round(prod.rating)
-                                  ? "fas fa-star"
-                                  : "far fa-star"
-                              }
-                            />
+                      <div
+                        style={{
+                          position: "relative",
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          height: "50px",
+                        }}
+                      >
+                        <ul
+                          style={{
+                            position: "relative",
+                            display: "flex",
+                            gap: "12px",
+                          }}
+                        >
+                          {icons.map((ic, j) => (
+                            <li key={j}>
+                              <Link
+                                href={ic.href}
+                                style={{
+                                  backgroundColor: "#ffffffcc",
+                                  backdropFilter: "blur(4px)",
+                                  borderRadius: "999px",
+                                  padding: "10px 10px",
+                                  display: "inline-flex",
+                                  alignItems: "center",
+                                  justifyContent: "center",
+                                  color: "#333",
+                                  fontSize: "1rem",
+                                  textDecoration: "none",
+                                  boxShadow: "0 4px 8px rgba(0,0,0,0.1)",
+                                }}
+                              >
+                                <i className={ic.iconClass}></i>
+                              </Link>
+                            </li>
                           ))}
-                        </div>
-                        <div style={{ fontSize: 12, color: "#888" }}>
-                          {prod.ratingCount} ratings
-                        </div>
+                        </ul>
                       </div>
+                    </div>
+
+                    {/* Product Content */}
+                    <div style={{ padding: "20px", textAlign: "center" }}>
+                      <h4
+                        style={{
+                          fontSize: "1.2rem",
+                          fontWeight: 600,
+                          margin: "0 0 6px",
+                          color: "#222",
+                        }}
+                      >
+                        {prod.useAnchor ? (
+                          <a
+                            href={prod.titleHref}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            style={{ color: "#222", textDecoration: "none" }}
+                          >
+                            {prod.title}
+                          </a>
+                        ) : (
+                          <Link
+                            href={`/${prod.titleHref}`}
+                            style={{ color: "#222", textDecoration: "none" }}
+                          >
+                            {prod.title}
+                          </Link>
+                        )}
+                      </h4>
+                      <h5 style={{ color: "#666", fontWeight: 500, margin: 0 }}>
+                        Rs. {prod.price}
+                      </h5>
                     </div>
                   </div>
                 ))}
