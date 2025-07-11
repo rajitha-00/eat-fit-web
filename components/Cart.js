@@ -1,178 +1,243 @@
-// components/CartDialog.tsx
 "use client";
-import React, { FormEvent } from "react";
+
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect, useState } from "react";
 import Link from "next/link";
+import { updateQuantity, removeFromCart } from "@/lib/api/cartSlice";
 
-const CartDialog = ({
-  isOpen,
-  onClose,
-  cartItems,
-  onIncrement,
-  onDecrement,
-  onRemove,
-  onApplyPromo,
-  onPlaceOrder,
-}) => {
-  const [promo, setPromo] = React.useState("");
+const CartDialog = () => {
+  const [open, setOpen] = useState(false);
+  const cartItems = useSelector((state) => state.cart.items);
+  const dispatch = useDispatch();
 
-  const subtotal = cartItems.reduce(
-    (sum, item) => sum + item.price * item.quantity,
+  const calculateItemTotal = (item) => {
+    const addonTotal =
+      item.selectedAddons?.reduce(
+        (sum, addon) => sum + (addon.price || 0) * (addon.quantity || 1),
+        0
+      ) || 0;
+    return (item.price + addonTotal) * item.quantity;
+  };
+
+  const total = cartItems.reduce(
+    (sum, item) => sum + calculateItemTotal(item),
     0
   );
-  const shipping = cartItems.length > 0 ? 500 : 0;
-  const total = subtotal + shipping;
-
-  if (!isOpen) return null;
-
+  const useHasMounted = () => {
+    const [hasMounted, setHasMounted] = useState(false);
+    useEffect(() => setHasMounted(true), []);
+    return hasMounted;
+  };
+  const hasMounted = useHasMounted();
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-40">
-      <div className="relative bg-white rounded-4 shadow-sm w-full max-w-2xl mx-4 p-4">
-        {/* Close button */}
-        <button
-          onClick={onClose}
-          className="absolute top-2 right-2 text-xl text-gray-500 hover:text-gray-700"
-          aria-label="Close cart"
+    <div style={{ position: "relative" }}>
+      <button
+        onClick={() => setOpen(!open)}
+        style={{
+          background: "transparent",
+          border: "none",
+          fontSize: 20,
+          cursor: "pointer",
+          marginLeft: 4,
+          background: "#ff3b30",
+          color: "#fff",
+          borderRadius: "999px",
+          padding: "2px 8px",
+          fontSize: 12,
+          fontWeight: "bold",
+          position: "relative",
+        }}
+      >
+        🛒
+        <span>
+          {hasMounted && cartItems.length > 0 ? ` ${cartItems.length}` : ""}
+        </span>
+      </button>
+
+      {open && (
+        <div
+          style={{
+            position: "absolute",
+            top: "110%",
+            right: 0,
+            width: 380,
+            background: "#fff",
+            borderRadius: 16,
+            boxShadow: "0 12px 24px rgba(0,0,0,0.1)",
+            zIndex: 1000,
+            overflow: "hidden",
+          }}
         >
-          &times;
-        </button>
-
-        <h2 className="fw-bold fs-4 mb-4">Your Cart</h2>
-
-        {cartItems.length === 0 ? (
-          <div className="text-center py-10 text-muted">
-            <i className="fas fa-shopping-cart fa-2x mb-2" />
-            <p className="fs-5 mb-3">Your cart is empty.</p>
-            <Link href="/shop">
-              <a className="btn btn-dark mt-2 px-4 rounded-pill">Browse Menu</a>
-            </Link>
+          <div style={{ padding: 16, borderBottom: "1px solid #eee" }}>
+            <strong>Your Cart</strong>
           </div>
-        ) : (
-          <>
-            <div className="max-h-80 overflow-y-auto mb-4">
-              {cartItems.map((item, idx) => (
+
+          {cartItems.length === 0 ? (
+            <div style={{ padding: 20, textAlign: "center", color: "#777" }}>
+              Your cart is empty.
+            </div>
+          ) : (
+            <div style={{ maxHeight: 320, overflowY: "auto" }}>
+              {cartItems.map((item) => (
                 <div
-                  key={item.id}
-                  className="d-flex align-items-center border-bottom py-3 gap-3"
-                  style={{ minHeight: 90 }}
+                  key={item.key}
+                  style={{
+                    display: "flex",
+                    gap: 10,
+                    padding: 12,
+                    borderBottom: "1px solid #f1f1f1",
+                    alignItems: "flex-start",
+                  }}
                 >
                   <img
                     src={item.image}
+                    width={48}
+                    height={48}
                     alt={item.name}
-                    width={64}
-                    height={64}
-                    className="rounded-3 border"
-                    style={{ objectFit: "cover", background: "#f5f5f5" }}
+                    style={{
+                      borderRadius: 12,
+                      background: "#f5f5f7",
+                      objectFit: "cover",
+                      border: "1px solid #eee",
+                    }}
                   />
-                  <div className="flex-grow-1">
-                    <div className="fw-semibold">{item.name}</div>
-                    <div className="text-muted small">
-                      Rs {item.price.toFixed(2)}
+                  <div style={{ flex: 1 }}>
+                    <div style={{ fontWeight: 500 }}>{item.name}</div>
+                    <div style={{ fontSize: 13, color: "#666" }}>
+                      Base: Rs {item.price.toFixed(2)}
+                    </div>
+
+                    {/* Addons */}
+                    {item.selectedAddons?.length > 0 && (
+                      <div
+                        style={{
+                          marginTop: 4,
+                          fontSize: 12,
+                          color: "#444",
+                        }}
+                      >
+                        <div style={{ fontWeight: 500 }}>Addons:</div>
+                        <ul style={{ margin: "4px 0 0 12px", padding: 0 }}>
+                          {item.selectedAddons.map((addon, idx) => (
+                            <li key={idx}>
+                              {addon.name} x {addon.quantity} = Rs{" "}
+                              {(addon.price * addon.quantity).toFixed(2)}
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
+
+                    {/* Quantity Controls */}
+                    <div style={{ display: "flex", gap: 6, marginTop: 8 }}>
+                      <button
+                        onClick={() =>
+                          dispatch(
+                            updateQuantity({
+                              key: item.key,
+                              quantity: Math.max(item.quantity - 1, 1),
+                            })
+                          )
+                        }
+                        style={{
+                          padding: "0 8px",
+                          borderRadius: 6,
+                          border: "1px solid #ccc",
+                          background: "#f5f5f5",
+                          cursor: "pointer",
+                        }}
+                      >
+                        −
+                      </button>
+                      <span>{item.quantity}</span>
+                      <button
+                        onClick={() =>
+                          dispatch(
+                            updateQuantity({
+                              key: item.key,
+                              quantity: item.quantity + 1,
+                            })
+                          )
+                        }
+                        style={{
+                          padding: "0 8px",
+                          borderRadius: 6,
+                          border: "1px solid #ccc",
+                          background: "#f5f5f5",
+                          cursor: "pointer",
+                        }}
+                      >
+                        +
+                      </button>
                     </div>
                   </div>
-                  <div className="d-flex align-items-center gap-2">
+                  <div
+                    style={{
+                      display: "flex",
+                      flexDirection: "column",
+                      alignItems: "flex-end",
+                    }}
+                  >
                     <button
-                      className="btn btn-light border px-2 py-1 rounded-pill"
-                      style={{ minWidth: 32 }}
-                      onClick={() => onDecrement(idx)}
-                      disabled={item.quantity === 1}
-                      aria-label="Decrease quantity"
-                    >
-                      <i className="fas fa-minus" />
-                    </button>
-                    <span
-                      className="fw-semibold fs-6 mx-1"
+                      onClick={() => dispatch(removeFromCart(item.key))}
                       style={{
-                        width: 24,
-                        display: "inline-block",
-                        textAlign: "center",
+                        background: "transparent",
+                        border: "none",
+                        color: "#ff3b30",
+                        fontSize: 20,
+                        cursor: "pointer",
                       }}
                     >
-                      {item.quantity}
-                    </span>
-                    <button
-                      className="btn btn-light border px-2 py-1 rounded-pill"
-                      style={{ minWidth: 32 }}
-                      onClick={() => onIncrement(idx)}
-                      aria-label="Increase quantity"
-                    >
-                      <i className="fas fa-plus" />
+                      ×
                     </button>
+                    <div
+                      style={{
+                        fontSize: 13,
+                        fontWeight: 600,
+                        marginTop: 8,
+                        color: "#000",
+                      }}
+                    >
+                      Rs {calculateItemTotal(item).toFixed(2)}
+                    </div>
                   </div>
-                  <div className="fw-bold ms-3" style={{ minWidth: 90 }}>
-                    Rs {(item.price * item.quantity).toFixed(2)}
-                  </div>
-                  <button
-                    className="btn btn-link text-danger p-0 ms-2"
-                    title="Remove"
-                    style={{ fontSize: 18 }}
-                    onClick={() => onRemove(idx)}
-                  >
-                    <i className="fas fa-trash-alt" />
-                  </button>
                 </div>
               ))}
             </div>
+          )}
 
-            {/* Promo code */}
-            {onApplyPromo && (
-              <form
-                className="d-flex gap-2 mb-4 justify-content-end"
-                onSubmit={(e) => {
-                  e.preventDefault();
-                  onApplyPromo(promo);
+          {cartItems.length > 0 && (
+            <div style={{ padding: 16 }}>
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  fontWeight: 600,
+                  marginBottom: 12,
                 }}
               >
-                <input
-                  value={promo}
-                  onChange={(e) => setPromo(e.target.value)}
-                  type="text"
-                  className="form-control rounded-pill"
-                  placeholder="Promo code"
-                  style={{ maxWidth: 180 }}
-                />
-                <button
-                  className="btn btn-outline-dark rounded-pill px-4"
-                  type="submit"
-                >
-                  Apply
-                </button>
-              </form>
-            )}
-
-            {/* Order summary */}
-            <div className="border-top pt-3">
-              <div className="d-flex justify-content-between mb-2">
-                <span>Subtotal</span>
-                <span className="fw-semibold">Rs {subtotal.toFixed(2)}</span>
-              </div>
-              <div className="d-flex justify-content-between mb-2">
-                <span>Shipping</span>
-                <span className="fw-semibold">Rs {shipping.toFixed(2)}</span>
-              </div>
-              <div className="d-flex justify-content-between fs-5 fw-bold mb-3">
                 <span>Total</span>
                 <span>Rs {total.toFixed(2)}</span>
               </div>
-
-              <div className="d-flex justify-content-end gap-2">
-                <button
-                  onClick={onPlaceOrder}
-                  className="btn btn-dark px-4 rounded-pill fw-bold"
-                  style={{ letterSpacing: 1 }}
-                >
-                  Place Order
-                </button>
-                <button
-                  onClick={onClose}
-                  className="btn btn-outline-secondary px-4 rounded-pill"
-                >
-                  Cancel
-                </button>
-              </div>
+              <Link
+                href="/checkout"
+                style={{
+                  display: "block",
+                  background: "#000",
+                  color: "#fff",
+                  padding: "10px 0",
+                  borderRadius: 10,
+                  textAlign: "center",
+                  fontWeight: 600,
+                  textDecoration: "none",
+                }}
+              >
+                Checkout
+              </Link>
             </div>
-          </>
-        )}
-      </div>
+          )}
+        </div>
+      )}
     </div>
   );
 };

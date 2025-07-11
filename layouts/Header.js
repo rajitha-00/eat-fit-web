@@ -1,4 +1,5 @@
 "use client";
+import CartDialog from "@/components/Cart";
 import Link from "next/link";
 import { Fragment, useEffect, useState } from "react";
 
@@ -117,12 +118,8 @@ const Header2 = () => {
             {/* Right Side */}
             <div className="d-flex align-items-center gap-3">
               {/* Cart */}
-              <Link
-                href="/shop-cart"
-                style={{ color: textColor, fontSize: "1.2rem" }}
-              >
-                <i className="far fa-shopping-cart"></i>
-              </Link>
+
+              <CartDialog />
 
               {/* Order Now */}
               <Link

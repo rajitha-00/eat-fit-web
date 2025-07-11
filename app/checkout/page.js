@@ -1,233 +1,266 @@
-import Cta from "@/components/Cta";
-import NiceSelect from "@/components/NiceSelect";
-import PageBanner from "@/components/PageBanner";
-import FoodKingLayout from "@/layouts/FoodKingLayout";
-import Link from "next/link";
+"use client";
 
-const page = () => {
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import Cta from "@/components/Cta";
+import FoodKingLayout from "@/layouts/FoodKingLayout";
+import { useCreateOrderMutation } from "@/lib/api/apiSlice";
+import { useRouter } from "next/navigation";
+import { clearCart } from "@/lib/api/cartSlice";
+
+const Page = () => {
+  const [mounted, setMounted] = useState(false);
+  const cartItems = useSelector((state) => state.cart.items || []);
+
+  const [paymentMethod, setPaymentMethod] = useState("Cash");
+  const [customerName, setCustomerName] = useState("");
+  const [customerPhone, setCustomerPhone] = useState("");
+  const [orderType, setOrderType] = useState("Takeaway");
+
+  const [createOrder, { isLoading: placingOrder }] = useCreateOrderMutation();
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) return null;
+
+  const total = cartItems.reduce((sum, item) => {
+    const addonTotal = (item.selectedAddons || []).reduce(
+      (aSum, addon) => aSum + (addon.price || 0) * (addon.quantity || 1),
+      0
+    );
+    return sum + (item.price + addonTotal) * item.quantity;
+  }, 0);
+  const dispatch = useDispatch();
+  const router = useRouter();
+  const handlePlaceOrder = async () => {
+    if (!customerName || !customerPhone) {
+      alert("Please fill out your name and phone number.");
+      return;
+    }
+
+    const totalPrice = total; // Your total calculation
+
+    const payload = {
+      orderId: "",
+      customerName,
+      customerPhone,
+      orderType,
+      orderStatus: "Preparing",
+      totalPrice,
+      orderTime: Date.now(),
+      paymentMethod,
+      items: cartItems.map((item) => ({
+        menuItemId: item.id,
+        quantity: item.quantity,
+        selectedAddons: (item.selectedAddons || []).map((addon) => ({
+          ingredientId: addon.ingredientId,
+          quantity: addon.quantity,
+        })),
+      })),
+    };
+
+    try {
+      const response = await createOrder(payload).unwrap(); // capture response here
+      alert("Order placed successfully!");
+      const orderId = response._id;
+      dispatch(clearCart());
+      router.push(`https://eat-fit-pos.vercel.app/orders/${orderId}/bill`);
+    } catch (err) {
+      console.error(err);
+      alert("Failed to place order.");
+    }
+  };
+
   return (
-    <FoodKingLayout>
-      <PageBanner pageName={"CHECKOUT"} />
+    <FoodKingLayout footer={2} header={2}>
       <section className="checkout-section fix section-padding border-bottom">
         <div className="container">
           <div className="row">
             <div className="col-12">
-              <form action="#" method="post">
-                <div className="row g-4">
-                  <div className="col-md-5 col-lg-4 col-xl-3">
-                    <div className="checkout-radio">
-                      <p className="primary-text">Select any one</p>
-                      <div className="checkout-radio-wrapper">
-                        <div className="checkout-radio-single">
-                          <input
-                            type="checkbox"
-                            className="form-check-input"
-                            id="cCard"
-                            name="pay-method"
-                            defaultValue="Credit/Debit Cards"
-                          />
-                          <label htmlFor="cCard">Credit/Debit Cards</label>
-                        </div>
-                        <div className="checkout-radio-single">
-                          <input
-                            type="checkbox"
-                            className="form-check-input"
-                            id="paypal"
-                            name="pay-method"
-                            defaultValue="PayPal"
-                          />
-                          <label htmlFor="paypal">PayPal</label>
-                        </div>
-                        <div className="checkout-radio-single">
-                          <input
-                            type="checkbox"
-                            className="form-check-input"
-                            id="payoneer"
-                            name="pay-method"
-                            defaultValue="Payoneer"
-                          />
-                          <label htmlFor="payoneer">Payoneer</label>
-                        </div>
-                        <div className="checkout-radio-single">
-                          <input
-                            type="checkbox"
-                            className="form-check-input"
-                            id="visa"
-                            name="pay-method"
-                            defaultValue="Visa"
-                          />
-                          <label htmlFor="visa">Visa</label>
-                        </div>
-                        <div className="checkout-radio-single">
-                          <input
-                            type="checkbox"
-                            className="form-check-input"
-                            id="mastercard"
-                            name="pay-method"
-                            defaultValue="Mastercard"
-                          />
-                          <label htmlFor="mastercard">Mastercard</label>
-                        </div>
-                        <div className="checkout-radio-single">
-                          <input
-                            type="checkbox"
-                            className="form-check-input"
-                            id="fastPay"
-                            name="pay-method"
-                            defaultValue="Fastpay"
-                          />
-                          <label htmlFor="fastPay">Fastpay</label>
-                        </div>
-                      </div>
+              {/* CART SUMMARY */}
+              <div
+                style={{
+                  marginBottom: "30px",
+                  padding: "20px",
+                  border: "1px solid #eee",
+                  borderRadius: "12px",
+                  backgroundColor: "#f9f9f9",
+                }}
+              >
+                <h3>Your Cart</h3>
+                {cartItems.length === 0 ? (
+                  <p>Your cart is empty.</p>
+                ) : (
+                  <div>
+                    <ul style={{ listStyle: "none", padding: 0 }}>
+                      {cartItems.map((item) => (
+                        <li
+                          key={item.id}
+                          style={{
+                            display: "flex",
+                            flexDirection: "column",
+                            marginBottom: "16px",
+                            borderBottom: "1px solid #ddd",
+                            paddingBottom: "8px",
+                          }}
+                        >
+                          <div
+                            style={{
+                              display: "flex",
+                              justifyContent: "space-between",
+                            }}
+                          >
+                            <span>
+                              {item.name} x {item.quantity}
+                            </span>
+                            <span>
+                              Rs{" "}
+                              {(
+                                (item.price +
+                                  (item.selectedAddons || []).reduce(
+                                    (a, ad) =>
+                                      a + (ad.price || 0) * (ad.quantity || 1),
+                                    0
+                                  )) *
+                                item.quantity
+                              ).toFixed(2)}
+                            </span>
+                          </div>
+                          {/* Show Addons if any */}
+                          {item.selectedAddons?.length > 0 && (
+                            <ul
+                              style={{
+                                paddingLeft: "1rem",
+                                fontSize: "0.9rem",
+                                color: "#555",
+                                marginTop: 4,
+                              }}
+                            >
+                              {item.selectedAddons.map((ad, i) => (
+                                <li key={i}>
+                                  + {ad.name} x {ad.quantity} (Rs{" "}
+                                  {(ad.price * ad.quantity).toFixed(2)})
+                                </li>
+                              ))}
+                            </ul>
+                          )}
+                        </li>
+                      ))}
+                    </ul>
+
+                    <div
+                      style={{
+                        borderTop: "2px solid #007aff",
+                        paddingTop: "10px",
+                        fontWeight: "bold",
+                        fontSize: "18px",
+                        textAlign: "right",
+                      }}
+                    >
+                      Total: Rs {total.toFixed(2)}
                     </div>
                   </div>
-                  <div className="col-md-7 col-lg-8 col-xl-9">
-                    <div className="checkout-single-wrapper">
-                      <div className="checkout-single boxshado-single">
-                        <h4>Billing address</h4>
-                        <div className="checkout-single-form">
-                          <div className="row g-4">
-                            <div className="col-lg-6">
-                              <div className="input-single">
-                                <input
-                                  type="text"
-                                  name="user-first-name"
-                                  id="userFirstName"
-                                  required
-                                  placeholder="First Name"
-                                />
-                              </div>
-                            </div>
-                            <div className="col-lg-6">
-                              <div className="input-single">
-                                <input
-                                  type="text"
-                                  name="user-last-name"
-                                  id="userLastName"
-                                  required
-                                  placeholder="Last Name"
-                                />
-                              </div>
-                            </div>
-                            <div className="col-lg-6">
-                              <div className="input-single">
-                                <input
-                                  type="email"
-                                  name="user-check-email"
-                                  id="userCheckEmail"
-                                  required
-                                  placeholder="Your Email"
-                                />
-                              </div>
-                            </div>
-                            <div className="col-lg-6">
-                              <div className="input-single">
-                                <NiceSelect
-                                  option={[
-                                    { id: 1, name: "USA", value: "usa" },
-                                    { id: 2, name: "AUS", value: "aus" },
-                                    { id: 3, name: "UK", value: "uk" },
-                                    { id: 4, name: "NED", value: "ned" },
-                                  ]}
-                                  className="country-select"
-                                />
-                              </div>
-                            </div>
-                            <div className="col-lg-12">
-                              <div className="input-single">
-                                <textarea
-                                  name="user-address"
-                                  id="userAddress"
-                                  placeholder="Address"
-                                  defaultValue={""}
-                                />
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="checkout-single checkout-single-bg">
-                        <h4>Payment Methods</h4>
-                        <div className="checkout-single-form">
-                          <p className="payment" />
-                          <div className="row g-3">
-                            <div className="col-lg-12">
-                              <div className="input-single">
-                                <label htmlFor="userCardNumber">
-                                  Card number
-                                </label>
-                                <input
-                                  type="number"
-                                  name="user-card-number"
-                                  id="userCardNumber"
-                                  placeholder="0000 0000 0000 0000"
-                                />
-                              </div>
-                            </div>
-                            <div className="col-lg-6">
-                              <div className="input-single">
-                                <label htmlFor="userCardDate">
-                                  Expiry date
-                                </label>
-                                <input
-                                  type="text"
-                                  id="userCardDate"
-                                  placeholder="DD/MM/YY"
-                                />
-                              </div>
-                            </div>
-                            <div className="col-lg-6">
-                              <div className="input-single">
-                                <label htmlFor="userCvc">Cvc / Cvv</label>
-                                <input
-                                  type="text"
-                                  maxLength={3}
-                                  name="user-card-cvc"
-                                  id="userCvc"
-                                  required
-                                  placeholder="3 Digits"
-                                />
-                              </div>
-                            </div>
-                            <div className="col-lg-12">
-                              <div className="input-single">
-                                <label htmlFor="userCardName">
-                                  Name on card
-                                </label>
-                                <input
-                                  type="text"
-                                  name="user-card-name"
-                                  id="userCardName"
-                                  placeholder="Name"
-                                />
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="input-single input-check payment-save">
+                )}
+              </div>
+
+              {/* CHECKOUT FORM */}
+              <div className="row g-4">
+                <div className="col-md-5 col-lg-4 col-xl-3">
+                  <div className="checkout-radio">
+                    <p className="primary-text">Select Payment Method</p>
+                    <div className="checkout-radio-wrapper">
+                      {["Cash", "Online", "Bank Transfer"].map((method) => (
+                        <div className="checkout-radio-single" key={method}>
                           <input
-                            type="checkbox"
+                            type="radio"
                             className="form-check-input"
-                            name="save-for-next"
-                            id="saveForNext"
+                            id={method}
+                            value={method}
+                            checked={paymentMethod === method}
+                            onChange={() => setPaymentMethod(method)}
                           />
-                          <label htmlFor="saveForNext">
-                            Save for my next payment
-                          </label>
+                          <label htmlFor={method}>{method}</label>
                         </div>
-                        <div className="mt-4">
-                          <Link
-                            href="/checkout"
-                            className="theme-btn border-radius-none"
-                          >
-                            Payment Now
-                          </Link>
-                        </div>
-                      </div>
+                      ))}
                     </div>
                   </div>
                 </div>
-              </form>
+
+                <div className="col-md-7 col-lg-8 col-xl-9">
+                  <div className="checkout-single-wrapper">
+                    <div className="checkout-single boxshado-single">
+                      <h4>Billing Info</h4>
+                      <div className="row g-4">
+                        <div className="col-md-6">
+                          <input
+                            type="text"
+                            placeholder="Customer Name"
+                            className="form-control"
+                            value={customerName}
+                            onChange={(e) => setCustomerName(e.target.value)}
+                          />
+                        </div>
+                        <div className="col-md-6">
+                          <input
+                            type="text"
+                            placeholder="Customer Phone"
+                            className="form-control"
+                            value={customerPhone}
+                            onChange={(e) => setCustomerPhone(e.target.value)}
+                          />
+                        </div>
+                        <div className="col-md-6">
+                          <select
+                            className="form-select"
+                            value={orderType}
+                            onChange={(e) => setOrderType(e.target.value)}
+                          >
+                            <option value="Takeaway">Takeaway</option>
+                            <option value="Store Delivery">
+                              Store Delivery
+                            </option>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="checkout-single checkout-single-bg mt-3">
+                      <h4>Payment Info</h4>
+                      {paymentMethod === "Bank Transfer" && (
+                        <div className="p-2">
+                          Transfer to:
+                          <br />
+                          <strong>Account No:</strong> 1234567890 <br />
+                          <strong>Bank:</strong> Eat Fit Bank
+                        </div>
+                      )}
+                      {paymentMethod === "Cash" && (
+                        <div className="p-2">
+                          Pay in cash at pickup/delivery.
+                        </div>
+                      )}
+                      {paymentMethod === "Online" && (
+                        <div className="p-2">
+                          You will be redirected to the payment gateway.
+                        </div>
+                      )}
+                    </div>
+
+                    <div className="mt-4">
+                      <button
+                        type="button"
+                        className="btn btn-dark w-100 py-2 fs-5"
+                        onClick={handlePlaceOrder}
+                        disabled={placingOrder}
+                      >
+                        {placingOrder ? "Placing..." : "Place Order"}
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -236,4 +269,5 @@ const page = () => {
     </FoodKingLayout>
   );
 };
-export default page;
+
+export default Page;

@@ -1,3 +1,4 @@
+// ❌ DO NOT add "use client" here
 import "./globals.css";
 import "@css/bootstrap.min.css";
 import "@css/font-awesome.css";
@@ -9,7 +10,9 @@ import "@css/nice-select.css";
 import "@css/main.css";
 import "rc-slider/assets/index.css";
 
+import ReduxProviderWrapper from "@/lib/ReduxProviderWrapper";
 import Preloader from "@/layouts/Preloader";
+
 export const metadata = {
   title: "Eat Fit",
   description:
@@ -20,8 +23,10 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body>
-        <Preloader />
-        {children}
+        <ReduxProviderWrapper>
+          <Preloader />
+          {children}
+        </ReduxProviderWrapper>
       </body>
     </html>
   );

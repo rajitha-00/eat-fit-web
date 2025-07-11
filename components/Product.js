@@ -1,6 +1,31 @@
-// components/Product.js
+"use client";
+import { addToCart } from "@/lib/api/cartSlice";
 import Link from "next/link";
-export default function ProductCard({ image, name, price, discount, rating }) {
+import { useDispatch } from "react-redux";
+
+export default function ProductCard({
+  id,
+  image,
+  name,
+  price,
+  discount,
+  rating,
+}) {
+  const dispatch = useDispatch();
+
+  const handleAddToCart = () => {
+    dispatch(
+      addToCart({
+        id,
+        name,
+        price: discount ? price - discount : price,
+        quantity: 1,
+        image,
+      })
+    );
+    alert(`${name} added to cart!`);
+  };
+
   return (
     <div className="bg-white rounded-xl shadow-md hover:shadow-xl transition p-5 text-center flex flex-col h-full">
       <div className="mb-3 relative">
@@ -10,8 +35,9 @@ export default function ProductCard({ image, name, price, discount, rating }) {
           className="mx-auto h-32 w-32 object-cover rounded-lg"
         />
         <Link
-          href="/shop-cart"
+          href="#"
           className="absolute top-0 right-0 p-2 text-gray-400 hover:text-rose-600"
+          aria-label="Wishlist"
         >
           <i className="far fa-heart" />
         </Link>
@@ -20,13 +46,15 @@ export default function ProductCard({ image, name, price, discount, rating }) {
       <div className="flex justify-center gap-2 mb-2">
         {discount ? (
           <>
-            <span className="line-through text-gray-400">${price}</span>
+            <span className="line-through text-gray-400">
+              ${price.toFixed(2)}
+            </span>
             <span className="text-green-600 font-bold">
               ${(price - discount).toFixed(2)}
             </span>
           </>
         ) : (
-          <span className="font-bold text-lg">${price}</span>
+          <span className="font-bold text-lg">${price.toFixed(2)}</span>
         )}
       </div>
       <div className="flex justify-center mb-2">
@@ -34,9 +62,12 @@ export default function ProductCard({ image, name, price, discount, rating }) {
           <span key={i} className="fas fa-star text-yellow-400" />
         ))}
       </div>
-      <Link href="/shop-cart" className="theme-btn-2 mt-auto inline-block">
-        <i className="far fa-shopping-basket" /> Add To Cart
-      </Link>
+      <button
+        onClick={handleAddToCart}
+        className="theme-btn-2 mt-auto inline-block bg-black text-white px-4 py-2 rounded-full hover:bg-gray-800 transition"
+      >
+        <i className="far fa-shopping-basket mr-2" /> Add To Cart
+      </button>
     </div>
   );
 }
