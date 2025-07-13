@@ -19,7 +19,7 @@ const Menus = ({ textColor }) => (
   <>
     {[
       { label: "Home", href: "/" },
-      { label: "Shop", href: "/shop-left-sidebar" },
+      { label: "Shop", href: "/shop" },
       { label: "Blog", href: "/news" },
       { label: "About Us", href: "/about" },
       { label: "Faq's", href: "/faq" },
@@ -263,7 +263,7 @@ const MobileMenu = ({ setToggle }) => {
       </li>
       <li>
         <Link
-          href="/shop-left-sidebar"
+          href="/shop"
           onClick={() => setToggle(false)}
           style={{ color: "white", textDecoration: "none" }}
         >

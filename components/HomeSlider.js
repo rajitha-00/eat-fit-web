@@ -1,35 +1,42 @@
 "use client";
 
-import { foodkingUtility } from "@/utility";
-import { sliderProps } from "@/utility/sliderProps";
-import Link from "next/link";
-import { useEffect, useRef, useCallback } from "react";
+import { useEffect, useRef, useCallback, useMemo } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
+import { useDispatch } from "react-redux";
+import { sliderProps } from "@/utility/sliderProps";
+import { foodkingUtility } from "@/utility";
+import { addToCart } from "@/lib/api/cartSlice";
 
-export const HomeSlider3 = () => {
+const TARGET_ITEMS = [
+  "Chicken Teriyaki Bowl",
+  "Minced Chicken Noodles",
+  "Beef Burger Bowl",
+];
+
+export const HomeSlider3 = ({ menuItems = [], isLoading }) => {
   const swiperRef = useRef(null);
+  const dispatch = useDispatch();
   const duration = "1";
 
-  // slide data
-  const slides = [
-    {
-      title: "Chicken Teriyaki Bowl",
-      subtitle: "Star Your Order Just Only LKR 900.00",
-      imgSrc: "/assets/hero/chicken-teriyaki-bowl.svg",
-    },
-    {
-      title: "Minced Chicken Noodles",
-      subtitle: "Star Your Order Just Only LKR 900.00",
-      imgSrc: "/assets/hero/Minced Chicken Noodles.svg",
-    },
-    {
-      title: "Beef Burger Bowl",
-      subtitle: "Star Your Order Just Only LKR 1200.00",
-      imgSrc: "/assets/hero/beef-burger-bowl.svg",
-    },
-  ];
+  // Map for hero images (use your nice local images here)
+  const localHeroImages = {
+    "Chicken Teriyaki Bowl": "/assets/hero/chicken-teriyaki-bowl.svg",
+    "Minced Chicken Noodles": "/assets/hero/Minced Chicken Noodles.svg",
+    "Beef Burger bowl": "/assets/hero/Beef Burger bowl.svg",
+  };
 
-  // shape overlays
+  // Filter items with matching names and valid webPrice
+  const slides = useMemo(() => {
+    const targetLower = TARGET_ITEMS.map((x) => x.toLowerCase());
+    return menuItems.filter(
+      (item) =>
+        item.name &&
+        targetLower.includes(item.name.toLowerCase().trim()) &&
+        typeof item.webPrice === "number" &&
+        !isNaN(item.webPrice)
+    );
+  }, [menuItems]);
+
   const shapes = [
     {
       className: "frame-shape",
@@ -63,16 +70,14 @@ export const HomeSlider3 = () => {
     },
   ];
 
-  // animation handler
   const handleAnimations = useCallback(() => {
     const el = swiperRef.current?.el || swiperRef.current?.wrapperEl;
     if (!el) return;
-    const slides = el.querySelectorAll(".hero-slider .swiper-slide");
-    foodkingUtility.sliderAnimation(slides);
+    const slidesEls = el.querySelectorAll(".hero-slider .swiper-slide");
+    foodkingUtility.sliderAnimation(slidesEls);
   }, []);
 
   useEffect(() => {
-    handleAnimations();
     const swiper = swiperRef.current;
     if (!swiper) return;
     swiper.on("slideChange", handleAnimations);
@@ -81,21 +86,21 @@ export const HomeSlider3 = () => {
     };
   }, [handleAnimations]);
 
+  if (isLoading) return null;
+
   return (
     <section className="hero-section-3">
       <div className="pegi-wrp">
-        <div className="pegi-number"></div>
+        <div className="pegi-number" />
       </div>
 
       <Swiper
         {...sliderProps.hero}
-        onSwiper={(swiper) => {
-          swiperRef.current = swiper;
-        }}
+        onSwiper={(swiper) => (swiperRef.current = swiper)}
         className="swiper hero-slider"
       >
-        {slides.map(({ title, subtitle, imgSrc }, idx) => (
-          <SwiperSlide key={idx}>
+        {slides.map((item) => (
+          <SwiperSlide key={item.id || item.name}>
             <div
               className="hero-3 bg-cover"
               style={{
@@ -123,40 +128,55 @@ export const HomeSlider3 = () => {
                         data-duration={duration}
                         data-delay=".4s"
                       >
-                        {title}
+                        {item.name}
                       </h1>
                       <h4
                         data-animation="fadeInUp"
                         data-duration={duration}
                         data-delay=".8s"
                       >
-                        {subtitle}
+                        Start Your Order Just Only LKR{" "}
+                        {item.webPrice.toFixed(2)}
                       </h4>
                       <div className="hero-button">
-                        <Link
-                          href="/shop-single"
+                        <button
+                          onClick={() =>
+                            dispatch(
+                              addToCart({
+                                ...item,
+                                quantity: 1,
+                                selectedAddons: [],
+                                uniqueKey: `${item.id || item.name}-${
+                                  item.webPrice
+                                }`, // Unique key for cart
+                              })
+                            )
+                          }
                           className="theme-btn bg-yellow border-radius-none"
                           data-animation="fadeInUp"
                           data-duration={duration}
                           data-delay="1s"
                         >
                           <span className="button-content-wrapper d-flex align-items-center">
-                            <span className="button-text">order now</span>
+                            <span className="button-text">Add to Cart</span>
                             <i className="fas fa-arrow-right" />
                           </span>
-                        </Link>
+                        </button>
                       </div>
                     </div>
                   </div>
 
                   <div className="col-xl-7 col-lg-7 mt-5 mt-lg-0">
-                    <div
-                      className="pizza-image"
-                      data-animation="fadeInUp"
-                      data-duration={duration}
-                      data-delay="1.4s"
-                    >
-                      <img src={imgSrc} alt="pizza-img" />
+                    <div className="pizza-image">
+                      <img
+                        src={
+                          localHeroImages[item.name] ||
+                          "/assets/img/hero/default-pizza.png"
+                        }
+                        alt={item.name}
+                        className="img-fluid"
+                        style={{ maxWidth: "500px" }}
+                      />
                     </div>
                   </div>
                 </div>

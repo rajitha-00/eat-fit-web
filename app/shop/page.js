@@ -1,530 +1,523 @@
-import Cta from "@/components/Cta";
-import PageBanner from "@/components/PageBanner";
-import ProductTopBar from "@/components/ProductTopBar";
-import FoodKingLayout from "@/layouts/FoodKingLayout";
-import Link from "next/link";
+"use client";
 
-const page = () => {
+import React, { useState } from "react";
+import Link from "next/link";
+import { useDispatch } from "react-redux";
+import FoodKingLayout from "@/layouts/FoodKingLayout";
+import ProductSidebar from "@/components/ProductSidebar";
+import ProductTopBar from "@/components/ProductTopBar";
+import Cta from "@/components/Cta";
+import { useGetMenuItemsQuery } from "@/lib/api/apiSlice";
+import { addToCart } from "@/lib/api/cartSlice";
+import { AddToCartModal } from "@/components/AddonCartModel";
+
+const MAIN_CATEGORIES = [
+  "All",
+  "Weight Gain",
+  "Weight Loss",
+  "Desserts",
+  "Wraps",
+  "Cheat Meal",
+  "Protein Kottu",
+];
+const ALLOWED_CATS_FOR_GROUPED = ["Mains", "Snacks", "Shakes"];
+const allowedMenuCatsForWeightLoss = ALLOWED_CATS_FOR_GROUPED;
+
+const ITEMS_PER_PAGE = 6;
+const icons = [
+  {
+    href: "/shop-cart",
+    iconClass: "far fa-shopping-cart",
+    label: "Add to Cart",
+  },
+  {
+    href: "/shop-single",
+    iconClass: "far fa-eye",
+  },
+];
+export default function ShopPage() {
+  const dispatch = useDispatch();
+  const { data: menuItems = [], isLoading } = useGetMenuItemsQuery();
+
+  // UI State
+  const [mainCat, setMainCat] = useState("All");
+  const [menuCat, setMenuCat] = useState("All");
+  const [search, setSearch] = useState("");
+  const [sortOrder, setSortOrder] = useState("asc"); // 'asc' | 'desc'
+  const [currentPage, setCurrentPage] = useState(1);
+  const [modalItem, setModalItem] = useState(null);
+
+  // Filter + Sort
+  const filteredItems = menuItems
+    .filter((item) => {
+      if (mainCat === "") return true; // ← FIXED: "" means 'All Categories'
+
+      if (["Weight Gain", "Weight Loss"].includes(mainCat)) {
+        return (
+          item.mainCategory === mainCat &&
+          ALLOWED_CATS_FOR_GROUPED.includes(item.menuCategory)
+        );
+      }
+
+      return item.mainCategory === mainCat;
+    })
+    .filter((item) => {
+      if (menuCat === "All") return true;
+      return item.menuCategory === menuCat;
+    })
+    .filter((item) => item.name.toLowerCase().includes(search.toLowerCase()))
+    .sort((a, b) =>
+      sortOrder === "asc" ? a.webPrice - b.webPrice : b.webPrice - a.webPrice
+    );
+
+  const totalPages = Math.ceil(filteredItems.length / ITEMS_PER_PAGE);
+
+  const paginatedItems = filteredItems.slice(
+    (currentPage - 1) * ITEMS_PER_PAGE,
+    currentPage * ITEMS_PER_PAGE
+  );
+
+  // Handlers
+  function handleMainCatChange(cat) {
+    setMainCat(cat);
+    setMenuCat("All");
+    setCurrentPage(1);
+  }
+
+  function handleMenuCatChange(cat) {
+    setMenuCat(cat);
+    setCurrentPage(1);
+  }
+
+  function handleSearchChange(e) {
+    setSearch(e.target.value);
+    setCurrentPage(1);
+  }
+
+  function handleSortChange() {
+    setSortOrder((prev) => (prev === "asc" ? "desc" : "asc"));
+  }
+
+  function handlePageChange(pageNum) {
+    setCurrentPage(pageNum);
+  }
+
+  function handleAddToCart(item) {
+    if (item.addons && item.addons.length > 0) {
+      // Ensure addon has names or fallback
+      const preparedAddons = item.addons.map((a) => ({
+        ...a,
+        name: a.name || `Addon #${a.ingredientId}`,
+      }));
+      setModalItem({ ...item, addons: preparedAddons });
+    } else {
+      dispatch(
+        addToCart({
+          id: item._id,
+          name: item.name,
+          price: item.webPrice,
+          quantity: 1,
+          image: item.imageurl || "/assets/img/food/default-food.png",
+          selectedAddons: [],
+        })
+      );
+      alert(`${item.name} added to cart!`);
+    }
+  }
+
   return (
-    <FoodKingLayout>
-      <PageBanner pageName={"Shop Page"} />
-      <section className="food-category-section fix section-padding">
-        <div className="container">
-          <ProductTopBar />
-          <div className="row">
-            <div
-              className="col-xl-3 col-lg-4 col-md-6 wow fadeInUp"
-              data-wow-delay=".3s"
-            >
-              <div className="catagory-product-card-2 shadow-style text-center">
-                <div className="icon">
-                  <Link href="/shop-cart">
-                    <i className="far fa-heart" />
-                  </Link>
-                </div>
-                <div className="catagory-product-image">
-                  <img src="assets/img/food/beef-ruti.png" alt="product-img" />
-                </div>
-                <div className="catagory-product-content">
-                  <div className="catagory-button">
-                    <Link href="/shop-cart" className="theme-btn-2">
-                      <i className="far fa-shopping-basket" />
-                      Add To Cart
-                    </Link>
-                  </div>
-                  <div className="info-price d-flex align-items-center justify-content-center">
-                    <p>-5%</p>
-                    <h6>$30.52</h6>
-                    <span>$28.52</span>
-                  </div>
-                  <h4>
-                    <Link href="/shop-single">ruti with beef slice</Link>
-                  </h4>
-                  <div className="star">
-                    <span className="fas fa-star" />
-                    <span className="fas fa-star" />
-                    <span className="fas fa-star" />
-                    <span className="fas fa-star" />
-                    <span className="fas fa-star text-white" />
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div
-              className="col-xl-3 col-lg-4 col-md-6 wow fadeInUp"
-              data-wow-delay=".5s"
-            >
-              <div className="catagory-product-card-2 active shadow-style text-center">
-                <div className="icon">
-                  <Link href="/shop-cart">
-                    <i className="far fa-heart" />
-                  </Link>
-                </div>
-                <div className="catagory-product-image">
-                  <img src="assets/img/food/burger-2.png" alt="product-img" />
-                </div>
-                <div className="catagory-product-content">
-                  <div className="catagory-button">
-                    <Link href="/shop-cart" className="theme-btn-2">
-                      <i className="far fa-shopping-basket" />
-                      Add To Cart
-                    </Link>
-                  </div>
-                  <div className="info-price d-flex align-items-center justify-content-center">
-                    <p>-5%</p>
-                    <h6>$30.52</h6>
-                    <span>$28.52</span>
-                  </div>
-                  <h4>
-                    <Link href="/shop-single">Whopper Burger King</Link>
-                  </h4>
-                  <div className="star">
-                    <span className="fas fa-star" />
-                    <span className="fas fa-star" />
-                    <span className="fas fa-star" />
-                    <span className="fas fa-star" />
-                    <span className="fas fa-star text-white" />
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div
-              className="col-xl-3 col-lg-4 col-md-6 wow fadeInUp"
-              data-wow-delay=".7s"
-            >
-              <div className="catagory-product-card-2 shadow-style text-center">
-                <div className="icon">
-                  <Link href="/shop-cart">
-                    <i className="far fa-heart" />
-                  </Link>
-                </div>
-                <div className="catagory-product-image">
-                  <img src="assets/img/food/pasta-2.png" alt="product-img" />
-                </div>
-                <div className="catagory-product-content">
-                  <div className="catagory-button">
-                    <Link href="/shop-cart" className="theme-btn-2">
-                      <i className="far fa-shopping-basket" />
-                      Add To Cart
-                    </Link>
-                  </div>
-                  <div className="info-price d-flex align-items-center justify-content-center">
-                    <p>-5%</p>
-                    <h6>$30.52</h6>
-                    <span>$28.52</span>
-                  </div>
-                  <h4>
-                    <Link href="/shop-single">Chiness pasta</Link>
-                  </h4>
-                  <div className="star">
-                    <span className="fas fa-star" />
-                    <span className="fas fa-star" />
-                    <span className="fas fa-star" />
-                    <span className="fas fa-star" />
-                    <span className="fas fa-star text-white" />
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div
-              className="col-xl-3 col-lg-4 col-md-6 wow fadeInUp"
-              data-wow-delay=".9s"
-            >
-              <div className="catagory-product-card-2 shadow-style text-center">
-                <div className="icon">
-                  <Link href="/shop-cart">
-                    <i className="far fa-heart" />
-                  </Link>
-                </div>
-                <div className="catagory-product-image">
-                  <img src="assets/img/food/pizza-3.png" alt="product-img" />
-                </div>
-                <div className="catagory-product-content">
-                  <div className="catagory-button">
-                    <Link href="/shop-cart" className="theme-btn-2">
-                      <i className="far fa-shopping-basket" />
-                      Add To Cart
-                    </Link>
-                  </div>
-                  <div className="info-price d-flex align-items-center justify-content-center">
-                    <p>-5%</p>
-                    <h6>$30.52</h6>
-                    <span>$28.52</span>
-                  </div>
-                  <h4>
-                    <Link href="/shop-single">delicious burger</Link>
-                  </h4>
-                  <div className="star">
-                    <span className="fas fa-star" />
-                    <span className="fas fa-star" />
-                    <span className="fas fa-star" />
-                    <span className="fas fa-star" />
-                    <span className="fas fa-star text-white" />
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div
-              className="col-xl-3 col-lg-4 col-md-6 wow fadeInUp"
-              data-wow-delay=".3s"
-            >
-              <div className="catagory-product-card-2 shadow-style text-center">
-                <div className="icon">
-                  <Link href="/shop-cart">
-                    <i className="far fa-heart" />
-                  </Link>
-                </div>
-                <div className="catagory-product-image">
-                  <img
-                    src="assets/img/food/main-food-2.png"
-                    alt="product-img"
-                  />
-                </div>
-                <div className="catagory-product-content">
-                  <div className="catagory-button">
-                    <Link href="/shop-cart" className="theme-btn-2">
-                      <i className="far fa-shopping-basket" />
-                      Add To Cart
-                    </Link>
-                  </div>
-                  <div className="info-price d-flex align-items-center justify-content-center">
-                    <p>-5%</p>
-                    <h6>$30.52</h6>
-                    <span>$28.52</span>
-                  </div>
-                  <h4>
-                    <Link href="/shop-single">fast food combo</Link>
-                  </h4>
-                  <div className="star">
-                    <span className="fas fa-star" />
-                    <span className="fas fa-star" />
-                    <span className="fas fa-star" />
-                    <span className="fas fa-star" />
-                    <span className="fas fa-star text-white" />
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div
-              className="col-xl-3 col-lg-4 col-md-6 wow fadeInUp"
-              data-wow-delay=".5s"
-            >
-              <div className="catagory-product-card-2 shadow-style text-center">
-                <div className="icon">
-                  <Link href="/shop-cart">
-                    <i className="far fa-heart" />
-                  </Link>
-                </div>
-                <div className="catagory-product-image">
-                  <img src="assets/img/food/ruti.png" alt="product-img" />
-                </div>
-                <div className="catagory-product-content">
-                  <div className="catagory-button">
-                    <Link href="/shop-cart" className="theme-btn-2">
-                      <i className="far fa-shopping-basket" />
-                      Add To Cart
-                    </Link>
-                  </div>
-                  <div className="info-price d-flex align-items-center justify-content-center">
-                    <p>-5%</p>
-                    <h6>$30.52</h6>
-                    <span>$28.52</span>
-                  </div>
-                  <h4>
-                    <Link href="/shop-single">ruti with chiken</Link>
-                  </h4>
-                  <div className="star">
-                    <span className="fas fa-star" />
-                    <span className="fas fa-star" />
-                    <span className="fas fa-star" />
-                    <span className="fas fa-star" />
-                    <span className="fas fa-star text-white" />
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div
-              className="col-xl-3 col-lg-4 col-md-6 wow fadeInUp"
-              data-wow-delay=".7s"
-            >
-              <div className="catagory-product-card-2 shadow-style text-center">
-                <div className="icon">
-                  <Link href="/shop-cart">
-                    <i className="far fa-heart" />
-                  </Link>
-                </div>
-                <div className="catagory-product-image">
-                  <img src="assets/img/food/grilled-2.png" alt="product-img" />
-                </div>
-                <div className="catagory-product-content">
-                  <div className="catagory-button">
-                    <Link href="/shop-cart" className="theme-btn-2">
-                      <i className="far fa-shopping-basket" />
-                      Add To Cart
-                    </Link>
-                  </div>
-                  <div className="info-price d-flex align-items-center justify-content-center">
-                    <p>-5%</p>
-                    <h6>$30.52</h6>
-                    <span>$28.52</span>
-                  </div>
-                  <h4>
-                    <Link href="/shop-single">grilled chiken</Link>
-                  </h4>
-                  <div className="star">
-                    <span className="fas fa-star" />
-                    <span className="fas fa-star" />
-                    <span className="fas fa-star" />
-                    <span className="fas fa-star" />
-                    <span className="fas fa-star text-white" />
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div
-              className="col-xl-3 col-lg-4 col-md-6 wow fadeInUp"
-              data-wow-delay=".9s"
-            >
-              <div className="catagory-product-card-2 shadow-style text-center">
-                <div className="icon">
-                  <Link href="/shop-cart">
-                    <i className="far fa-heart" />
-                  </Link>
-                </div>
-                <div className="catagory-product-image">
-                  <img
-                    src="assets/img/food/delicious-burger.png"
-                    alt="product-img"
-                  />
-                </div>
-                <div className="catagory-product-content">
-                  <div className="catagory-button">
-                    <Link href="/shop-cart" className="theme-btn-2">
-                      <i className="far fa-shopping-basket" />
-                      Add To Cart
-                    </Link>
-                  </div>
-                  <div className="info-price d-flex align-items-center justify-content-center">
-                    <p>-5%</p>
-                    <h6>$30.52</h6>
-                    <span>$28.52</span>
-                  </div>
-                  <h4>
-                    <Link href="/shop-single">delicious burger</Link>
-                  </h4>
-                  <div className="star">
-                    <span className="fas fa-star" />
-                    <span className="fas fa-star" />
-                    <span className="fas fa-star" />
-                    <span className="fas fa-star" />
-                    <span className="fas fa-star text-white" />
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div
-              className="col-xl-3 col-lg-4 col-md-6 wow fadeInUp"
-              data-wow-delay=".3s"
-            >
-              <div className="catagory-product-card-2 shadow-style text-center">
-                <div className="icon">
-                  <Link href="/shop-cart">
-                    <i className="far fa-heart" />
-                  </Link>
-                </div>
-                <div className="catagory-product-image">
-                  <img src="assets/img/food/pasta-3.png" alt="product-img" />
-                </div>
-                <div className="catagory-product-content">
-                  <div className="catagory-button">
-                    <Link href="/shop-cart" className="theme-btn-2">
-                      <i className="far fa-shopping-basket" />
-                      Add To Cart
-                    </Link>
-                  </div>
-                  <div className="info-price d-flex align-items-center justify-content-center">
-                    <p>-5%</p>
-                    <h6>$30.52</h6>
-                    <span>$28.52</span>
-                  </div>
-                  <h4>
-                    <Link href="/shop-single">ruti with beef slice</Link>
-                  </h4>
-                  <div className="star">
-                    <span className="fas fa-star" />
-                    <span className="fas fa-star" />
-                    <span className="fas fa-star" />
-                    <span className="fas fa-star" />
-                    <span className="fas fa-star text-white" />
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div
-              className="col-xl-3 col-lg-4 col-md-6 wow fadeInUp"
-              data-wow-delay=".5s"
-            >
-              <div className="catagory-product-card-2 shadow-style text-center">
-                <div className="icon">
-                  <Link href="/shop-cart">
-                    <i className="far fa-heart" />
-                  </Link>
-                </div>
-                <div className="catagory-product-image">
-                  <img
-                    src="assets/img/food/french-fry-3.png"
-                    alt="product-img"
-                  />
-                </div>
-                <div className="catagory-product-content">
-                  <div className="catagory-button">
-                    <Link href="/shop-cart" className="theme-btn-2">
-                      <i className="far fa-shopping-basket" />
-                      Add To Cart
-                    </Link>
-                  </div>
-                  <div className="info-price d-flex align-items-center justify-content-center">
-                    <p>-5%</p>
-                    <h6>$30.52</h6>
-                    <span>$28.52</span>
-                  </div>
-                  <h4>
-                    <Link href="/shop-single">Whopper Burger King</Link>
-                  </h4>
-                  <div className="star">
-                    <span className="fas fa-star" />
-                    <span className="fas fa-star" />
-                    <span className="fas fa-star" />
-                    <span className="fas fa-star" />
-                    <span className="fas fa-star text-white" />
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div
-              className="col-xl-3 col-lg-4 col-md-6 wow fadeInUp"
-              data-wow-delay=".7s"
-            >
-              <div className="catagory-product-card-2 shadow-style text-center">
-                <div className="icon">
-                  <Link href="/shop-cart">
-                    <i className="far fa-heart" />
-                  </Link>
-                </div>
-                <div className="catagory-product-image">
-                  <img
-                    src="assets/img/food/fried-chicken-2.png"
-                    alt="product-img"
-                  />
-                </div>
-                <div className="catagory-product-content">
-                  <div className="catagory-button">
-                    <Link href="/shop-cart" className="theme-btn-2">
-                      <i className="far fa-shopping-basket" />
-                      Add To Cart
-                    </Link>
-                  </div>
-                  <div className="info-price d-flex align-items-center justify-content-center">
-                    <p>-5%</p>
-                    <h6>$30.52</h6>
-                    <span>$28.52</span>
-                  </div>
-                  <h4>
-                    <Link href="/shop-single">Chiness pasta</Link>
-                  </h4>
-                  <div className="star">
-                    <span className="fas fa-star" />
-                    <span className="fas fa-star" />
-                    <span className="fas fa-star" />
-                    <span className="fas fa-star" />
-                    <span className="fas fa-star text-white" />
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div
-              className="col-xl-3 col-lg-4 col-md-6 wow fadeInUp"
-              data-wow-delay=".9s"
-            >
-              <div className="catagory-product-card-2 shadow-style text-center">
-                <div className="icon">
-                  <Link href="/shop-cart">
-                    <i className="far fa-heart" />
-                  </Link>
-                </div>
-                <div className="catagory-product-image">
-                  <img
-                    src="assets/img/food/french-fry-4.png"
-                    alt="product-img"
-                  />
-                </div>
-                <div className="catagory-product-content">
-                  <div className="catagory-button">
-                    <Link href="/shop-cart" className="theme-btn-2">
-                      <i className="far fa-shopping-basket" />
-                      Add To Cart
-                    </Link>
-                  </div>
-                  <div className="info-price d-flex align-items-center justify-content-center">
-                    <p>-5%</p>
-                    <h6>$30.52</h6>
-                    <span>$28.52</span>
-                  </div>
-                  <h4>
-                    <Link href="/shop-single">delicious burger</Link>
-                  </h4>
-                  <div className="star">
-                    <span className="fas fa-star" />
-                    <span className="fas fa-star" />
-                    <span className="fas fa-star" />
-                    <span className="fas fa-star" />
-                    <span className="fas fa-star text-white" />
-                  </div>
-                </div>
-              </div>
-            </div>
+    <FoodKingLayout header={2} footer={2}>
+      <section
+        style={{
+          padding: "100px 20px",
+          fontFamily:
+            '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif',
+          backgroundColor: "#f9f9f9",
+          minHeight: "80vh",
+        }}
+      >
+        <div
+          style={{
+            maxWidth: 1200,
+            margin: "0 auto",
+            display: "flex",
+            gap: 32,
+            flexWrap: "wrap",
+          }}
+        >
+          {/* Sidebar for main category */}
+          <div style={{ flex: "0 0 280px" }}>
+            <ProductSidebar
+              selectedCategory={mainCat}
+              onCategoryChange={handleMainCatChange}
+            />
           </div>
+
           <div
-            className="page-nav-wrap mt-5 text-center wow fadeInUp"
-            data-wow-delay=".4s"
+            style={{
+              flex: "1 1 0",
+              minWidth: 320,
+              display: "flex",
+              flexDirection: "column",
+            }}
           >
-            <ul>
-              <li>
-                <Link className="page-numbers" href="#">
-                  <i className="fal fa-long-arrow-left" />
-                </Link>
-              </li>
-              <li>
-                <Link className="page-numbers" href="#">
-                  1
-                </Link>
-              </li>
-              <li>
-                <Link className="page-numbers" href="#">
-                  2
-                </Link>
-              </li>
-              <li>
-                <Link className="page-numbers" href="#">
-                  3
-                </Link>
-              </li>
-              <li>
-                <Link className="page-numbers" href="#">
-                  4
-                </Link>
-              </li>
-              <li>
-                <Link className="page-numbers" href="#">
-                  <i className="fal fa-long-arrow-right" />
-                </Link>
-              </li>
-            </ul>
+            {/* Top bar */}
+            <ProductTopBar
+              search={search}
+              onSearchChange={handleSearchChange}
+              sortOrder={sortOrder}
+              onSortChange={handleSortChange}
+              total={filteredItems.length}
+            />
+
+            {/* Subcategory filters */}
+            <div
+              style={{
+                display: "flex",
+                gap: 12,
+                marginTop: 20,
+                marginBottom: 32,
+                flexWrap: "wrap",
+              }}
+            >
+              <button
+                onClick={() => handleMenuCatChange("All")}
+                style={{
+                  padding: "8px 18px",
+                  borderRadius: 9999,
+                  border: "1.5px solid",
+                  borderColor: menuCat === "All" ? "#007aff" : "#ccc",
+                  backgroundColor:
+                    menuCat === "All" ? "#e6f0ff" : "transparent",
+                  color: menuCat === "All" ? "#007aff" : "#555",
+                  fontWeight: menuCat === "All" ? 600 : 500,
+                  cursor: "pointer",
+                  userSelect: "none",
+                  transition: "all 0.3s",
+                  outline: "none",
+                }}
+                onMouseEnter={(e) => {
+                  if (menuCat !== "All")
+                    e.currentTarget.style.backgroundColor = "#f0f8ff";
+                }}
+                onMouseLeave={(e) => {
+                  if (menuCat !== "All")
+                    e.currentTarget.style.backgroundColor = "transparent";
+                }}
+              >
+                All
+              </button>
+
+              {(mainCat === "Weight Gain" || mainCat === "Weight Loss"
+                ? allowedMenuCatsForWeightLoss
+                : []
+              ).map((cat) => (
+                <button
+                  key={cat}
+                  onClick={() => handleMenuCatChange(cat)}
+                  style={{
+                    padding: "8px 18px",
+                    borderRadius: 9999,
+                    border: "1.5px solid",
+                    borderColor: menuCat === cat ? "#007aff" : "#ccc",
+                    backgroundColor:
+                      menuCat === cat ? "#e6f0ff" : "transparent",
+                    color: menuCat === cat ? "#007aff" : "#555",
+                    fontWeight: menuCat === cat ? 600 : 500,
+                    cursor: "pointer",
+                    userSelect: "none",
+                    transition: "all 0.3s",
+                    outline: "none",
+                  }}
+                  onMouseEnter={(e) => {
+                    if (menuCat !== cat)
+                      e.currentTarget.style.backgroundColor = "#f0f8ff";
+                  }}
+                  onMouseLeave={(e) => {
+                    if (menuCat !== cat)
+                      e.currentTarget.style.backgroundColor = "transparent";
+                  }}
+                >
+                  {cat}
+                </button>
+              ))}
+            </div>
+
+            {/* Menu items grid */}
+            <div
+              style={{
+                display: "grid",
+                gridTemplateColumns: "repeat(auto-fill, minmax(260px, 1fr))",
+                gap: 32,
+              }}
+            >
+              {isLoading ? (
+                <p>Loading...</p>
+              ) : paginatedItems.length === 0 ? (
+                <p>No items found.</p>
+              ) : (
+                paginatedItems.map((item, i) => (
+                  <div
+                    key={item._id || i}
+                    style={{
+                      backgroundColor: "#fff",
+                      borderRadius: 16,
+                      boxShadow: "0 8px 24px rgba(0,0,0,0.05)",
+                      overflow: "hidden",
+                      transition: "transform 0.3s ease",
+                      cursor: "default",
+                      userSelect: "none",
+                    }}
+                    onMouseEnter={(e) =>
+                      (e.currentTarget.style.transform = "translateY(-4px)")
+                    }
+                    onMouseLeave={(e) =>
+                      (e.currentTarget.style.transform = "translateY(0)")
+                    }
+                  >
+                    {/* Product Image */}
+                    <div style={{ position: "relative" }}>
+                      <div
+                        style={{
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          height: 220,
+                          backgroundColor: "#f5f5f7",
+                        }}
+                      >
+                        <img
+                          src={
+                            item.imageurl || "/assets/img/food/default-food.png"
+                          }
+                          alt={item.name}
+                          style={{
+                            width: 220,
+                            height: 220,
+                            objectFit: "cover",
+                            bordertRadius: 16,
+                            borderTopRightRadius: 16,
+                          }}
+                        />
+                      </div>
+
+                      {/* Icons (optional) */}
+                      <div
+                        style={{
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          height: 50,
+                        }}
+                      >
+                        <ul
+                          style={{
+                            display: "flex",
+                            gap: 12,
+                            margin: 0,
+                            padding: 0,
+                            listStyle: "none",
+                          }}
+                        >
+                          {icons.map((ic, j) => (
+                            <li key={j}>
+                              <Link
+                                href={ic.href}
+                                style={{
+                                  backgroundColor: "rgba(255 255 255 / 0.8)",
+                                  backdropFilter: "blur(4px)",
+                                  borderRadius: 9999,
+                                  padding: 10,
+                                  display: "inline-flex",
+                                  alignItems: "center",
+                                  justifyContent: "center",
+                                  color: "#333",
+                                  fontSize: 16,
+                                  textDecoration: "none",
+                                  boxShadow: "0 4px 8px rgba(0,0,0,0.1)",
+                                }}
+                              >
+                                <i
+                                  className={ic.iconClass}
+                                  aria-hidden="true"
+                                ></i>
+                              </Link>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    </div>
+
+                    {/* Product Content */}
+                    <div style={{ padding: 20, textAlign: "center" }}>
+                      <h4
+                        style={{
+                          fontSize: 20,
+                          fontWeight: 600,
+                          margin: "0 0 6px",
+                          color: "#222",
+                          userSelect: "text",
+                        }}
+                      >
+                        <Link
+                          href={`/menu/${item._id}`}
+                          style={{ color: "#222", textDecoration: "none" }}
+                        >
+                          {item.name}
+                        </Link>
+                      </h4>
+                      <h5
+                        style={{
+                          color: "#666",
+                          fontWeight: 500,
+                          marginBottom: 12,
+                          userSelect: "text",
+                        }}
+                      >
+                        Rs. {item.webPrice?.toFixed(2) || "0.00"}
+                      </h5>
+                      <button
+                        onClick={() => handleAddToCart(item)}
+                        style={{
+                          padding: "8px 24px",
+                          backgroundColor: "#007aff",
+                          color: "#fff",
+                          border: "none",
+                          borderRadius: 12,
+                          cursor: "pointer",
+                          fontWeight: 600,
+                          fontSize: 16,
+                          userSelect: "none",
+                          transition: "background-color 0.3s",
+                        }}
+                        onMouseEnter={(e) =>
+                          (e.currentTarget.style.backgroundColor = "#005bb5")
+                        }
+                        onMouseLeave={(e) =>
+                          (e.currentTarget.style.backgroundColor = "#007aff")
+                        }
+                      >
+                        Add to Cart
+                      </button>
+                    </div>
+                  </div>
+                ))
+              )}
+            </div>
+
+            {/* Pagination */}
+            <nav
+              aria-label="Page navigation"
+              style={{ marginTop: 40, textAlign: "center" }}
+            >
+              <ul
+                style={{
+                  listStyle: "none",
+                  padding: 0,
+                  margin: 0,
+                  display: "inline-flex",
+                  gap: 8,
+                  userSelect: "none",
+                }}
+              >
+                <li>
+                  <button
+                    onClick={() =>
+                      handlePageChange(Math.max(currentPage - 1, 1))
+                    }
+                    disabled={currentPage === 1}
+                    aria-label="Previous page"
+                    style={{
+                      padding: "6px 12px",
+                      borderRadius: 8,
+                      border: "1px solid #ccc",
+                      backgroundColor: currentPage === 1 ? "#eee" : "#fff",
+                      cursor: currentPage === 1 ? "not-allowed" : "pointer",
+                      fontSize: 14,
+                    }}
+                  >
+                    {"←"}
+                  </button>
+                </li>
+
+                {Array.from({ length: totalPages }).map((_, i) => {
+                  const pageNum = i + 1;
+                  const isActive = currentPage === pageNum;
+                  return (
+                    <li key={pageNum}>
+                      <button
+                        onClick={() => handlePageChange(pageNum)}
+                        aria-current={isActive ? "page" : undefined}
+                        style={{
+                          padding: "6px 14px",
+                          borderRadius: 8,
+                          border: isActive
+                            ? "2px solid #007aff"
+                            : "1px solid #ccc",
+                          backgroundColor: isActive ? "#e6f0ff" : "#fff",
+                          cursor: "pointer",
+                          fontWeight: isActive ? 700 : 500,
+                          color: isActive ? "#007aff" : "#333",
+                          fontSize: 14,
+                          userSelect: "none",
+                        }}
+                      >
+                        {pageNum}
+                      </button>
+                    </li>
+                  );
+                })}
+
+                <li>
+                  <button
+                    onClick={() =>
+                      handlePageChange(Math.min(currentPage + 1, totalPages))
+                    }
+                    disabled={currentPage === totalPages}
+                    aria-label="Next page"
+                    style={{
+                      padding: "6px 12px",
+                      borderRadius: 8,
+                      border: "1px solid #ccc",
+                      backgroundColor:
+                        currentPage === totalPages ? "#eee" : "#fff",
+                      cursor:
+                        currentPage === totalPages ? "not-allowed" : "pointer",
+                      fontSize: 14,
+                    }}
+                  >
+                    {"→"}
+                  </button>
+                </li>
+              </ul>
+            </nav>
           </div>
         </div>
       </section>
+
       <Cta />
+      {modalItem && (
+        <AddToCartModal
+          item={modalItem}
+          onAddToCart={(itemWithAddons) => {
+            dispatch(
+              addToCart({
+                id: itemWithAddons._id,
+                name: itemWithAddons.name,
+                price: itemWithAddons.webPrice,
+                quantity: 1,
+                image:
+                  itemWithAddons.imageurl ||
+                  "/assets/img/food/default-food.png",
+                selectedAddons: itemWithAddons.selectedAddons,
+              })
+            );
+            alert(`${itemWithAddons.name} added to cart!`);
+            setModalItem(null);
+          }}
+          onClose={() => setModalItem(null)}
+        />
+      )}
     </FoodKingLayout>
   );
-};
-export default page;
+}

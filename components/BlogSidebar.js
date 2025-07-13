@@ -1,123 +1,88 @@
 "use client";
 import Link from "next/link";
 import { useState } from "react";
+import {
+  ShoppingBag,
+  Flame,
+  Dumbbell,
+  CupSoda,
+  WrapText,
+  IceCream,
+  ChevronsRight,
+} from "lucide-react";
 
-// You can move this to its own file and import if you want!
 const CATEGORY_DATA = [
   {
     name: "Weight Gain",
-    icon: "flaticon-burger",
+    icon: <Dumbbell size={18} strokeWidth={2} />,
     count: 23,
     description: (
       <>
         <b>Getting Thick Never Tasted This Good</b>
         <br />
-        More muscle, less mess. These meals are built to help you bulk clean—no
-        burnout.
-        <br />
-        Great for post-workout recovery and hungry hustlers.
+        Bulk clean. No burnout. Perfect for post-workout recovery and hustlers.
       </>
     ),
-    href: "/shop-single",
   },
   {
     name: "Weight Loss",
-    icon: "flaticon-chicken",
+    icon: <Flame size={18} strokeWidth={2} />,
     count: 24,
     description: (
       <>
         <b>Fit Looks, Better Bowl</b>
         <br />
-        You don’t need to starve to feel light. Our portion-smart meals give you
-        the glow-up without the guesswork.
-        <br />
-        Perfect for busy bees and glow-getters.
+        Smart portions. Light feeling. Glow-up without guesswork.
       </>
     ),
-    href: "/shop-single",
   },
   {
     name: "Shakes",
-    icon: "flaticon-french-fries",
+    icon: <CupSoda size={18} strokeWidth={2} />,
     count: 11,
     description: (
       <>
         <b>Protein Packed. Shaky Vibe Approved.</b>
         <br />
-        Thick, creamy, and loaded with clean gains. Post-workout or breakfast
-        on-the-go.
+        Creamy and loaded with clean gains.
       </>
     ),
-    href: "/shop-single",
   },
   {
     name: "Protein Wraps",
-    icon: "flaticon-pizza",
+    icon: <WrapText size={18} strokeWidth={2} />,
     count: 5,
     description: (
       <>
         <b>Wrapped in Goodness.</b>
         <br />
-        Our wraps bring the gains and the taste. Wrapped in protein, packed with
-        goodness. Just bold flavors and clean diet.
+        Lean, packed, flavorful protein wraps.
       </>
     ),
-    href: "/shop-single",
   },
   {
-    name: "Deserts",
-    icon: "flaticon-sandwich",
+    name: "Desserts",
+    icon: <IceCream size={18} strokeWidth={2} />,
     count: 6,
     description: (
       <>
-        <b>Sugar Rush, Treat Yourself!</b>
+        <b>Sweet Cravings, Smarter Treats.</b>
         <br />
-        Sweet, satisfying, low regret, and 100% full-on flavor. These desserts
-        are here to crush cravings.
+        Low-regret, full-flavor desserts.
       </>
     ),
-    href: "/shop-single",
   },
   {
     name: "Cheat Meals",
-    icon: "flaticon-bread",
+    icon: <ShoppingBag size={18} strokeWidth={2} />,
     count: 10,
     description: (
       <>
-        <b>Cheat Day? More Like Flavor Bombs with Fit Energy.</b>
+        <b>Flavor Bombs. Still Fit.</b>
         <br />
-        Eat cheaty, stay clean. These meals give you the taste and the balance.
-        Treat yourself without throwing off your track.
+        Treat yourself. Don’t derail yourself.
       </>
     ),
-    href: "/shop-single",
-  },
-  {
-    name: "Protein Kottu",
-    icon: "flaticon-rice",
-    count: 13,
-    description: (
-      <>
-        <b>Kottu Gains – Where Cravings Meet Clean Eating</b>
-        <br />
-        Kottu, but make it gym-approved. Packed with lean protein and clean
-        carbs. This protein-packed kottu hits hard on flavors.
-      </>
-    ),
-    href: "/shop-single",
-  },
-  {
-    name: "Hot Dog",
-    icon: "flaticon-hotdog",
-    count: 7,
-    description: (
-      <>
-        <b>Hot Dog, Healthy Twist!</b>
-        <br />
-        Enjoy your classic favorite with lean protein and a healthy touch.
-      </>
-    ),
-    href: "/shop-single",
   },
 ];
 
@@ -126,164 +91,144 @@ const BlogSidebar = () => {
 
   return (
     <div className="col-12 col-lg-4">
-      <div className="main-sidebar rounded-3 bg-white shadow-sm p-0">
-        {/* Categories Accordion */}
-        <div className="single-sidebar-widget">
-          <div className="wid-title px-3 pt-3 pb-2">
-            <h4
-              className="text-uppercase fw-bold mb-0"
-              style={{ letterSpacing: 1 }}
-            >
-              Categories
-            </h4>
-          </div>
-          <div
-            className="modern-accordion"
-            style={{ padding: "0 0.5rem 1rem 0.5rem" }}
+      <div
+        className="main-sidebar p-0"
+        style={{
+          borderRadius: "24px",
+          background: "rgba(255,255,255,0.75)",
+          backdropFilter: "blur(18px)",
+          boxShadow: "0 8px 32px rgba(0,0,0,0.05)",
+          overflow: "hidden",
+        }}
+      >
+        {/* Categories */}
+        <div
+          className="px-4 pt-4 pb-2 border-bottom"
+          style={{ borderColor: "#eaeaea" }}
+        >
+          <h4
+            className="fw-semibold text-dark mb-0"
+            style={{ letterSpacing: 0.5 }}
           >
-            {CATEGORY_DATA.map((cat, idx) => (
-              <div
-                key={cat.name}
-                className="accordion-card mb-2 rounded-2 bg-gray-50"
+            Categories
+          </h4>
+        </div>
+
+        <div className="p-3">
+          {CATEGORY_DATA.map((cat, idx) => (
+            <div
+              key={cat.name}
+              className="mb-3"
+              style={{
+                background: openIdx === idx ? "#f2f2f7" : "#fff",
+                borderRadius: "16px",
+                border: `1.5px solid ${
+                  openIdx === idx ? "#0071e3" : "#e0e0e0"
+                }`,
+                boxShadow:
+                  openIdx === idx ? "0 4px 20px rgba(0,113,227,0.08)" : "none",
+                transition: "all 0.25s ease",
+              }}
+            >
+              <button
+                onClick={() => setOpenIdx(openIdx === idx ? -1 : idx)}
+                className="w-100 d-flex align-items-center px-3 py-3 bg-transparent border-0"
                 style={{
-                  boxShadow:
-                    openIdx === idx ? "0 2px 16px rgba(50,50,50,0.08)" : "none",
-                  border:
-                    openIdx === idx
-                      ? "1.5px solid #59c98d"
-                      : "1.5px solid #e9ecef",
-                  background: openIdx === idx ? "#f7fcfa" : "#fff",
-                  transition: "all 0.17s cubic-bezier(.39,.58,.57,1)",
+                  fontWeight: 600,
+                  fontSize: "1rem",
+                  color: "#1d1d1f",
+                  cursor: "pointer",
+                  textAlign: "left",
+                  outline: "none",
                 }}
               >
-                <button
-                  className="accordion-toggle d-flex align-items-center w-100 px-3 py-3 border-0 bg-transparent"
+                <span className="me-2 text-primary">{cat.icon}</span>
+                {cat.name}
+                <span
+                  className="badge ms-2"
                   style={{
-                    fontWeight: 600,
-                    color: "#232323",
-                    fontSize: "1rem",
-                    outline: "none",
-                    cursor: "pointer",
+                    background: "#d6ecff",
+                    color: "#0071e3",
+                    borderRadius: "12px",
+                    padding: "0.1em 0.7em",
+                    fontSize: "0.85em",
+                    fontWeight: 500,
                   }}
-                  onClick={() => setOpenIdx(openIdx === idx ? -1 : idx)}
-                  aria-expanded={openIdx === idx}
-                  aria-controls={`cat-panel-${idx}`}
-                  type="button"
                 >
-                  <i
-                    className={`${cat.icon} me-2 fs-5`}
-                    style={{ minWidth: 26, color: "#43a047" }}
-                  />
-                  {cat.name}
-                  <span
-                    className="badge ms-2"
-                    style={{
-                      background: "#e0f3e8",
-                      color: "#43a047",
-                      borderRadius: "12px",
-                      padding: "0.1em 0.7em",
-                      fontSize: "0.92em",
-                      fontWeight: 500,
-                    }}
-                  >
-                    {cat.count}
-                  </span>
-                  <span
-                    className="ms-auto"
+                  {cat.count}
+                </span>
+                <span className="ms-auto" style={{ color: "#999" }}>
+                  <ChevronsRight
+                    size={16}
                     style={{
                       transform:
                         openIdx === idx ? "rotate(90deg)" : "rotate(0)",
-                      transition: "transform 0.22s cubic-bezier(.4,2,.5,1)",
-                      color: "#888",
-                      fontSize: "1.3em",
-                      display: "flex",
-                      alignItems: "center",
+                      transition: "0.2s",
                     }}
-                  >
-                    <svg width={16} height={16} viewBox="0 0 16 16" fill="none">
-                      <path
-                        d="M6 4l4 4-4 4"
-                        stroke="currentColor"
-                        strokeWidth={2}
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                    </svg>
-                  </span>
-                </button>
-                <div
-                  id={`cat-panel-${idx}`}
-                  className="accordion-content px-3 pb-3"
-                  style={{
-                    maxHeight: openIdx === idx ? 300 : 0,
-                    overflow: "hidden",
-                    transition: "max-height 0.32s cubic-bezier(.4,2,.5,1)",
-                    opacity: openIdx === idx ? 1 : 0.2,
-                  }}
-                  aria-hidden={openIdx !== idx}
+                  />
+                </span>
+              </button>
+
+              <div
+                style={{
+                  maxHeight: openIdx === idx ? 500 : 0,
+                  overflow: "hidden",
+                  transition: "max-height 0.4s ease",
+                  opacity: openIdx === idx ? 1 : 0.2,
+                  padding: openIdx === idx ? "0 1rem 1rem" : "0 1rem",
+                }}
+              >
+                <p
+                  className="text-secondary small mt-1 mb-2"
+                  style={{ lineHeight: 1.5 }}
                 >
-                  <div
-                    className="small text-secondary mt-1 mb-2"
-                    style={{ fontSize: ".95em" }}
-                  >
-                    {cat.description}
-                  </div>
-                  <Link
-                    href={cat.href}
-                    className="btn btn-sm px-3 py-1 rounded-pill fw-semibold"
-                    style={{
-                      background: "#59c98d",
-                      color: "#fff",
-                      fontSize: ".98em",
-                      boxShadow: "0 2px 8px rgba(50,200,130,0.10)",
-                    }}
-                  >
-                    Shop {cat.name}
-                  </Link>
-                </div>
+                  {cat.description}
+                </p>
+                <Link
+                  href={`/shop`}
+                  className="btn btn-sm btn-primary rounded-pill px-3 fw-semibold"
+                >
+                  Explore {cat.name}
+                </Link>
               </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Social Links */}
+        <div
+          className="px-4 pt-4 pb-3 border-top"
+          style={{ borderColor: "#eaeaea" }}
+        >
+          <h5 className="mb-3 fw-medium">Stay Connected</h5>
+          <div className="d-flex gap-3">
+            {[
+              { icon: "fab fa-facebook-f", label: "Facebook" },
+              { icon: "fab fa-instagram", label: "Instagram" },
+              { icon: "fab fa-twitter", label: "Twitter" },
+              { icon: "fab fa-linkedin-in", label: "LinkedIn" },
+            ].map((social, i) => (
+              <a
+                key={i}
+                href="#"
+                aria-label={social.label}
+                className="d-flex align-items-center justify-content-center"
+                style={{
+                  width: 36,
+                  height: 36,
+                  background: "#f2f2f7",
+                  borderRadius: "50%",
+                  color: "#1d1d1f",
+                  fontSize: "0.95rem",
+                  transition: "all 0.2s",
+                }}
+              >
+                <i className={social.icon} />
+              </a>
             ))}
           </div>
         </div>
-
-        {/* Social Media */}
-        <div className="single-sidebar-widget">
-          <div className="wid-title px-3 pt-3 pb-2">
-            <h4>Never Miss News</h4>
-          </div>
-          <div className="social-link px-3 pb-3">
-            <a href="#" aria-label="Facebook">
-              <i className="fab fa-facebook-f" />
-            </a>
-            <a href="#" aria-label="Twitter">
-              <i className="fab fa-twitter" />
-            </a>
-            <a href="#" aria-label="Instagram">
-              <i className="fab fa-instagram" />
-            </a>
-            <a href="#" aria-label="LinkedIn">
-              <i className="fab fa-linkedin-in" />
-            </a>
-            <a href="#" aria-label="YouTube">
-              <i className="fab fa-youtube" />
-            </a>
-          </div>
-        </div>
       </div>
-      {/* Modern Accordion Inline Styling (scoped) */}
-      <style jsx>{`
-        .modern-accordion .accordion-toggle:focus-visible {
-          outline: 2px solid #59c98d;
-        }
-        .modern-accordion .accordion-toggle:hover {
-          background: #f2f8f6;
-        }
-        @media (max-width: 991px) {
-          .main-sidebar {
-            margin-bottom: 1.5rem;
-          }
-        }
-      `}</style>
     </div>
   );
 };

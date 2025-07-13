@@ -1,106 +1,99 @@
-import React from "react";
-import Link from "next/link";
+"use client";
 
-const bannerItems = [
-  {
-    bgImage: "/assets/img/banner/Mexican-Beef-Bowl.png",
-    priceBg: "/assets/img/vector-2.png",
-    price: "1300",
-    startPrice: "Rs.1500",
-    titleLines: ["Mexican", "Beef ", "Bowl"],
-    href: "/shop-single",
-    priceClass: "price",
-  },
-  {
-    bgImage: "/assets/img/banner/Butter-Chicken-Bowl.png",
-    priceBg: "/assets/img/vector.png",
-    price: "1050",
-    startPrice: "Rs.1250",
-    titleLines: ["Butter ", "Chicken ", "Bowl"],
-    href: "/shop-single",
-    priceClass: "price style-2",
-  },
-  {
-    bgImage: "/assets/img/banner/Beef-Veggie-Omelet.png",
-    priceBg: "/assets/img/vector-2.png",
-    price: "950",
-    startPrice: "Rs.1200",
-    titleLines: ["Beef &", "Veggie ", "Omelet"],
-    href: "/shop-single",
-    priceClass: "price",
-  },
+import React from "react";
+import { useDispatch } from "react-redux";
+import { addToCart } from "@/lib/api/cartSlice";
+
+const TARGET_ITEMS = [
+  "Mexican Beef Bowl",
+  "Butter Chicken Bowl",
+  "Beef & Veggie Omelet",
 ];
 
-// const bannerItems = [
-//   {
-//     bgImage: "assets/img/banner/Mexican Beef Bowl.png",
-//     priceBg: "/assets/img/vector-2.png",
-//     price: "1300",
-//     startPrice: "Rs.1500",
-//     titleLines: ["Mexican", "Beef ", "Bowl"],
-//     href: "/shop-single",
-//     priceClass: "price",
-//   },
-//   {
-//     bgImage: "assets/img/banner/Butter Chicken Bowl.png",
-//     priceBg: "/assets/img/vector.png",
-//     price: "1050",
-//     startPrice: "Rs.1250",
-//     titleLines: ["Butter ", "Chicken ", "Bowl"],
-//     href: "/shop-single",
-//     priceClass: "price style-2",
-//   },
-//   {
-//     bgImage: "assets/img/banner/Beef & Veggie Omelet.png",
-//     priceBg: "/assets/img/vector-2.png",
-//     price: "950",
-//     startPrice: "Rs.1200",
-//     titleLines: ["Beef &", "Veggie ", "Omelet"],
-//     href: "/shop-single",
-//     priceClass: "price",
-//   },
-// ];
-const FoodBannerHome = () => {
+const FoodBannerHome = ({ menuItems = [], isLoading }) => {
+  const dispatch = useDispatch();
+
+  const bannerItems = React.useMemo(() => {
+    const targetLower = TARGET_ITEMS.map((x) => x.toLowerCase());
+    return menuItems
+      .filter(
+        (item) =>
+          item.name &&
+          targetLower.includes(item.name.toLowerCase().trim()) &&
+          typeof item.webPrice === "number"
+      )
+      .map((item) => ({
+        id: item._id,
+        bgImage: item.imageurl || "/assets/img/hero/default-pizza.png",
+        priceBg: "/assets/img/vector-2.png",
+        price: item.webPrice.toFixed(0),
+        startPrice: item.uberPrice?.toFixed(0) || "",
+        titleLines: item.name.split(" "),
+        priceClass: "price",
+        item, // Keep full item for dispatch
+      }));
+  }, [menuItems]);
+
+  if (isLoading) return null;
+
   return (
     <section className="food-banner fix">
       <div className="row g-3">
-        {bannerItems.map(
-          (
-            {
-              bgImage,
-              priceBg,
-              price,
-              startPrice,
-              titleLines,
-              href,
-              priceClass,
-            },
-            idx
-          ) => (
-            <div key={idx} className="col-xl-4 col-lg-6 col-md-6">
+        {bannerItems.map((item, idx) => (
+          <div key={idx} className="col-xl-4 col-lg-6 col-md-6">
+            <div
+              className="food-banner-items-2 bg-cover"
+              style={{ backgroundImage: `url(${item.bgImage})` }}
+            >
               <div
-                className="food-banner-items-2 bg-cover"
-                style={{ backgroundImage: `url(${bgImage})` }}
+                className={item.priceClass + " bg-cover"}
+                style={{ backgroundImage: `url(${item.priceBg})` }}
               >
+                <span>{item.price}</span>
+              </div>
+              <div className="food-content">
+                {/* Overlay */}
                 <div
-                  className={priceClass + " bg-cover"}
-                  style={{ backgroundImage: `url(${priceBg})` }}
-                >
-                  <span>{price}</span>
-                </div>
-                <div className="food-content">
-                  <h4>price was {startPrice}</h4>
+                  style={{
+                    position: "absolute",
+                    top: 0,
+                    left: 0,
+                    height: "100%",
+                    width: "100%",
+                    pointerEvents: "none",
+                    background:
+                      "linear-gradient(to right, rgba(0,0,0,0.3), rgba(0,0,0,0))",
+                    borderRadius: "inherit",
+                    zIndex: 0,
+                  }}
+                />
+
+                {/* Text content */}
+                <div style={{ position: "relative", zIndex: 1 }}>
+                  <h4 style={{ color: "#fff" }}>
+                    price was Rs. {item.startPrice}
+                  </h4>
                   <h2 className="text-white">
-                    {titleLines.map((line, i) => (
+                    {item.titleLines.map((line, i) => (
                       <React.Fragment key={i}>
                         {line}
-                        {i < titleLines.length - 1 && <br />}
+                        {i < item.titleLines.length - 1 && <br />}
                       </React.Fragment>
                     ))}
                   </h2>
-                  <Link
-                    href={href}
+
+                  <button
                     className="theme-btn border-radius-none mt-4"
+                    onClick={() =>
+                      dispatch(
+                        addToCart({
+                          ...item.item,
+                          quantity: 1,
+                          selectedAddons: [],
+                          uniqueKey: `${item.item._id}-${item.item.webPrice}`,
+                        })
+                      )
+                    }
                   >
                     <span className="button-content-wrapper d-flex align-items-center">
                       <span className="button-icon">
@@ -108,12 +101,12 @@ const FoodBannerHome = () => {
                       </span>
                       <span className="button-text">order now</span>
                     </span>
-                  </Link>
+                  </button>
                 </div>
               </div>
             </div>
-          )
-        )}
+          </div>
+        ))}
       </div>
     </section>
   );

@@ -4,349 +4,297 @@ import Cta from "@/components/Cta";
 import FoodKingLayout from "@/layouts/FoodKingLayout";
 import Link from "next/link";
 
-// 1. Blog Data Array
-const blogPosts = [
-  {
-    id: 1,
-    title: "10 Proven Healthy Diets for a Fit Lifestyle",
-    image:
-      "https://img.freepik.com/free-photo/healthy-menu-recipe-food-diet_53876-125076.jpg", // Direct image link!
-    author: "Dr. Amy Wellness",
-    comments: 18,
-    date: "12th June 2024",
-    excerpt:
-      "Discover the world’s healthiest diets—from the Mediterranean to plant-based living. Learn what science says about food for energy, weight loss, and disease prevention.",
-    link: "/news-details/10-healthy-diets",
-  },
-];
-
-const page = () => {
+const Page = () => {
   return (
     <FoodKingLayout header={2} footer={2}>
-      <section className="blog-wrapper news-wrapper section-padding section-bg">
+      <section
+        className="blog-wrapper section-padding"
+        style={{ backgroundColor: "#f9f9f9" }}
+      >
         <div className="container">
-          <div className="news-area">
-            <div className="row">
-              <div className="col-12 col-lg-8">
-                <div
+          <div className="row">
+            <div className="col-12 col-lg-8">
+              <article
+                style={{
+                  maxWidth: 880,
+                  margin: "auto",
+                  fontFamily:
+                    "-apple-system, BlinkMacSystemFont, 'San Francisco', 'Segoe UI', Roboto, Helvetica, Arial, sans-serif",
+                  color: "#1d1d1f",
+                  background: "rgba(255,255,255,0.75)",
+                  backdropFilter: "blur(12px)",
+                  borderRadius: "24px",
+                  boxShadow: "0 10px 40px rgba(0,0,0,0.05)",
+                  padding: "3rem",
+                  lineHeight: 1.75,
+                }}
+              >
+                <h1
                   style={{
-                    flex: "1 1 100%",
-                    maxWidth: 880,
-                    margin: "auto",
-                    fontFamily:
-                      "-apple-system, BlinkMacSystemFont, 'San Francisco', 'Segoe UI', Roboto, Helvetica, Arial, sans-serif",
-                    color: "#1d1d1f",
+                    fontSize: "2.5rem",
+                    fontWeight: 700,
+                    marginBottom: "1.5rem",
                   }}
                 >
-                  <article
-                    style={{
-                      background: "#fff",
-                      borderRadius: "20px",
-                      boxShadow: "0 4px 16px rgba(0,0,0,0.06)",
-                      padding: "2.5rem",
-                      lineHeight: 1.65,
-                    }}
-                  >
-                    <h1
-                      style={{
-                        fontSize: "2.25rem",
-                        fontWeight: 700,
-                        marginBottom: "1rem",
-                      }}
-                    >
-                      The Science of Healthy Food: How to Build Your Perfect
-                      Plate
-                    </h1>
+                  Modern Nutrition with Eat Fit: Smart Eating for Weight Loss &
+                  Gain
+                </h1>
 
+                <div
+                  style={{
+                    display: "flex",
+                    flexWrap: "wrap",
+                    gap: "1.5rem",
+                    fontSize: "0.95rem",
+                    color: "#6e6e73",
+                    marginBottom: "2rem",
+                  }}
+                >
+                  <span>
+                    <i className="fal fa-user" style={{ marginRight: 6 }} />{" "}
+                    Ruwanthi Jayasekara
+                  </span>
+                  <span>
+                    <i className="fal fa-comments" style={{ marginRight: 6 }} />{" "}
+                    12 Comments
+                  </span>
+                  <span>
+                    <i
+                      className="fal fa-calendar-alt"
+                      style={{ marginRight: 6 }}
+                    />{" "}
+                    13th July 2025
+                  </span>
+                </div>
+
+                <p style={{ fontSize: "1.05rem" }}>
+                  In today’s fast-paced world, finding the time and knowledge to
+                  eat healthy can feel overwhelming. That’s where{" "}
+                  <strong>Eat Fit</strong> steps in—combining modern nutrition
+                  science with chef-crafted meals designed to help you gain
+                  weight, lose fat, or simply eat smarter.
+                </p>
+
+                <img
+                  src="https://img.freepik.com/free-photo/top-view-healthy-meals-composition_23-2149245403.jpg"
+                  alt="Eat Fit healthy meals"
+                  style={{
+                    borderRadius: "20px",
+                    margin: "2rem 0",
+                    width: "100%",
+                    objectFit: "cover",
+                  }}
+                />
+
+                <h2 style={{ fontSize: "1.75rem", fontWeight: 600 }}>
+                  Why Eat Fit?
+                </h2>
+                <p>
+                  Eat Fit isn’t just about calories—it’s about balance. Our menu
+                  is designed by certified nutritionists and culinary experts
+                  who understand the unique needs of individuals on different
+                  journeys.
+                </p>
+
+                <h3
+                  style={{
+                    fontSize: "1.35rem",
+                    fontWeight: 600,
+                    marginTop: "2rem",
+                  }}
+                >
+                  💪 For Weight Gain
+                </h3>
+                <p>
+                  Struggling to gain weight the healthy way? Our high-calorie,
+                  high-protein meals like{" "}
+                  <strong>Grilled Chicken with Quinoa</strong> or{" "}
+                  <strong>Peanut Butter Protein Shakes</strong> fuel your body
+                  without unhealthy fats or sugars.
+                </p>
+
+                <h3
+                  style={{
+                    fontSize: "1.35rem",
+                    fontWeight: 600,
+                    marginTop: "2rem",
+                  }}
+                >
+                  🔥 For Weight Loss
+                </h3>
+                <p>
+                  Trying to shed extra weight? Explore{" "}
+                  <strong>low-carb wraps</strong>, <strong>clean salads</strong>
+                  , and <strong>keto-friendly meals</strong> crafted to help you
+                  feel full and energized with fewer calories.
+                </p>
+
+                <blockquote
+                  style={{
+                    fontStyle: "italic",
+                    padding: "1.25rem 1.75rem",
+                    borderLeft: "4px solid #007aff",
+                    backgroundColor: "#f2f2f7",
+                    borderRadius: "16px",
+                    margin: "2.5rem 0",
+                    color: "#333",
+                  }}
+                >
+                  “Food is not just fuel—it's information. Every bite tells your
+                  body what to do.” — Dr. Mark Hyman
+                </blockquote>
+
+                <h2 style={{ fontSize: "1.75rem", fontWeight: 600 }}>
+                  🍽️ Inside the Eat Fit Menu
+                </h2>
+                <ul
+                  style={{
+                    paddingLeft: "1.25rem",
+                    margin: "1.25rem 0 2rem",
+                    color: "#3c3c43",
+                    fontSize: "1.05rem",
+                  }}
+                >
+                  <li>✨ Protein-packed breakfasts for metabolism</li>
+                  <li>🥗 Customizable bowls with clean carbs</li>
+                  <li>🧋 Nutrient-rich smoothies & juices</li>
+                  <li>🥘 Balanced bundles for weight gain goals</li>
+                </ul>
+
+                <p>
+                  Each dish is clearly labeled—whether you're eating for{" "}
+                  <strong>Weight Loss</strong>,<strong> Weight Gain</strong>,{" "}
+                  <strong>Vegan</strong>, or <strong>Gluten-Free</strong> diets.
+                </p>
+
+                <img
+                  src="https://img.freepik.com/free-photo/vegetables-balanced-diet-food_144627-8991.jpg"
+                  alt="Balanced plate"
+                  style={{
+                    borderRadius: "20px",
+                    margin: "2.5rem 0",
+                    width: "100%",
+                    objectFit: "cover",
+                  }}
+                />
+
+                <h2 style={{ fontSize: "1.75rem", fontWeight: 600 }}>
+                  📈 Start Where You Are
+                </h2>
+                <p>
+                  Whether you’re a beginner or a fitness pro, Eat Fit makes
+                  healthy eating accessible, tasty, and personalized. No cooking
+                  stress. Just order, enjoy, and track your progress with ease.
+                </p>
+
+                <p>
+                  It’s not about restriction—it’s about nourishment. Because
+                  when you eat fit, you live fit.
+                </p>
+
+                <div
+                  style={{
+                    display: "flex",
+                    flexWrap: "wrap",
+                    gap: "2rem",
+                    justifyContent: "space-between",
+                    marginTop: "3rem",
+                    paddingTop: "2rem",
+                    borderTop: "1px solid #e0e0e0",
+                  }}
+                >
+                  <div>
+                    <h4 style={{ fontSize: "1rem", fontWeight: 600 }}>Tags</h4>
                     <div
                       style={{
                         display: "flex",
+                        gap: "0.5rem",
                         flexWrap: "wrap",
-                        gap: "1.5rem",
-                        fontSize: "0.95rem",
-                        color: "#6e6e73",
-                        marginBottom: "2rem",
-                      }}
-                    >
-                      <span>
-                        <i className="fal fa-user" style={{ marginRight: 6 }} />
-                        Priya Fernando
-                      </span>
-                      <span>
-                        <i
-                          className="fal fa-comments"
-                          style={{ marginRight: 6 }}
-                        />
-                        22 Comments
-                      </span>
-                      <span>
-                        <i
-                          className="fal fa-calendar-alt"
-                          style={{ marginRight: 6 }}
-                        />
-                        10th June 2025
-                      </span>
-                    </div>
-
-                    <p>
-                      Eating well isn’t about strict limitations, staying
-                      unrealistically thin, or depriving yourself of the foods
-                      you love. It’s about feeling great, having more energy,
-                      and stabilizing your mood.
-                    </p>
-                    <p>
-                      A healthy diet doesn’t have to be complicated. The
-                      cornerstone of a good diet is to replace processed food
-                      with real food whenever possible. Eating food that is as
-                      close as possible to the way nature made it can make a
-                      huge difference to the way you think, look, and feel.
-                    </p>
-
-                    <img
-                      src="https://img.freepik.com/free-photo/table-filled-with-healthy-food-vegetables-fruits-top-view_2829-17718.jpg"
-                      alt="Healthy food table"
-                      style={{
-                        borderRadius: "16px",
-                        margin: "2rem 0",
-                        width: "100%",
-                        objectFit: "cover",
-                        maxHeight: 400,
-                      }}
-                    />
-
-                    <h2
-                      style={{
-                        fontSize: "1.5rem",
-                        fontWeight: 600,
-                        marginTop: "2rem",
-                      }}
-                    >
-                      Key Principles of Healthy Eating
-                    </h2>
-                    <p>
-                      Try to eat a rainbow of vegetables and fruits every day.
-                      Choose whole grains over refined, and don’t be afraid of
-                      healthy fats like nuts, seeds, and olive oil. Hydration
-                      matters too—aim for at least 8 glasses of water per day.
-                    </p>
-
-                    <blockquote
-                      style={{
-                        fontStyle: "italic",
-                        padding: "1rem 1.5rem",
-                        borderLeft: "4px solid #0071e3",
-                        backgroundColor: "#f9f9f9",
-                        borderRadius: "12px",
-                        margin: "2rem 0",
-                      }}
-                    >
-                      “Let food be thy medicine and medicine be thy food.” —
-                      Hippocrates
-                    </blockquote>
-
-                    <p>
-                      Cooking at home gives you more control over ingredients
-                      and portions. Aim to fill half your plate with vegetables,
-                      one quarter with lean protein, and one quarter with whole
-                      grains.
-                    </p>
-
-                    <ul
-                      style={{
-                        paddingLeft: "1rem",
-                        marginBottom: "2rem",
-                        color: "#3c3c4399",
+                        marginTop: "0.5rem",
                       }}
                     >
                       {[
-                        "Half your plate veggies & fruits",
-                        "Lean proteins every meal",
-                        "Whole grains instead of refined",
-                        "Healthy fats in moderation",
-                      ].map((item, i) => (
-                        <li
-                          key={i}
+                        "Eat Fit",
+                        "Weight Loss",
+                        "Weight Gain",
+                        "Nutrition",
+                      ].map((tag) => (
+                        <Link
+                          key={tag}
+                          href="/news-details"
                           style={{
-                            marginBottom: "0.75rem",
-                            listStyle: "none",
-                            display: "flex",
-                            alignItems: "center",
-                            gap: "0.5rem",
+                            backgroundColor: "#e5e5ea",
+                            color: "#007aff",
+                            padding: "6px 14px",
+                            borderRadius: "9999px",
+                            fontSize: "0.85rem",
+                            fontWeight: 500,
+                            textDecoration: "none",
                           }}
                         >
-                          <svg
-                            width="16"
-                            height="16"
-                            fill="none"
-                            stroke="#0071e3"
-                            strokeWidth="2"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            viewBox="0 0 24 24"
-                          >
-                            <polyline points="20 6 9 17 4 12" />
-                          </svg>
-                          {item}
-                        </li>
+                          {tag}
+                        </Link>
                       ))}
-                    </ul>
+                    </div>
+                  </div>
 
-                    <h3 style={{ fontWeight: 600, fontSize: "1.25rem" }}>
-                      Sample Day on a Healthy Diet
-                    </h3>
-                    <p style={{ marginBottom: "2rem" }}>
-                      <b>Breakfast:</b> Oats with berries and nuts <br />
-                      <b>Lunch:</b> Grilled chicken salad with olive oil
-                      dressing <br />
-                      <b>Snack:</b> Greek yogurt with honey <br />
-                      <b>Dinner:</b> Brown rice, stir-fried veggies, and tofu or
-                      salmon
-                    </p>
-
-                    <img
-                      src="https://img.freepik.com/free-photo/top-view-healthy-lunch-box-composition_23-2148723311.jpg"
-                      alt="Healthy lunch box"
+                  <div>
+                    <h4
                       style={{
-                        borderRadius: "12px",
-                        margin: "0 2rem 1.5rem 0",
-                        width: "320px",
-                        float: "left",
-                        maxWidth: "100%",
-                        objectFit: "cover",
+                        fontSize: "1rem",
+                        fontWeight: 600,
+                        textAlign: "right",
                       }}
-                    />
-
-                    <p style={{ clear: "both" }}>
-                      Remember: eating healthy is not about perfection. It’s
-                      about consistency. Enjoy your meals, savor your food, and
-                      make healthy eating a lifelong habit!
-                    </p>
-
-                    {/* TAGS & SOCIAL */}
+                    >
+                      Share
+                    </h4>
                     <div
                       style={{
                         display: "flex",
-                        flexWrap: "wrap",
-                        gap: "2rem",
-                        justifyContent: "space-between",
-                        marginTop: "3rem",
-                        paddingTop: "2rem",
-                        borderTop: "1px solid #e0e0e0",
+                        gap: "0.75rem",
+                        marginTop: "0.5rem",
                       }}
                     >
-                      <div>
-                        <h4
+                      {[
+                        { icon: "fab fa-facebook-f", href: "#" },
+                        { icon: "fab fa-twitter", href: "#" },
+                        { icon: "fab fa-instagram", href: "#" },
+                        { icon: "fab fa-linkedin-in", href: "#" },
+                      ].map((social, i) => (
+                        <a
+                          key={i}
+                          href={social.href}
                           style={{
-                            fontSize: "1rem",
-                            fontWeight: 600,
-                            color: "#1d1d1f",
-                            marginBottom: "0.5rem",
-                          }}
-                        >
-                          Related Tags
-                        </h4>
-                        <div
-                          style={{
+                            backgroundColor: "#e5e5ea",
+                            borderRadius: "50%",
+                            width: 36,
+                            height: 36,
                             display: "flex",
-                            flexWrap: "wrap",
-                            gap: "0.5rem",
-                          }}
-                        >
-                          {[
-                            "Healthy",
-                            "Meal Prep",
-                            "Nutrition",
-                            "Wellness",
-                          ].map((tag) => (
-                            <Link
-                              key={tag}
-                              href="/news-details"
-                              style={{
-                                backgroundColor: "#f2f2f7",
-                                color: "#0071e3",
-                                padding: "6px 12px",
-                                borderRadius: "20px",
-                                fontSize: "0.85rem",
-                                fontWeight: 500,
-                                textDecoration: "none",
-                              }}
-                            >
-                              {tag}
-                            </Link>
-                          ))}
-                        </div>
-                      </div>
-
-                      <div>
-                        <h4
-                          style={{
+                            alignItems: "center",
+                            justifyContent: "center",
                             fontSize: "1rem",
-                            fontWeight: 600,
+                            textDecoration: "none",
                             color: "#1d1d1f",
-                            marginBottom: "0.5rem",
-                            textAlign: "right",
                           }}
                         >
-                          Social Share
-                        </h4>
-                        <div
-                          style={{
-                            display: "flex",
-                            gap: "0.75rem",
-                            justifyContent: "flex-end",
-                          }}
-                        >
-                          {[
-                            { icon: "fab fa-facebook-f", href: "#" },
-                            { icon: "fab fa-twitter", href: "#" },
-                            { icon: "fab fa-instagram", href: "#" },
-                            { icon: "fab fa-linkedin-in", href: "#" },
-                          ].map((social, i) => (
-                            <a
-                              key={i}
-                              href={social.href}
-                              style={{
-                                backgroundColor: "#f2f2f7",
-                                borderRadius: "50%",
-                                width: 36,
-                                height: 36,
-                                display: "flex",
-                                alignItems: "center",
-                                justifyContent: "center",
-                                color: "#3c3c43",
-                                fontSize: "1rem",
-                                textDecoration: "none",
-                                transition: "all 0.2s ease",
-                              }}
-                              onMouseEnter={(e) =>
-                                (e.currentTarget.style.backgroundColor =
-                                  "#0071e3")
-                              }
-                              onMouseLeave={(e) =>
-                                (e.currentTarget.style.backgroundColor =
-                                  "#f2f2f7")
-                              }
-                            >
-                              <i
-                                className={social.icon}
-                                style={{ color: "#1d1d1f" }}
-                              />
-                            </a>
-                          ))}
-                        </div>
-                      </div>
+                          <i className={social.icon} />
+                        </a>
+                      ))}
                     </div>
-                  </article>
+                  </div>
                 </div>
-              </div>
-              <BlogSidebar />
+              </article>
             </div>
+
+            {/* Sidebar */}
+            <BlogSidebar />
           </div>
         </div>
       </section>
+
       <Cta />
     </FoodKingLayout>
   );
 };
 
-export default page;
+export default Page;

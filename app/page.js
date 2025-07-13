@@ -1,12 +1,17 @@
+"use client";
 import { CeoMessage } from "@/components/Home/CeoMessage";
 import Features from "@/components/Home/Features";
 import FoodBanerHome from "@/components/Home/FoodBanerHome";
-import FoodCategoryHome from "@/components/Home/FoodCategoryHome";
+import { FoodCategoryHome } from "@/components/Home/FoodCategoryHome";
 import Marquee from "@/components/Home/Marquee";
 import { HomeSlider3 } from "@/components/HomeSlider";
 import InstagramBannerSlider from "@/components/InstagramBannerSlider";
 import NextSaleBanner from "@/components/NextSaleBanner";
 import FoodKingLayout from "@/layouts/FoodKingLayout";
+import { useGetMenuItemsQuery } from "@/lib/api/apiSlice";
+import { setLoading } from "@/lib/api/loadingSlice";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
 const features = [
   {
     icon: "assets/img/icon/01.svg",
@@ -34,9 +39,17 @@ const features = [
   },
 ];
 const page = () => {
+  const dispatch = useDispatch();
+  const { isLoading, data: menuItems } = useGetMenuItemsQuery();
+
+  useEffect(() => {
+    dispatch(setLoading(isLoading));
+  }, [isLoading, dispatch]);
+
+  if (isLoading) return null;
   return (
     <FoodKingLayout header={2} footer={2}>
-      <HomeSlider3 />
+      <HomeSlider3 menuItems={menuItems} isLoading={isLoading} />
       <section
         style={{
           position: "relative",
@@ -150,9 +163,9 @@ const page = () => {
         </div>
       </section>
       <Marquee />
-      <FoodBanerHome />
-      <FoodCategoryHome />
-      <NextSaleBanner />
+      <FoodBanerHome menuItems={menuItems} isLoading={isLoading} />
+      <FoodCategoryHome menuItems={menuItems} isLoading={isLoading} />
+      <NextSaleBanner menuItems={menuItems} isLoading={isLoading} />
       <Features features={features} />
       <CeoMessage />
       <InstagramBannerSlider />

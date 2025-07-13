@@ -16,7 +16,7 @@ const CartDialog = () => {
         (sum, addon) => sum + (addon.price || 0) * (addon.quantity || 1),
         0
       ) || 0;
-    return (item.price + addonTotal) * item.quantity;
+    return (item.webPrice + addonTotal) * item.quantity;
   };
 
   const total = cartItems.reduce(
@@ -90,7 +90,7 @@ const CartDialog = () => {
                   }}
                 >
                   <img
-                    src={item.image}
+                    src={item.imageurl}
                     width={48}
                     height={48}
                     alt={item.name}
@@ -104,7 +104,7 @@ const CartDialog = () => {
                   <div style={{ flex: 1 }}>
                     <div style={{ fontWeight: 500 }}>{item.name}</div>
                     <div style={{ fontSize: 13, color: "#666" }}>
-                      Base: Rs {item.price.toFixed(2)}
+                      Base: Rs {item.webPrice}
                     </div>
 
                     {/* Addons */}
@@ -121,7 +121,7 @@ const CartDialog = () => {
                           {item.selectedAddons.map((addon, idx) => (
                             <li key={idx}>
                               {addon.name} x {addon.quantity} = Rs{" "}
-                              {(addon.price * addon.quantity).toFixed(2)}
+                              {addon.price * addon.quantity}
                             </li>
                           ))}
                         </ul>
@@ -198,7 +198,7 @@ const CartDialog = () => {
                         color: "#000",
                       }}
                     >
-                      Rs {calculateItemTotal(item).toFixed(2)}
+                      Rs {calculateItemTotal(item)}
                     </div>
                   </div>
                 </div>
@@ -217,7 +217,7 @@ const CartDialog = () => {
                 }}
               >
                 <span>Total</span>
-                <span>Rs {total.toFixed(2)}</span>
+                <span>Rs {total}</span>
               </div>
               <Link
                 href="/checkout"

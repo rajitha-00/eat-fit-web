@@ -1,281 +1,176 @@
+"use client";
 import InstagramBannerSlider from "@/components/InstagramBannerSlider";
 import NextSaleBanner from "@/components/NextSaleBanner";
 import TestimonialSlider from "@/components/TestimonialSlider";
 import FoodKingLayout from "@/layouts/FoodKingLayout";
+import { useGetMenuItemsQuery } from "@/lib/api/apiSlice";
+import { setLoading } from "@/lib/api/loadingSlice";
 import Link from "next/link";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
 
 const page = () => {
+  const dispatch = useDispatch();
+  const { isLoading, data: menuItems } = useGetMenuItemsQuery();
+
+  useEffect(() => {
+    dispatch(setLoading(isLoading));
+  }, [isLoading, dispatch]);
+
+  if (isLoading) return null;
   return (
     <FoodKingLayout header={2} footer={2}>
-      {/* Hero About Section */}
+      {/* Hero Section */}
       <section
-        className="about-section fix section-padding section-bg"
-        style={{ background: "#f7fcfa" }}
+        className="section-padding section-bg"
+        style={{ background: "#f9f9fb" }}
       >
         <div className="container">
-          <div className="about-wrapper">
-            <div className="row align-items-center">
-              {/* Left: Big modern hero image */}
-              <div className="col-xl-6 col-lg-6 mb-5 mb-lg-0">
-                <div className="about-image position-relative">
-                  <img
-                    src="https://img.freepik.com/free-photo/top-view-table-full-delicious-food-composition_23-2149141340.jpg"
-                    alt="About healthy food"
-                    className="img-fluid rounded-4 shadow"
-                    style={{
-                      objectFit: "cover",
-                      width: "100%",
-                      minHeight: 420,
-                    }}
-                  />
-                  {/* Overlayed stat */}
-                  <div className="about-badge position-absolute top-0 end-0 p-3">
-                    <div
-                      style={{
-                        background: "#59c98d",
-                        color: "#fff",
-                        borderRadius: "1.5rem",
-                        padding: "0.6rem 1.7rem",
-                        fontWeight: 700,
-                        boxShadow: "0 2px 12px rgba(89,201,141,0.10)",
-                        fontSize: "1.3rem",
-                      }}
-                    >
-                      10+ Years of Taste!
-                    </div>
-                  </div>
-                </div>
+          <div className="row align-items-center">
+            {/* Left image */}
+            <div className="col-lg-6 mb-4 mb-lg-0">
+              <div
+                className="position-relative"
+                style={{
+                  borderRadius: "20px",
+                  overflow: "hidden",
+                  boxShadow: "0 10px 40px rgba(0,0,0,0.05)",
+                }}
+              >
+                <img
+                  src="https://img.freepik.com/free-photo/top-view-table-full-delicious-food-composition_23-2149141340.jpg"
+                  alt="EatFit Kitchen"
+                  className="img-fluid w-100"
+                  style={{ objectFit: "cover", minHeight: 420 }}
+                />
               </div>
-              {/* Right: Modern About Content */}
-              <div className="col-xl-6 col-lg-6">
-                <div className="about-content ps-lg-4">
-                  <div className="section-title mb-3">
-                    <span
-                      className="fw-bold"
-                      style={{ color: "#59c98d", fontWeight: 600 }}
-                    >
-                      About Our Food Journey
-                    </span>
-                    <h2 className="fw-bold mb-3" style={{ lineHeight: 1.23 }}>
-                      Nourishing Communities,
-                      <br />
-                      One <span style={{ color: "#59c98d" }}>
-                        Fresh Plate
-                      </span>{" "}
-                      at a Time
-                    </h2>
-                  </div>
-                  <p className="lead mb-4" style={{ color: "#4b4b4b" }}>
-                    At <b>FoodKing</b>, food is more than a meal—it's our
-                    passion, our promise, and our way to make the world
-                    healthier, one plate at a time.
-                    <br />
-                    <br />
-                    Sourced from local farmers and crafted by skilled chefs,
-                    every dish is a celebration of freshness, taste, and
-                    community. Whether you crave hearty classics or modern
-                    nutrition, we make healthy eating exciting and accessible
-                    for everyone.
-                  </p>
-                  {/* Mission/Values */}
-                  <div className="row g-2 mb-4">
-                    <div className="col-6 d-flex align-items-start">
-                      <div className="about-icon me-3">
-                        <i
-                          className="flaticon-quality"
-                          style={{ fontSize: 32, color: "#43a047" }}
-                        />
-                      </div>
-                      <div>
-                        <h5 className="mb-1 fw-semibold">Farm Fresh</h5>
-                        <div style={{ fontSize: ".97em", color: "#888" }}>
-                          Sourced daily for unbeatable taste and nutrition.
-                        </div>
-                      </div>
-                    </div>
-                    <div className="col-6 d-flex align-items-start">
-                      <div className="about-icon me-3">
-                        <i
-                          className="flaticon-reputation"
-                          style={{ fontSize: 32, color: "#43a047" }}
-                        />
-                      </div>
-                      <div>
-                        <h5 className="mb-1 fw-semibold">Awarded Quality</h5>
-                        <div style={{ fontSize: ".97em", color: "#888" }}>
-                          Trusted by thousands—loved by families.
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="d-flex align-items-center gap-3">
-                    <Link
-                      href="/about"
-                      className="theme-btn style-line-height px-4 py-2"
-                      style={{
-                        background: "#59c98d",
-                        color: "#fff",
-                        fontWeight: 600,
-                        borderRadius: "1.8rem",
-                        fontSize: "1.13em",
-                        letterSpacing: ".5px",
-                      }}
-                    >
-                      More About Us
-                    </Link>
-                    <div className="info-content ms-3">
-                      <span className="fw-bold" style={{ color: "#43a047" }}>
-                        Priya, Founder
-                      </span>
-                      <div style={{ color: "#555", fontSize: ".99em" }}>
-                        “We don’t just cook—we care, and you can taste it.”
-                      </div>
-                    </div>
-                  </div>
-                </div>
+            </div>
+
+            {/* Right content */}
+            <div className="col-lg-6">
+              <div style={{ fontFamily: "-apple-system, BlinkMacSystemFont" }}>
+                <h2 className="fw-bold mb-3" style={{ lineHeight: 1.3 }}>
+                  EatFit Kitchen,
+                  <br />
+                  Where <span style={{ color: "#059669" }}>Freshness</span>{" "}
+                  Meets Fuel
+                </h2>
+                <p className="lead" style={{ color: "#4b4b4b" }}>
+                  At <b>EatFit</b>, food is more than a meal it's how we
+                  energize communities with clean, crave-worthy dishes.
+                </p>
+                <p style={{ color: "#555", fontSize: "1rem" }}>
+                  Every bite is made from farm-fresh ingredients, crafted by
+                  chefs who care about your goals and your tastebuds.
+                </p>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Food Banner Section (Today's Special) */}
-      <section className="food-banner-section fix section-padding section-bg pt-0">
+      {/* Specials Banner */}
+      <section className="section-padding pt-0">
         <div className="container">
-          <div className="row justify-content-center">
-            <div className="col-xl-7 col-lg-9">
+          <div className="row gy-4">
+            <div className="col-lg-7">
               <div
-                className="burger-banner-items bg-cover"
+                className="p-4 text-center"
                 style={{
-                  backgroundImage: "url(assets/img/banner/burger-bg.png)",
-                  borderRadius: 16,
-                  boxShadow: "0 8px 24px rgba(80,130,60,0.10)",
+                  background: "#ffffff",
+                  borderRadius: 24,
+                  boxShadow: "0 6px 24px rgba(0,0,0,0.04)",
+                  position: "relative",
+                  overflow: "hidden",
                 }}
               >
-                <div className="burger-content text-center">
-                  <h3
-                    className="fw-light"
-                    style={{ letterSpacing: 2, color: "#59c98d" }}
-                  >
-                    today
-                  </h3>
-                  <h2 className="fw-bold text-dark">special</h2>
-                  <h4>
-                    <Link href="/shop" className="text-white">
-                      beef <span style={{ color: "#ffc107" }}>burger</span>
-                    </Link>
-                  </h4>
-                </div>
-                <div className="burger-image">
-                  <img src="assets/img/food/big-burger.png" alt="food-img" />
-                </div>
-                <div className="text-shape">
-                  <img
-                    src="assets/img/shape/pizza-text-2.png"
-                    alt="shape-img"
-                  />
-                </div>
-                <div className="burger-text">
-                  <img src="assets/img/shape/burger-text.png" alt="shape-img" />
-                </div>
+                <h5 className="text-emerald-500 text-uppercase mb-1">
+                  Today’s Special
+                </h5>
+                <h2 className="fw-bold mb-1">
+                  Beef <span style={{ color: "#f59e0b" }}>Burger</span>
+                </h2>
+                <Link
+                  href="/shop"
+                  className="btn btn-outline-dark rounded-pill mt-3"
+                >
+                  Explore Menu
+                </Link>
+                <img
+                  src="assets/img/food/big-burger.png"
+                  alt="Burger"
+                  className="position-absolute end-0 bottom-0"
+                  style={{ width: 180, opacity: 0.15 }}
+                />
               </div>
             </div>
-            <div className="col-xl-5 col-lg-9 mt-5 mt-xl-0">
+            <div className="col-lg-5">
               <div
-                className="single-offer-items style-2 bg-cover"
+                className="p-4"
                 style={{
-                  backgroundImage: 'url("assets/img/banner/pepsi-bg.png")',
-                  borderRadius: 16,
-                  boxShadow: "0 8px 24px rgba(90,160,90,0.10)",
+                  background: "#ecfdf5", // emerald-50
+                  borderRadius: 24,
+                  boxShadow: "0 6px 24px rgba(0,0,0,0.04)",
+                  position: "relative",
+                  overflow: "hidden",
                 }}
               >
-                <div className="offer-content">
-                  <h5 style={{ color: "#59c98d" }}>crispy, every bite taste</h5>
-                  <h3>
-                    FAST FOOD <br />
-                    MEAL
-                  </h3>
-                  <p>
-                    The mouth-watering aroma of <br />
-                    sizzling burgers
-                  </p>
-                  <Link href="/shop-single" className="theme-btn mt-4">
-                    order now
-                  </Link>
-                </div>
-                <div className="offer-img">
-                  <img
-                    src="assets/img/offer/50percent-off-3.png"
-                    alt="shape-img"
-                  />
-                </div>
-                <div className="roller-box">
-                  <img src="assets/img/food/roller-box.png" alt="food-img" />
-                </div>
+                <h5 className="text-emerald-600">Crispy, every bite counts</h5>
+                <h3 className="fw-bold">Clean Fuel Meal</h3>
+                <p className="text-muted">Satisfy cravings the EatFit way.</p>
+                <Link
+                  href="/shop-single"
+                  className="btn btn-success rounded-pill mt-3"
+                >
+                  Order Now
+                </Link>
+                <img
+                  src="assets/img/offer/50percent-off-3.png"
+                  alt="Offer"
+                  className="position-absolute end-0 bottom-0"
+                  style={{ width: 100, opacity: 0.2 }}
+                />
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Next Sale Banner */}
-      <section className="today-best-sale fix">
-        <div className="today-best-sale-wrapper">
-          <div className="row g-0">
-            <NextSaleBanner />
-          </div>
-        </div>
+      {/* Sale Banner */}
+      <section className="section-padding bg-light">
+        <NextSaleBanner menuItems={menuItems} isLoading={isLoading} />
       </section>
 
-      {/* Testimonial Section */}
+      {/* Testimonial + Booking */}
       <section
-        className="booking-section mt-0 fix section-padding bg-cover"
+        className="section-padding bg-cover"
         style={{
-          backgroundImage: 'url("assets/img/banner/main-bg.jpg")',
+          backgroundImage: "url('assets/img/banner/main-bg.jpg')",
+          backgroundSize: "cover",
           backgroundPosition: "center",
         }}
       >
         <div className="container">
-          <div className="booking-wrapper">
-            <div className="row justify-content-between align-items-center">
-              <div className="col-lg-6">
-                <div className="booking-content">
-                  <div className="section-title">
-                    <span className="fw-bold" style={{ color: "#ffa726" }}>
-                      crispy, every bite taste
-                    </span>
-                    <h2
-                      className="text-white fw-bold"
-                      style={{ fontSize: "2.15em" }}
-                    >
-                      Need booking? <br />
-                      Reserve your table?
-                    </h2>
-                  </div>
-                  <div className="icon-items d-flex align-items-center mt-4">
-                    <div className="icon">
-                      <i className="flaticon-phone-call-2" />
-                    </div>
-                    <div className="content">
-                      <h5 style={{ color: "#fff" }}>24/7 Support center</h5>
-                      <h3>
-                        <a href="tel:+1718-904-4450" style={{ color: "#fff" }}>
-                          +1718-904-4450
-                        </a>
-                      </h3>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="col-lg-5 d-none d-lg-block">
-                <TestimonialSlider />
-              </div>
+          <div className="row justify-content-between align-items-center">
+            <div className="col-lg-6 text-white">
+              <h5 className="text-warning text-uppercase">
+                24/7 Support Center
+              </h5>
+              <h2 className="fw-bold mb-2">Need booking? Reserve a table?</h2>
+              <h4>
+                <a href="tel:+1718-904-4450" className="text-white">
+                  +1 718-904-4450
+                </a>
+              </h4>
+            </div>
+            <div className="col-lg-5 d-none d-lg-block">
+              <TestimonialSlider />
             </div>
           </div>
         </div>
       </section>
 
-      {/* Instagram Banner Section */}
+      {/* Instagram Section */}
       <InstagramBannerSlider />
     </FoodKingLayout>
   );
