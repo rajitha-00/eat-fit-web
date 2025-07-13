@@ -1,5 +1,4 @@
 import Cta from "@/components/Cta";
-import PageBanner from "@/components/PageBanner";
 import FoodKingLayout from "@/layouts/FoodKingLayout";
 const page = () => {
   const contactInfo = [
@@ -26,7 +25,6 @@ const page = () => {
 
   return (
     <FoodKingLayout>
-      <PageBanner pageName={"Contact us"} />
       {/*<< Contact Info Section Start >>*/}
       <section className="contact-info-section fix section-padding section-bg">
         <div className="container">

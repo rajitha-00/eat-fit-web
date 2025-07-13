@@ -5,7 +5,7 @@ function Features({ features }) {
   return (
     <section
       style={{
-        backgroundImage: 'url("assets/img/bg-image/bg-shape.png")',
+        // backgroundImage: 'url("assets/img/bg-image/bg-shape.png")',
         backgroundSize: "cover",
         backgroundPosition: "center",
         padding: "5rem 1.5rem",

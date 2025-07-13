@@ -105,9 +105,11 @@ const Footer = () => (
             marginBottom: "1.5rem",
           }}
         >
-          Temporibus autem quibusdam officiis debitis aut rerum necessitatibus
-          saepe eveniet voluta repudiandae molestiae recusandae Itaquear rerum
-          hic tenetur sapiente delectus
+          EAT FIT is your go to spot for clean, crave worthy meals that fuel
+          your hustle. From protein packed bowls to guilt free desserts, we
+          serve up flavor without the fluff. Whether you're bulking, shredding,
+          or just eating better. We’ve got your macros, your cravings, and
+          your goals covered.
         </p>
         <div style={{ display: "flex", gap: "1rem", fontSize: "1.2rem" }}>
           {socialLinks.map(({ href, icon }, i) => (

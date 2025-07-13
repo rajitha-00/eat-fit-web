@@ -15,6 +15,14 @@ export const api = createApi({
       query: () => "/menu-items",
       providesTags: ["MenuItems"],
     }),
+    getMenuItem: builder.query({
+      query: (id) => ({
+        url: `/menu-items/${id}`,
+        method: "GET",
+      }),
+      providesTags: [],
+    }),
+
     createOrder: builder.mutation({
       query: (body) => ({
         url: "/orders",
@@ -32,5 +40,6 @@ export const api = createApi({
 export const {
   useGetIngredientsQuery,
   useGetMenuItemsQuery,
+  useGetMenuItemQuery,
   useCreateOrderMutation,
 } = api;

@@ -96,12 +96,6 @@ const page = () => {
                 >
                   Explore Menu
                 </Link>
-                <img
-                  src="assets/img/food/big-burger.png"
-                  alt="Burger"
-                  className="position-absolute end-0 bottom-0"
-                  style={{ width: 180, opacity: 0.15 }}
-                />
               </div>
             </div>
             <div className="col-lg-5">
@@ -119,17 +113,11 @@ const page = () => {
                 <h3 className="fw-bold">Clean Fuel Meal</h3>
                 <p className="text-muted">Satisfy cravings the EatFit way.</p>
                 <Link
-                  href="/shop-single"
+                  href="/shop"
                   className="btn btn-success rounded-pill mt-3"
                 >
                   Order Now
                 </Link>
-                <img
-                  src="assets/img/offer/50percent-off-3.png"
-                  alt="Offer"
-                  className="position-absolute end-0 bottom-0"
-                  style={{ width: 100, opacity: 0.2 }}
-                />
               </div>
             </div>
           </div>
@@ -139,35 +127,6 @@ const page = () => {
       {/* Sale Banner */}
       <section className="section-padding bg-light">
         <NextSaleBanner menuItems={menuItems} isLoading={isLoading} />
-      </section>
-
-      {/* Testimonial + Booking */}
-      <section
-        className="section-padding bg-cover"
-        style={{
-          backgroundImage: "url('assets/img/banner/main-bg.jpg')",
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-        }}
-      >
-        <div className="container">
-          <div className="row justify-content-between align-items-center">
-            <div className="col-lg-6 text-white">
-              <h5 className="text-warning text-uppercase">
-                24/7 Support Center
-              </h5>
-              <h2 className="fw-bold mb-2">Need booking? Reserve a table?</h2>
-              <h4>
-                <a href="tel:+1718-904-4450" className="text-white">
-                  +1 718-904-4450
-                </a>
-              </h4>
-            </div>
-            <div className="col-lg-5 d-none d-lg-block">
-              <TestimonialSlider />
-            </div>
-          </div>
-        </div>
       </section>
 
       {/* Instagram Section */}

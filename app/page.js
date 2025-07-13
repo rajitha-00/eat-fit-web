@@ -124,42 +124,6 @@ const page = () => {
           </div>
 
           {/* Decorative Shapes (optional) */}
-          <img
-            src="assets/img/shape/fry-shape-3.png"
-            alt="shape"
-            style={{
-              position: "absolute",
-              bottom: "0",
-              left: "8%",
-              height: "100px",
-              opacity: 0.8,
-              zIndex: 0,
-            }}
-          />
-          <img
-            src="assets/img/shape/frame-4.png"
-            alt="shape"
-            style={{
-              position: "absolute",
-              top: "10%",
-              right: "10%",
-              height: "80px",
-              opacity: 0.6,
-              zIndex: 0,
-            }}
-          />
-          <img
-            src="assets/img/shape/frame-5.png"
-            alt="shape"
-            style={{
-              position: "absolute",
-              bottom: "12%",
-              right: "6%",
-              height: "60px",
-              opacity: 0.4,
-              zIndex: 0,
-            }}
-          />
         </div>
       </section>
       <Marquee />

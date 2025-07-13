@@ -26,12 +26,10 @@ const allowedMenuCatsForWeightLoss = ALLOWED_CATS_FOR_GROUPED;
 const ITEMS_PER_PAGE = 6;
 const icons = [
   {
-    href: "/shop-cart",
     iconClass: "far fa-shopping-cart",
     label: "Add to Cart",
   },
   {
-    href: "/shop-single",
     iconClass: "far fa-eye",
   },
 ];
@@ -50,22 +48,22 @@ export default function ShopPage() {
   // Filter + Sort
   const filteredItems = menuItems
     .filter((item) => {
-      if (mainCat === "") return true; // ← FIXED: "" means 'All Categories'
-
+      if (!mainCat || mainCat === "" || mainCat === "All") return true;
       if (["Weight Gain", "Weight Loss"].includes(mainCat)) {
         return (
           item.mainCategory === mainCat &&
           ALLOWED_CATS_FOR_GROUPED.includes(item.menuCategory)
         );
       }
-
       return item.mainCategory === mainCat;
     })
     .filter((item) => {
-      if (menuCat === "All") return true;
+      if (!menuCat || menuCat === "All") return true;
       return item.menuCategory === menuCat;
     })
-    .filter((item) => item.name.toLowerCase().includes(search.toLowerCase()))
+    .filter((item) =>
+      search ? item.name.toLowerCase().includes(search.toLowerCase()) : true
+    )
     .sort((a, b) =>
       sortOrder === "asc" ? a.webPrice - b.webPrice : b.webPrice - a.webPrice
     );
@@ -321,8 +319,8 @@ export default function ShopPage() {
                         >
                           {icons.map((ic, j) => (
                             <li key={j}>
-                              <Link
-                                href={ic.href}
+                              <button
+                                onClick={() => (window.location.href = ic.href)}
                                 style={{
                                   backgroundColor: "rgba(255 255 255 / 0.8)",
                                   backdropFilter: "blur(4px)",
@@ -341,7 +339,7 @@ export default function ShopPage() {
                                   className={ic.iconClass}
                                   aria-hidden="true"
                                 ></i>
-                              </Link>
+                              </button>
                             </li>
                           ))}
                         </ul>
@@ -360,7 +358,7 @@ export default function ShopPage() {
                         }}
                       >
                         <Link
-                          href={`/menu/${item._id}`}
+                          href={`/shop/${item._id}`}
                           style={{ color: "#222", textDecoration: "none" }}
                         >
                           {item.name}

@@ -7,12 +7,10 @@ import { addToCart } from "@/lib/api/cartSlice";
 
 const icons = [
   {
-    href: "/shop-cart",
     iconClass: "far fa-shopping-cart",
     label: "Add to Cart",
   },
   {
-    href: "/shop-single",
     iconClass: "far fa-eye",
   },
 ];
@@ -144,8 +142,8 @@ export const FoodCategoryHome = ({ menuItems = [], isLoading }) => {
                     >
                       {icons.map((ic, j) => (
                         <li key={j}>
-                          <Link
-                            href={ic.href}
+                          <button
+                            onClick={() => (window.location.href = ic.href)}
                             style={{
                               backgroundColor: "rgba(255 255 255 / 0.8)",
                               backdropFilter: "blur(4px)",
@@ -161,7 +159,7 @@ export const FoodCategoryHome = ({ menuItems = [], isLoading }) => {
                             }}
                           >
                             <i className={ic.iconClass} aria-hidden="true" />
-                          </Link>
+                          </button>
                         </li>
                       ))}
                     </ul>

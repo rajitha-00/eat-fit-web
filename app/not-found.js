@@ -1,10 +1,8 @@
-import PageBanner from "@/components/PageBanner";
 import FoodKingLayout from "@/layouts/FoodKingLayout";
 import Link from "next/link";
 const notFound = () => {
   return (
-    <FoodKingLayout>
-      <PageBanner pageName={"error page"} />
+    <FoodKingLayout header={2} footer={2}>
       <section className="error-section section-bg section-padding fix">
         <div className="container">
           <div className="error-content text-center">

@@ -1,6 +1,5 @@
 "use client";
 import Cta from "@/components/Cta";
-import PageBanner from "@/components/PageBanner";
 import FoodKingLayout from "@/layouts/FoodKingLayout";
 
 const GALLERY_IMAGES = [

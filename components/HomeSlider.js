@@ -37,39 +37,6 @@ export const HomeSlider3 = ({ menuItems = [], isLoading }) => {
     );
   }, [menuItems]);
 
-  const shapes = [
-    {
-      className: "frame-shape",
-      src: "/assets/img/hero/frame.png",
-      delay: "2s",
-    },
-    {
-      className: "frame-shape-2",
-      src: "/assets/img/hero/frame-2.png",
-      delay: "2.2s",
-    },
-    {
-      className: "frame-shape-3",
-      src: "/assets/img/hero/frame-3.png",
-      delay: "2.4s",
-    },
-    {
-      className: "frame-shape-4",
-      src: "/assets/img/hero/frame-4.png",
-      delay: "2.6s",
-    },
-    {
-      className: "frame-shape-5",
-      src: "/assets/img/hero/frame-5.png",
-      delay: "2.8s",
-    },
-    {
-      className: "frame-shape-6",
-      src: "/assets/img/hero/frame-6.png",
-      delay: "2.9s",
-    },
-  ];
-
   const handleAnimations = useCallback(() => {
     const el = swiperRef.current?.el || swiperRef.current?.wrapperEl;
     if (!el) return;
@@ -107,18 +74,6 @@ export const HomeSlider3 = ({ menuItems = [], isLoading }) => {
                 backgroundImage: 'url("/assets/img/hero/hero-bg-3.jpg")',
               }}
             >
-              {shapes.map(({ className, src, delay }) => (
-                <div
-                  key={className}
-                  className={className}
-                  data-animation="fadeInUp"
-                  data-duration={duration}
-                  data-delay={delay}
-                >
-                  <img src={src} alt="shape-img" />
-                </div>
-              ))}
-
               <div className="container">
                 <div className="row align-items-center">
                   <div className="col-xl-5 col-lg-5">

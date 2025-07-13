@@ -2259,18 +2259,7 @@ input.main-search-input::placeholder {
 .hero-1 .hero-content h1 span {
   position: relative;
 }
-.hero-1 .hero-content h1 span::before {
-  position: absolute;
-  right: 0;
-  content: "";
-  width: 83px;
-  height: 75px;
-  background-image: url("../../assets/img/icon/icon.png");
-  background-repeat: no-repeat;
-  background-position: center;
-  z-index: 9;
-  right: -70px;
-}
+
 @media (max-width: 991px) {
   .hero-1 .hero-content h1 span::before {
     display: none;
@@ -2718,22 +2707,7 @@ input.main-search-input::placeholder {
   position: relative;
   z-index: 9;
 }
-.catagory-product-card::before {
-  position: absolute;
-  left: 0;
-  top: 0px;
-  height: 100%;
-  width: 100%;
-  background-color: var(--theme3);
-  content: "";
-  visibility: hidden;
-  opacity: 0;
-  -webkit-transition: all 0.3s ease-in-out;
-  transition: all 0.3s ease-in-out;
-  background-image: url("../../assets/img/shape/catagory-card-shape.jpg");
-  border-radius: 14px;
-  z-index: 9;
-}
+
 .catagory-product-card::after {
   position: absolute;
   left: 0;
@@ -3023,11 +2997,7 @@ input.main-search-input::placeholder {
   -webkit-transition: all 0.4s ease-in-out;
   transition: all 0.4s ease-in-out;
 }
-.catagory-product-card-2:hover::before {
-  height: 100%;
-  background-color: var(--theme3);
-  background-image: url(../../assets/img/shape/catagory-card-shape.jpg);
-}
+
 .catagory-product-card-2:hover .catagory-product-content .catagory-button {
   opacity: 1;
 }
@@ -3040,11 +3010,7 @@ input.main-search-input::placeholder {
 .catagory-product-card-2:hover .catagory-product-content .star span {
   color: var(--white);
 }
-.catagory-product-card-2.active::before {
-  height: 100%;
-  background-color: var(--theme3);
-  background-image: url(../../assets/img/shape/catagory-card-shape.jpg);
-}
+
 .catagory-product-card-2.active .icon {
   background-color: var(--white);
 }
@@ -3478,18 +3444,7 @@ input.main-search-input::placeholder {
     padding: 25px;
   }
 }
-.about-wrapper-2 .pizza-image .quate-content::before {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  content: "";
-  width: 100%;
-  height: 100%;
-  background-position: center;
-  background-image: url(../../assets/img/about/food-shape.png);
-}
+
 .about-wrapper-2 .pizza-image .quate-content h3 {
   font-size: 28px;
   position: relative;
@@ -3734,22 +3689,7 @@ input.main-search-input::placeholder {
     -ms-flex-wrap: wrap;
         flex-wrap: wrap;
   }
-  .fooder-menu-wrapper .food-menu-items::before {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    width: 100%;
-    height: 100%;
-    content: "";
-    background-position: center;
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-image: url(../../assets/img/shape/overlay-shape.png);
-    -webkit-transition: all 0.3s ease-in-out;
-    transition: all 0.3s ease-in-out;
-  }
+
   .fooder-menu-wrapper .food-menu-items .food-menu-content h4, .fooder-menu-wrapper .food-menu-items .food-menu-content p {
     color: var(--white);
     -webkit-transition: all 0.3s ease-in-out;
@@ -3777,20 +3717,7 @@ input.main-search-input::placeholder {
   background-color: var(--theme);
   border-radius: 8px;
 }
-.fooder-menu-wrapper .food-menu-items:hover::before {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  width: 100%;
-  height: 100%;
-  content: "";
-  background-position: center;
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-image: url(../../assets/img/shape/overlay-shape.png);
-}
+
 .fooder-menu-wrapper .food-menu-items:hover .food-menu-content h4, .fooder-menu-wrapper .food-menu-items:hover .food-menu-content p {
   color: var(--white);
 }
@@ -3801,22 +3728,7 @@ input.main-search-input::placeholder {
   background-color: var(--theme);
   border-radius: 8px;
 }
-.fooder-menu-wrapper .food-menu-items.active::before {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  width: 100%;
-  height: 100%;
-  content: "";
-  background-position: center;
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-image: url(../../assets/img/shape/overlay-shape.png);
-  -webkit-transition: all 0.3s ease-in-out;
-  transition: all 0.3s ease-in-out;
-}
+
 .fooder-menu-wrapper .food-menu-items.active .food-menu-content h4, .fooder-menu-wrapper .food-menu-items.active .food-menu-content p {
   color: var(--white);
 }
@@ -4794,7 +4706,7 @@ input.main-search-input::placeholder {
   width: 80%;
   height: 1px;
   content: "";
-  background-image: url(../../assets/img/border.png);
+  /* background-image: url(../../assets/img/border.png); */
 }
 @media (max-width: 1399px) {
   .food-processing-wrapper::before {
@@ -7861,7 +7773,7 @@ input.main-search-input::placeholder {
   height: 100%;
   content: "";
   background-repeat: no-repeat;
-  background-image: url(../../assets/img/arrow.png);
+  /* background-image: url(../../assets/img/arrow.png); */
   -webkit-animation: 4s linear 0s infinite normal none running rounded-2;
           animation: 4s linear 0s infinite normal none running rounded-2;
 }
@@ -8177,21 +8089,6 @@ input.main-search-input::placeholder {
   height: 55%;
   background-color: var(--bg);
   z-index: -1;
-}
-.testimonial-section-2::after {
-  position: absolute;
-  top: 0;
-  left: 17%;
-  right: 0;
-  bottom: 0;
-  content: "";
-  width: 100%;
-  height: 100%;
-  background-color: var(--white);
-  -webkit-box-shadow: 0px 4px 31px 0px rgba(0, 0, 0, 0.04);
-          box-shadow: 0px 4px 31px 0px rgba(0, 0, 0, 0.04);
-  z-index: -1;
-  background-image: url(../../assets/img/client/bg-shape.png);
 }
 
 .testimonial-wrapper-2 {
@@ -8781,7 +8678,7 @@ input.main-search-input::placeholder {
 .blog-wrapper .single-blog-post.quote-post .post-content, .blog-wrapper .single-blog-post.format-quote .post-content {
   position: relative;
   background-color: var(--theme);
-  background-image: url("../img/quotepost.png");
+  /* background-image: url("../img/quotepost.png"); */
   border: none;
 }
 .blog-wrapper .single-blog-post.quote-post .quote-content, .blog-wrapper .single-blog-post.format-quote .quote-content {
@@ -9908,20 +9805,7 @@ p.sticky-label {
   position: relative;
   z-index: 1;
 }
-.contact-info-items::before {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  content: "";
-  background: url("../../assets/img/shape/catagory-card-shape.jpg");
-  opacity: 0;
-  -webkit-transition: all 0.4s ease-in-out;
-  transition: all 0.4s ease-in-out;
-  z-index: -1;
-  visibility: hidden;
-}
+
 .contact-info-items .icon {
   -webkit-transition: all 0.4s ease-in-out;
   transition: all 0.4s ease-in-out;

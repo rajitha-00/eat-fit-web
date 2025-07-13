@@ -123,7 +123,7 @@ const Header2 = () => {
 
               {/* Order Now */}
               <Link
-                href="/shop-single"
+                href="/shop"
                 className="d-none d-md-block"
                 style={{
                   backgroundColor: isScrolled
@@ -205,7 +205,7 @@ const Sidebar = ({ toggle, setToggle }) => {
         <MobileMenu setToggle={setToggle} />
         <div className="mt-4">
           <Link
-            href="/shop-single"
+            href="/shop"
             style={{
               display: "block",
               textAlign: "center",

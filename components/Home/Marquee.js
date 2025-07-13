@@ -51,7 +51,7 @@ const Marquee = () => {
           >
             {text}
             <img
-              src="/assets/img/star.svg"
+              src="/assets/img/logo/logo-3.svg"
               alt="star"
               style={{
                 height: "16px",
@@ -80,7 +80,7 @@ const Marquee = () => {
           >
             {text}
             <img
-              src="/assets/img/star.svg"
+              src="/assets/img/logo/logo-3.svg"
               alt="star"
               style={{
                 height: "16px",

@@ -33,9 +33,6 @@ const InstagramBannerSlider = () => (
           <div className="instagram-banner-items">
             <div className="banner-image">
               <img src={src} alt="food-img" />
-              <a href={src} className="icon img-popup">
-                <i className="far fa-search" />
-              </a>
             </div>
           </div>
         </SwiperSlide>
