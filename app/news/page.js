@@ -133,7 +133,7 @@ const Page = () => {
                   style={{
                     fontStyle: "italic",
                     padding: "1.25rem 1.75rem",
-                    borderLeft: "4px solid #007aff",
+                    borderLeft: "4px solid #429c5a",
                     backgroundColor: "#f2f2f7",
                     borderRadius: "16px",
                     margin: "2.5rem 0",
@@ -224,7 +224,7 @@ const Page = () => {
                           href="/news-details"
                           style={{
                             backgroundColor: "#e5e5ea",
-                            color: "#007aff",
+                            color: "#429c5a",
                             padding: "6px 14px",
                             borderRadius: "9999px",
                             fontSize: "0.85rem",

@@ -2,39 +2,29 @@
 
 import React, { useMemo } from "react";
 import Link from "next/link";
-import { useDispatch } from "react-redux";
-import { addToCart } from "@/lib/api/cartSlice";
 
 const icons = [
   {
     iconClass: "far fa-shopping-cart",
     label: "Add to Cart",
+    type: "add_to_cart", // <-- identify the action
   },
   {
     iconClass: "far fa-eye",
+    type: "view", // <-- identify as 'view' action
   },
 ];
-
 const getRandomItems = (arr, count) => {
   const shuffled = [...arr].sort(() => 0.5 - Math.random());
   return shuffled.slice(0, count);
 };
 
-export const FoodCategoryHome = ({ menuItems = [], isLoading }) => {
-  const dispatch = useDispatch();
-
+export const FoodCategoryHome = ({
+  menuItems = [],
+  isLoading,
+  onAddToCart,
+}) => {
   const randomItems = useMemo(() => getRandomItems(menuItems, 8), [menuItems]);
-
-  const handleAddToCart = (item) => {
-    dispatch(
-      addToCart({
-        ...item,
-        quantity: 1,
-        selectedAddons: [],
-        uniqueKey: `${item._id}-${item.webPrice}`,
-      })
-    );
-  };
 
   return (
     <section
@@ -113,7 +103,7 @@ export const FoodCategoryHome = ({ menuItems = [], isLoading }) => {
                       src={item.imageurl || "/assets/img/food/default-food.png"}
                       alt={item.name}
                       style={{
-                        width: "220px",
+                        width: "100%",
                         height: "220px",
                         objectFit: "cover",
                         borderTopLeftRadius: "16px",
@@ -143,7 +133,13 @@ export const FoodCategoryHome = ({ menuItems = [], isLoading }) => {
                       {icons.map((ic, j) => (
                         <li key={j}>
                           <button
-                            onClick={() => (window.location.href = ic.href)}
+                            onClick={() => {
+                              if (ic.type === "add_to_cart") {
+                                handleAddToCart(item);
+                              } else if (ic.type === "view") {
+                                window.location.href = `/shop/${item._id}`;
+                              }
+                            }}
                             style={{
                               backgroundColor: "rgba(255 255 255 / 0.8)",
                               backdropFilter: "blur(4px)",
@@ -158,7 +154,7 @@ export const FoodCategoryHome = ({ menuItems = [], isLoading }) => {
                               boxShadow: "0 4px 8px rgba(0,0,0,0.1)",
                             }}
                           >
-                            <i className={ic.iconClass} aria-hidden="true" />
+                            <i className={ic.iconClass} aria-hidden="true"></i>
                           </button>
                         </li>
                       ))}
@@ -177,7 +173,7 @@ export const FoodCategoryHome = ({ menuItems = [], isLoading }) => {
                     }}
                   >
                     <Link
-                      href={`/menu/${item._id}`}
+                      href={`/shop/${item._id}`}
                       style={{ color: "#222", textDecoration: "none" }}
                     >
                       {item.name}
@@ -193,24 +189,30 @@ export const FoodCategoryHome = ({ menuItems = [], isLoading }) => {
                     Rs. {item.webPrice?.toFixed(2) || "0.00"}
                   </h5>
                   <button
-                    onClick={() => handleAddToCart(item)}
+                    onClick={() => onAddToCart(current)}
                     style={{
-                      padding: "8px 24px",
-                      backgroundColor: "#007aff",
+                      padding: "10px 28px",
+                      backgroundColor: "#429c5a", // Royal Emerald green
                       color: "#fff",
                       border: "none",
-                      borderRadius: 12,
+                      borderRadius: 24, // More rounded, Apple-like
                       cursor: "pointer",
                       fontWeight: 600,
                       fontSize: 16,
-                      transition: "background-color 0.3s",
+                      userSelect: "none",
+                      boxShadow: "0 4px 12px rgba(80, 200, 120, 0.4)", // subtle glow
+                      transition: "background-color 0.3s, box-shadow 0.3s",
                     }}
-                    onMouseEnter={(e) =>
-                      (e.currentTarget.style.backgroundColor = "#005bb5")
-                    }
-                    onMouseLeave={(e) =>
-                      (e.currentTarget.style.backgroundColor = "#007aff")
-                    }
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.backgroundColor = "#3CA760"; // darker green on hover
+                      e.currentTarget.style.boxShadow =
+                        "0 6px 16px rgba(60, 167, 96, 0.6)";
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.backgroundColor = "#429c5a";
+                      e.currentTarget.style.boxShadow =
+                        "0 4px 12px rgba(80, 200, 120, 0.4)";
+                    }}
                   >
                     Add to Cart
                   </button>

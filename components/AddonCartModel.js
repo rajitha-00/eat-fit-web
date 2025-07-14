@@ -134,7 +134,7 @@ export function AddToCartModal({ item, onAddToCart, onClose }) {
               padding: "8px 16px",
               borderRadius: 8,
               border: "none",
-              backgroundColor: "#007aff",
+              backgroundColor: "#429c5a",
               color: "#fff",
               cursor: "pointer",
             }}

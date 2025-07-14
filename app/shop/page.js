@@ -187,10 +187,10 @@ export default function ShopPage() {
                   padding: "8px 18px",
                   borderRadius: 9999,
                   border: "1.5px solid",
-                  borderColor: menuCat === "All" ? "#007aff" : "#ccc",
+                  borderColor: menuCat === "All" ? "#429c5a" : "#ccc",
                   backgroundColor:
                     menuCat === "All" ? "#e6f0ff" : "transparent",
-                  color: menuCat === "All" ? "#007aff" : "#555",
+                  color: menuCat === "All" ? "#429c5a" : "#555",
                   fontWeight: menuCat === "All" ? 600 : 500,
                   cursor: "pointer",
                   userSelect: "none",
@@ -220,10 +220,10 @@ export default function ShopPage() {
                     padding: "8px 18px",
                     borderRadius: 9999,
                     border: "1.5px solid",
-                    borderColor: menuCat === cat ? "#007aff" : "#ccc",
+                    borderColor: menuCat === cat ? "#429c5a" : "#ccc",
                     backgroundColor:
                       menuCat === cat ? "#e6f0ff" : "transparent",
-                    color: menuCat === cat ? "#007aff" : "#555",
+                    color: menuCat === cat ? "#429c5a" : "#555",
                     fontWeight: menuCat === cat ? 600 : 500,
                     cursor: "pointer",
                     userSelect: "none",
@@ -283,7 +283,7 @@ export default function ShopPage() {
                           display: "flex",
                           alignItems: "center",
                           justifyContent: "center",
-                          height: 220,
+                          height: "220px",
                           backgroundColor: "#f5f5f7",
                         }}
                       >
@@ -293,11 +293,11 @@ export default function ShopPage() {
                           }
                           alt={item.name}
                           style={{
-                            width: 220,
-                            height: 220,
+                            width: "100%",
+                            height: "220px",
                             objectFit: "cover",
-                            bordertRadius: 16,
-                            borderTopRightRadius: 16,
+                            borderTopLeftRadius: "16px",
+                            borderTopRightRadius: "16px",
                           }}
                         />
                       </div>
@@ -386,23 +386,28 @@ export default function ShopPage() {
                       <button
                         onClick={() => handleAddToCart(item)}
                         style={{
-                          padding: "8px 24px",
-                          backgroundColor: "#007aff",
+                          padding: "10px 28px",
+                          backgroundColor: "#429c5a", // Royal Emerald green
                           color: "#fff",
                           border: "none",
-                          borderRadius: 12,
+                          borderRadius: 24, // More rounded, Apple-like
                           cursor: "pointer",
                           fontWeight: 600,
                           fontSize: 16,
                           userSelect: "none",
-                          transition: "background-color 0.3s",
+                          boxShadow: "0 4px 12px rgba(80, 200, 120, 0.4)", // subtle glow
+                          transition: "background-color 0.3s, box-shadow 0.3s",
                         }}
-                        onMouseEnter={(e) =>
-                          (e.currentTarget.style.backgroundColor = "#005bb5")
-                        }
-                        onMouseLeave={(e) =>
-                          (e.currentTarget.style.backgroundColor = "#007aff")
-                        }
+                        onMouseEnter={(e) => {
+                          e.currentTarget.style.backgroundColor = "#3CA760"; // darker green on hover
+                          e.currentTarget.style.boxShadow =
+                            "0 6px 16px rgba(60, 167, 96, 0.6)";
+                        }}
+                        onMouseLeave={(e) => {
+                          e.currentTarget.style.backgroundColor = "#429c5a";
+                          e.currentTarget.style.boxShadow =
+                            "0 4px 12px rgba(80, 200, 120, 0.4)";
+                        }}
                       >
                         Add to Cart
                       </button>
@@ -459,12 +464,12 @@ export default function ShopPage() {
                           padding: "6px 14px",
                           borderRadius: 8,
                           border: isActive
-                            ? "2px solid #007aff"
+                            ? "2px solid #429c5a"
                             : "1px solid #ccc",
                           backgroundColor: isActive ? "#e6f0ff" : "#fff",
                           cursor: "pointer",
                           fontWeight: isActive ? 700 : 500,
-                          color: isActive ? "#007aff" : "#333",
+                          color: isActive ? "#429c5a" : "#333",
                           fontSize: 14,
                           userSelect: "none",
                         }}
@@ -528,4 +533,3 @@ export default function ShopPage() {
     </FoodKingLayout>
   );
 }
-f;

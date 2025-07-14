@@ -1,86 +1,78 @@
 "use client";
+
 import Cta from "@/components/Cta";
 import FoodKingLayout from "@/layouts/FoodKingLayout";
 import { useState } from "react";
 import { Accordion } from "react-bootstrap";
-import {
-  FiHelpCircle,
-  FiDollarSign,
-  FiShoppingCart,
-  FiMapPin,
-  FiUserCheck,
-} from "react-icons/fi";
 
 const FAQS = [
   {
-    id: 1,
-    icon: <FiDollarSign style={{ color: "#59c98d", fontSize: "1.35em" }} />,
-    title: "Are your menu prices the same as in the restaurant?",
+    id: "1",
+    title: "Are your meals HALAL certified?",
     content: (
       <>
-        Yes! We believe in price transparency. The menu prices you see on our
-        app/website are the same as those in our restaurant. No hidden fees—just
-        delicious food at fair prices.
+        Yes! At EAT FIT, we prioritize inclusivity and quality. All our meat and
+        poultry products are sourced from HALAL-certified suppliers, so you can
+        enjoy your meals with peace of mind.
       </>
     ),
-    delay: ".1s",
   },
   {
-    id: 2,
-    icon: <FiShoppingCart style={{ color: "#59c98d", fontSize: "1.35em" }} />,
-    title: "Can I order from multiple restaurants in one order?",
+    id: "2",
+    title: "Are your meals good for weight loss or muscle gain?",
     content: (
       <>
-        Currently, each order can only be placed from a single restaurant to
-        ensure quality and freshness. You’re welcome to place separate orders
-        from different restaurants at the same time!
+        Absolutely! Whether you're cutting or bulking, we’ve got your goals
+        covered. Each meal is crafted with your macros in mind—just pick from
+        our weight loss, muscle gain, or balanced fuel options.
       </>
     ),
-    delay: ".2s",
   },
   {
-    id: 3,
-    icon: <FiMapPin style={{ color: "#59c98d", fontSize: "1.35em" }} />,
-    title: "What is your delivery coverage area?",
+    id: "3",
+    title: "Do you provide nutritional information?",
     content: (
       <>
-        We deliver to all major neighborhoods in the city. Enter your address at
-        checkout to see if we deliver to you, or contact our team for special
-        requests.
+        Yes! Every EAT FIT meal comes with a full breakdown of calories,
+        protein, carbs, fat, and sugar—so you know exactly what you're putting
+        into your body.
       </>
     ),
-    delay: ".3s",
   },
   {
-    id: 4,
-    icon: <FiUserCheck style={{ color: "#59c98d", fontSize: "1.35em" }} />,
-    title: "Do you offer vegan, gluten-free, or allergy-friendly options?",
+    id: "4",
+    title: "Do you offer vegetarian or vegan options?",
     content: (
       <>
-        Absolutely! Our menu features vegan, vegetarian, gluten-free, and
-        allergy-conscious meals. Check the icons on each dish or use the filter
-        to find the best fit for you.
+        We do! Our menu includes protein-packed veggie wraps, chickpea bowls,
+        detox smoothies, and more. Plant-powered? We got you.
       </>
     ),
-    delay: ".4s",
   },
   {
-    id: 5,
-    icon: <FiHelpCircle style={{ color: "#59c98d", fontSize: "1.35em" }} />,
-    title: "How can I track my order in real time?",
+    id: "5",
+    title: "Are your shakes and desserts healthy too?",
     content: (
       <>
-        After placing your order, you’ll receive a live tracking link by SMS or
-        in your account dashboard. Follow your meal’s journey from our kitchen
-        to your door.
+        Yes! Our shakes and desserts are made with protein-rich, low-sugar, and
+        whole food ingredients, perfect for sweet cravings without the guilt.
       </>
     ),
-    delay: ".5s",
+  },
+  {
+    id: "6",
+    title: "Can I order just one meal to try it out?",
+    content: (
+      <>
+        Of course! There’s no minimum order. You can grab one meal or shake to
+        taste the EAT FIT difference before committing to more.
+      </>
+    ),
   },
 ];
 
 const page = () => {
-  const [active, setActive] = useState(FAQS[0].id);
+  const [active, setActive] = useState("1");
 
   return (
     <FoodKingLayout header={2} footer={2}>
@@ -108,7 +100,7 @@ const page = () => {
                 className="faq-content rounded-4 shadow-sm p-4"
                 style={{ background: "#fff" }}
               >
-                <Accordion defaultActiveKey={active}>
+                <Accordion activeKey={active}>
                   {FAQS.map((item) => (
                     <div
                       className="accordion-item mb-3"
@@ -124,14 +116,14 @@ const page = () => {
                             ? "1.5px solid #59c98d"
                             : "1.5px solid #e6e9ef",
                         background: active === item.id ? "#f7fcfa" : "#fff",
-                        transition: "all 0.17s cubic-bezier(.39,.58,.57,1)",
+                        transition: "all 0.25s cubic-bezier(.39,.58,.57,1)",
                       }}
                     >
                       <h4 className="accordion-header">
                         <Accordion.Toggle
                           as="button"
                           eventKey={item.id}
-                          className={`accordion-button d-flex align-items-center gap-2 fw-semibold fs-5 ${
+                          className={`accordion-button d-flex align-items-center fw-semibold fs-5 ${
                             active === item.id ? "" : "collapsed"
                           }`}
                           onClick={() => setActive(item.id)}
@@ -144,11 +136,10 @@ const page = () => {
                             fontWeight: 600,
                             padding: "1rem 1.2rem",
                             borderRadius: "12px",
-                            fontSize: "1.11em",
+                            fontSize: "1.15em",
                             cursor: "pointer",
                           }}
                         >
-                          {item.icon}
                           {item.title}
                         </Accordion.Toggle>
                       </h4>
@@ -156,7 +147,7 @@ const page = () => {
                         <div
                           className="accordion-body"
                           style={{
-                            padding: "0.85rem 1.7rem 1.1rem 3.4rem",
+                            padding: "0.85rem 1.7rem 1.1rem 2.5rem",
                             color: "#444",
                             fontSize: "1.04em",
                           }}

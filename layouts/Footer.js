@@ -25,7 +25,8 @@ const Footer = () => (
       fontFamily:
         "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif",
       color: "#ddd",
-      paddingTop: "4rem",
+      paddingTop: "40px",
+      padding: "20px",
       paddingBottom: "2rem",
       userSelect: "none",
       overflow: "hidden",
@@ -123,7 +124,7 @@ const Footer = () => (
               }}
               target="_blank"
               rel="noopener noreferrer"
-              onMouseEnter={(e) => (e.currentTarget.style.color = "#0a84ff")}
+              onMouseEnter={(e) => (e.currentTarget.style.color = "#429c5a")}
               onMouseLeave={(e) =>
                 (e.currentTarget.style.color = "rgba(255,255,255,0.65)")
               }
@@ -170,7 +171,7 @@ const Footer = () => (
         <a
           href="mailto:info.eatfitlk@gmail.com"
           style={{
-            color: "#0a84ff",
+            color: "#429c5a",
             textDecoration: "none",
             fontWeight: 500,
             display: "inline-block",
@@ -184,7 +185,7 @@ const Footer = () => (
         <a
           href="tel:+94703364646"
           style={{
-            color: "#0a84ff",
+            color: "#429c5a",
             textDecoration: "none",
             fontWeight: 500,
             userSelect: "text",
@@ -220,11 +221,11 @@ const Footer = () => (
         userSelect: "none",
       }}
     >
-      © Copyright <span style={{ color: "#0a84ff" }}>2025</span>{" "}
+      © Copyright <span style={{ color: "#429c5a" }}>2025</span>{" "}
       <Link href="/">
         <div
           style={{
-            color: "#0a84ff",
+            color: "#429c5a",
             textDecoration: "none",
             fontWeight: 600,
             cursor: "pointer",
@@ -247,7 +248,7 @@ const Footer = () => (
         width: "48px",
         height: "48px",
         borderRadius: "50%",
-        background: "linear-gradient(145deg, #0a84ff, #0061d5)",
+        background: "linear-gradient(145deg, #429c5a, #0061d5)",
         border: "none",
         boxShadow: "0 6px 16px rgba(10,132,255,0.6)",
         color: "#fff",
@@ -266,7 +267,7 @@ const Footer = () => (
       }
       onMouseLeave={(e) =>
         (e.currentTarget.style.background =
-          "linear-gradient(145deg, #0a84ff, #0061d5)")
+          "linear-gradient(145deg, #429c5a, #0061d5)")
       }
     >
       <i className="fas fa-arrow-up" />

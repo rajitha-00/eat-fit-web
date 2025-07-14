@@ -1,8 +1,6 @@
 "use client";
 
 import React from "react";
-import { useDispatch } from "react-redux";
-import { addToCart } from "@/lib/api/cartSlice";
 
 const TARGET_ITEMS = [
   "Mexican Beef Bowl",
@@ -10,9 +8,7 @@ const TARGET_ITEMS = [
   "Beef & Veggie Omelet",
 ];
 
-const FoodBannerHome = ({ menuItems = [], isLoading }) => {
-  const dispatch = useDispatch();
-
+const FoodBannerHome = ({ menuItems = [], isLoading, onAddToCart }) => {
   const bannerItems = React.useMemo(() => {
     const targetLower = TARGET_ITEMS.map((x) => x.toLowerCase());
     return menuItems
@@ -84,16 +80,7 @@ const FoodBannerHome = ({ menuItems = [], isLoading }) => {
 
                   <button
                     className="theme-btn border-radius-none mt-4"
-                    onClick={() =>
-                      dispatch(
-                        addToCart({
-                          ...item.item,
-                          quantity: 1,
-                          selectedAddons: [],
-                          uniqueKey: `${item.item._id}-${item.item.webPrice}`,
-                        })
-                      )
-                    }
+                    onClick={() => onAddToCart(item.item)}
                   >
                     <span className="button-content-wrapper d-flex align-items-center">
                       <span className="button-icon">

@@ -13,7 +13,7 @@ const getRandomItems = (arr, count) => {
   return shuffled.slice(0, count);
 };
 
-export const NextSaleBanner = ({ menuItems = [], isLoading }) => {
+export const NextSaleBanner = ({ menuItems = [], isLoading, onAddToCart }) => {
   const dispatch = useDispatch();
   const [selectedItems, setSelectedItems] = useState([]);
   const [activeIndex, setActiveIndex] = useState(0);
@@ -137,16 +137,7 @@ export const NextSaleBanner = ({ menuItems = [], isLoading }) => {
               </p>
 
               <button
-                onClick={() =>
-                  dispatch(
-                    addToCart({
-                      ...current,
-                      quantity: 1,
-                      selectedAddons: [],
-                      uniqueKey: `${current._id}-${current.webPrice}`,
-                    })
-                  )
-                }
+                onClick={() => onAddToCart(current)}
                 style={{
                   padding: "12px 32px",
                   backgroundColor: "#ff3b30",

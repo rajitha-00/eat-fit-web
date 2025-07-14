@@ -1,4 +1,5 @@
 "use client";
+import { AddToCartModal } from "@/components/AddonCartModel";
 import { CeoMessage } from "@/components/Home/CeoMessage";
 import Features from "@/components/Home/Features";
 import FoodBanerHome from "@/components/Home/FoodBanerHome";
@@ -9,8 +10,9 @@ import InstagramBannerSlider from "@/components/InstagramBannerSlider";
 import NextSaleBanner from "@/components/NextSaleBanner";
 import FoodKingLayout from "@/layouts/FoodKingLayout";
 import { useGetMenuItemsQuery } from "@/lib/api/apiSlice";
+import { addToCart } from "@/lib/api/cartSlice";
 import { setLoading } from "@/lib/api/loadingSlice";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 const features = [
   {
@@ -41,98 +43,182 @@ const features = [
 const page = () => {
   const dispatch = useDispatch();
   const { isLoading, data: menuItems } = useGetMenuItemsQuery();
+  const [modalItem, setModalItem] = useState(null);
 
   useEffect(() => {
     dispatch(setLoading(isLoading));
   }, [isLoading, dispatch]);
 
   if (isLoading) return null;
+
+  const handleAddToCart = (item) => {
+    if (item.addons && item.addons.length > 0) {
+      const preparedAddons = item.addons.map((a) => ({
+        ...a,
+        name: a.name || `Addon #${a.ingredientId}`,
+      }));
+      setModalItem({ ...item, addons: preparedAddons });
+    } else {
+      dispatch(
+        addToCart({
+          id: item._id,
+          name: item.name,
+          price: item.webPrice,
+          quantity: 1,
+          image: item.imageurl || "/assets/img/food/default-food.png",
+          selectedAddons: [],
+        })
+      );
+      alert(`${item.name} added to cart!`);
+    }
+  };
   return (
     <FoodKingLayout header={2} footer={2}>
-      <HomeSlider3 menuItems={menuItems} isLoading={isLoading} />
+      <HomeSlider3
+        menuItems={menuItems}
+        isLoading={isLoading}
+        onAddToCart={handleAddToCart}
+      />
       <section
         style={{
           position: "relative",
           width: "100%",
           overflow: "hidden",
-          marginTop: "-20px", // overlap slightly with hero if needed
+          marginTop: "-20px",
+          fontFamily:
+            "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif",
+          background: "linear-gradient(135deg, #f0faf6 0%, #d6f0e4 100%)",
+          padding: "60px 20px",
+          display: "flex",
+          justifyContent: "center",
         }}
       >
         <div
           style={{
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-            height: "320px",
             position: "relative",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            fontFamily:
-              "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif",
+            zIndex: 2,
+            backgroundColor: "rgba(66, 156, 90, 0.15)", // soft brand green with opacity
+            backdropFilter: "blur(12px)",
+            padding: "48px 56px",
+            borderRadius: "24px",
+            border: "1.5px solid rgba(66, 156, 90, 0.3)",
+            boxShadow: "0 12px 40px rgba(66, 156, 90, 0.15)",
+            maxWidth: "720px",
+            width: "100%",
+            textAlign: "center",
+            color: "#276437", // deeper green for text for easier reading
+            animation: "pulseGlow 4s ease-in-out infinite",
           }}
         >
-          {/* Optional gradient overlay */}
-          <div
+          <h2
             style={{
-              position: "absolute",
-              inset: 0,
-              background:
-                "linear-gradient(to bottom, rgba(0,0,0,0.01), rgba(0,0,0,0.07))",
-              zIndex: 1,
-            }}
-          />
-
-          {/* Statement Message */}
-          <div
-            style={{
-              position: "relative",
-              zIndex: 2,
-              backgroundColor: "rgba(255, 255, 255, 0.1)",
-              backdropFilter: "blur(10px)",
-              padding: "36px 48px",
-              borderRadius: "20px",
-              border: "1px solid rgba(255,255,255,0.2)",
-              boxShadow: "0 8px 32px rgba(0,0,0,0.2)",
-              textAlign: "center",
-              color: "white",
-              maxWidth: "700px",
-              width: "90%",
+              fontSize: "2.6rem",
+              fontWeight: "700",
+              marginBottom: "16px",
+              lineHeight: 1.2,
+              letterSpacing: "0.05em",
             }}
           >
-            <h2
-              style={{
-                fontSize: "2.2rem",
-                fontWeight: 600,
-                marginBottom: "12px",
-                lineHeight: 1.3,
-              }}
-            >
-              Innovation Never Tasted This Good
-            </h2>
-            <p
-              style={{
-                fontSize: "1rem",
-                fontWeight: 300,
-                color: "rgba(1,1,1,1)",
-                maxWidth: "540px",
-                margin: "0 auto",
-              }}
-            >
-              A celebration of flavor, design, and culinary technology brought
-              to your plate with love and precision.
-            </p>
-          </div>
-
-          {/* Decorative Shapes (optional) */}
+            Innovation Never Tasted This Good
+          </h2>
+          <p
+            style={{
+              fontSize: "1.15rem",
+              fontWeight: "400",
+              maxWidth: "600px",
+              margin: "0 auto 24px auto",
+              lineHeight: 1.5,
+              color: "#3b6d41",
+            }}
+          >
+            At EATFIT, we combine wholesome nutrition with culinary creativity
+            to bring meals that energize your body and delight your senses.
+          </p>
+          <button
+            style={{
+              backgroundColor: "#429c5a",
+              color: "white",
+              fontWeight: "600",
+              fontSize: "1rem",
+              padding: "12px 36px",
+              borderRadius: "36px",
+              border: "none",
+              cursor: "pointer",
+              boxShadow: "0 6px 20px rgba(66,156,90,0.4)",
+              transition: "background-color 0.3s ease",
+            }}
+            onMouseEnter={(e) =>
+              (e.currentTarget.style.backgroundColor = "#368147")
+            }
+            onMouseLeave={(e) =>
+              (e.currentTarget.style.backgroundColor = "#429c5a")
+            }
+            onClick={() =>
+              window.scrollTo({
+                top: document.body.scrollHeight,
+                behavior: "smooth",
+              })
+            }
+            aria-label="See our menu"
+          >
+            Explore Our Menu
+          </button>
         </div>
+
+        <style jsx>{`
+          @keyframes pulseGlow {
+            0%,
+            100% {
+              box-shadow: 0 12px 40px rgba(66, 156, 90, 0.15);
+            }
+            50% {
+              box-shadow: 0 12px 60px rgba(66, 156, 90, 0.35);
+            }
+          }
+        `}</style>
       </section>
+
       <Marquee />
-      <FoodBanerHome menuItems={menuItems} isLoading={isLoading} />
-      <FoodCategoryHome menuItems={menuItems} isLoading={isLoading} />
-      <NextSaleBanner menuItems={menuItems} isLoading={isLoading} />
+      <FoodBanerHome
+        menuItems={menuItems}
+        isLoading={isLoading}
+        onAddToCart={handleAddToCart}
+      />
+      <FoodCategoryHome
+        menuItems={menuItems}
+        isLoading={isLoading}
+        onAddToCart={handleAddToCart}
+      />
+      <NextSaleBanner
+        menuItems={menuItems}
+        isLoading={isLoading}
+        onAddToCart={handleAddToCart}
+      />
       <Features features={features} />
       <CeoMessage />
       <InstagramBannerSlider />
+      {modalItem && (
+        <AddToCartModal
+          item={modalItem}
+          onAddToCart={(itemWithAddons) => {
+            dispatch(
+              addToCart({
+                id: itemWithAddons._id,
+                name: itemWithAddons.name,
+                price: itemWithAddons.webPrice,
+                quantity: 1,
+                image:
+                  itemWithAddons.imageurl ||
+                  "/assets/img/food/default-food.png",
+                selectedAddons: itemWithAddons.selectedAddons,
+              })
+            );
+            alert(`${itemWithAddons.name} added to cart!`);
+            setModalItem(null);
+          }}
+          onClose={() => setModalItem(null)}
+        />
+      )}
     </FoodKingLayout>
   );
 };

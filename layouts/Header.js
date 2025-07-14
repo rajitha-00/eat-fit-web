@@ -1,5 +1,6 @@
 "use client";
 import CartDialog from "@/components/Cart";
+import { CarFrontIcon, MenuIcon, ShoppingCart } from "lucide-react";
 import Link from "next/link";
 import { Fragment, useEffect, useState } from "react";
 
@@ -137,7 +138,7 @@ const Header2 = () => {
                   textDecoration: "none",
                 }}
               >
-                <i className="flaticon-delivery me-2"></i> Order Now
+                <ShoppingCart /> Order Now
               </Link>
 
               {/* Mobile Hamburger */}
@@ -146,10 +147,7 @@ const Header2 = () => {
                 onClick={() => setToggle(true)}
                 style={{ cursor: "pointer" }}
               >
-                <img
-                  src="/assets/img/logo/bar.svg"
-                  alt="menu"
-                  height="24"
+                <MenuIcon
                   style={{
                     filter: isScrolled ? "none" : "invert(100%)",
                   }}

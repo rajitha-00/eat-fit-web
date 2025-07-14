@@ -4,20 +4,43 @@ import NextSaleBanner from "@/components/NextSaleBanner";
 import TestimonialSlider from "@/components/TestimonialSlider";
 import FoodKingLayout from "@/layouts/FoodKingLayout";
 import { useGetMenuItemsQuery } from "@/lib/api/apiSlice";
+import { addToCart } from "@/lib/api/cartSlice";
 import { setLoading } from "@/lib/api/loadingSlice";
 import Link from "next/link";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 
 const page = () => {
   const dispatch = useDispatch();
   const { isLoading, data: menuItems } = useGetMenuItemsQuery();
+  const [modalItem, setModalItem] = useState(null);
 
   useEffect(() => {
     dispatch(setLoading(isLoading));
   }, [isLoading, dispatch]);
 
   if (isLoading) return null;
+  const handleAddToCart = (item) => {
+    if (item.addons && item.addons.length > 0) {
+      const preparedAddons = item.addons.map((a) => ({
+        ...a,
+        name: a.name || `Addon #${a.ingredientId}`,
+      }));
+      setModalItem({ ...item, addons: preparedAddons });
+    } else {
+      dispatch(
+        addToCart({
+          id: item._id,
+          name: item.name,
+          price: item.webPrice,
+          quantity: 1,
+          image: item.imageurl || "/assets/img/food/default-food.png",
+          selectedAddons: [],
+        })
+      );
+      alert(`${item.name} added to cart!`);
+    }
+  };
   return (
     <FoodKingLayout header={2} footer={2}>
       {/* Hero Section */}
@@ -126,7 +149,11 @@ const page = () => {
 
       {/* Sale Banner */}
       <section className="section-padding bg-light">
-        <NextSaleBanner menuItems={menuItems} isLoading={isLoading} />
+        <NextSaleBanner
+          menuItems={menuItems}
+          isLoading={isLoading}
+          onAddToCart={handleAddToCart}
+        />
       </section>
 
       {/* Instagram Section */}

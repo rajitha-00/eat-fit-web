@@ -23,7 +23,7 @@ const ProductTopBar = ({
       }}
     >
       <div style={{ fontSize: 16, fontWeight: 600, color: "#1d1d1f" }}>
-        Showing <span style={{ color: "#007aff" }}>{total}</span> result
+        Showing <span style={{ color: "#429c5a" }}>{total}</span> result
         {total !== 1 ? "s" : ""}
       </div>
 
@@ -46,13 +46,13 @@ const ProductTopBar = ({
             borderRadius: 10,
             border: "1px solid #d2d2d7",
             outlineOffset: 2,
-            outlineColor: "#007aff",
+            outlineColor: "#429c5a",
             transition: "border-color 0.3s ease",
             width: 220,
             fontFamily:
               '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif',
           }}
-          onFocus={(e) => (e.currentTarget.style.borderColor = "#007aff")}
+          onFocus={(e) => (e.currentTarget.style.borderColor = "#429c5a")}
           onBlur={(e) => (e.currentTarget.style.borderColor = "#d2d2d7")}
         />
 
@@ -60,8 +60,8 @@ const ProductTopBar = ({
           onClick={onSortChange}
           style={{
             backgroundColor: "transparent",
-            border: "1.5px solid #007aff",
-            color: "#007aff",
+            border: "1.5px solid #429c5a",
+            color: "#429c5a",
             borderRadius: 10,
             padding: "8px 16px",
             fontWeight: 600,
@@ -73,7 +73,7 @@ const ProductTopBar = ({
             transition: "background-color 0.25s ease",
           }}
           onMouseEnter={(e) =>
-            (e.currentTarget.style.backgroundColor = "#007aff")
+            (e.currentTarget.style.backgroundColor = "#429c5a")
           }
           onMouseLeave={(e) =>
             (e.currentTarget.style.backgroundColor = "transparent")

@@ -152,7 +152,7 @@ const Page = () => {
 
                     <div
                       style={{
-                        borderTop: "2px solid #007aff",
+                        borderTop: "2px solid #429c5a",
                         paddingTop: "10px",
                         fontWeight: "bold",
                         fontSize: "18px",

@@ -13,6 +13,7 @@ const Cta = () => {
         userSelect: "none",
         overflow: "hidden",
         borderRadius: "12px",
+        margin: "20px",
       }}
       aria-label="Call to action banner for fast delivery challenge"
     >
