@@ -304,15 +304,6 @@ const MobileMenu = ({ setToggle }) => {
           Faq's
         </Link>
       </li>
-      <li>
-        <Link
-          href="/contact"
-          onClick={() => setToggle(false)}
-          style={{ color: "white", textDecoration: "none" }}
-        >
-          Contact
-        </Link>
-      </li>
     </ul>
   );
 };
