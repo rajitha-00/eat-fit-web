@@ -28,11 +28,14 @@ const icons = [
   {
     iconClass: "far fa-shopping-cart",
     label: "Add to Cart",
+    type: "add_to_cart", // <-- identify the action
   },
   {
     iconClass: "far fa-eye",
+    type: "view", // <-- identify as 'view' action
   },
 ];
+
 export default function ShopPage() {
   const dispatch = useDispatch();
   const { data: menuItems = [], isLoading } = useGetMenuItemsQuery();
@@ -320,7 +323,13 @@ export default function ShopPage() {
                           {icons.map((ic, j) => (
                             <li key={j}>
                               <button
-                                onClick={() => (window.location.href = ic.href)}
+                                onClick={() => {
+                                  if (ic.type === "add_to_cart") {
+                                    handleAddToCart(item);
+                                  } else if (ic.type === "view") {
+                                    window.location.href = `/shop/${item._id}`;
+                                  }
+                                }}
                                 style={{
                                   backgroundColor: "rgba(255 255 255 / 0.8)",
                                   backdropFilter: "blur(4px)",
@@ -519,3 +528,4 @@ export default function ShopPage() {
     </FoodKingLayout>
   );
 }
+f;
