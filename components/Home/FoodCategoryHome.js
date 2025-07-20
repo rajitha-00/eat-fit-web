@@ -189,7 +189,7 @@ export const FoodCategoryHome = ({
                     Rs. {item.webPrice?.toFixed(2) || "0.00"}
                   </h5>
                   <button
-                    onClick={() => onAddToCart(current)}
+                    onClick={() => onAddToCart(item)}
                     style={{
                       padding: "10px 28px",
                       backgroundColor: "#429c5a", // Royal Emerald green

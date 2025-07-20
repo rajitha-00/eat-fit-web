@@ -93,7 +93,7 @@ export const HomeSlider3 = ({ menuItems = [], isLoading, onAddToCart }) => {
                         </h4>
                         <div className="hero-button">
                           <button
-                            onClick={() => onAddToCart(current)}
+                            onClick={() => onAddToCart(item)}
                             className="theme-btn bg-yellow border-radius-none"
                             data-animation="fadeInUp"
                             data-duration={duration}
