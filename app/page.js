@@ -1,6 +1,5 @@
 "use client";
 import { AddToCartModal } from "@/components/AddonCartModel";
-import { CeoMessage } from "@/components/Home/CeoMessage";
 import Features from "@/components/Home/Features";
 import FoodBanerHome from "@/components/Home/FoodBanerHome";
 import { FoodCategoryHome } from "@/components/Home/FoodCategoryHome";
@@ -195,7 +194,7 @@ const page = () => {
         onAddToCart={handleAddToCart}
       />
       <Features features={features} />
-      <CeoMessage />
+      {/* <CeoMessage /> */}
       <InstagramBannerSlider />
       {modalItem && (
         <AddToCartModal
