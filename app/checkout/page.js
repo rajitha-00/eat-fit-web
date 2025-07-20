@@ -30,7 +30,7 @@ const Page = () => {
       (aSum, addon) => aSum + (addon.price || 0) * (addon.quantity || 1),
       0
     );
-    return sum + (item.webPrice + addonTotal) * item.quantity;
+    return sum + (item.price + addonTotal) * item.quantity;
   }, 0);
   const dispatch = useDispatch();
   const router = useRouter();
@@ -118,7 +118,7 @@ const Page = () => {
                             <span>
                               Rs{" "}
                               {(
-                                (item.webPrice +
+                                (item.price +
                                   (item.selectedAddons || []).reduce(
                                     (a, ad) =>
                                       a + (ad.price || 0) * (ad.quantity || 1),
