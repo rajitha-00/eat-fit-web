@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useMemo } from "react";
 
 const TARGET_ITEMS = [
   "Mexican Beef Bowl",
@@ -9,7 +9,7 @@ const TARGET_ITEMS = [
 ];
 
 const FoodBannerHome = ({ menuItems = [], isLoading, onAddToCart }) => {
-  const bannerItems = React.useMemo(() => {
+  const bannerItems = useMemo(() => {
     const targetLower = TARGET_ITEMS.map((x) => x.toLowerCase());
     return menuItems
       .filter(
@@ -23,10 +23,9 @@ const FoodBannerHome = ({ menuItems = [], isLoading, onAddToCart }) => {
         bgImage: item.imageurl || "/assets/img/hero/default-pizza.png",
         priceBg: "/assets/img/vector-2.png",
         price: item.webPrice.toFixed(0),
-        startPrice: item.uberPrice?.toFixed(0) || "",
+        startPrice: item.uberPrice ? item.uberPrice.toFixed(0) : "",
         titleLines: item.name.split(" "),
-        priceClass: "price",
-        item, // Keep full item for dispatch
+        item, // full item reference
       }));
   }, [menuItems]);
 
@@ -35,40 +34,35 @@ const FoodBannerHome = ({ menuItems = [], isLoading, onAddToCart }) => {
   return (
     <section className="food-banner fix">
       <div className="row g-3">
-        {bannerItems.map((item, idx) => (
-          <div key={idx} className="col-xl-4 col-lg-6 col-md-6">
+        {bannerItems.map((item) => (
+          <div key={item.id} className="col-xl-4 col-lg-6 col-md-6">
             <div
               className="food-banner-items-2 bg-cover"
               style={{ backgroundImage: `url(${item.bgImage})` }}
             >
               <div
-                className={item.priceClass + " bg-cover"}
-                style={{ backgroundImage: `url(${item.priceBg})` }}
+                className="price"
+                style={{
+                  backgroundColor: "#fde6e3ff", // rich red color
+                  padding: "1rem",
+                  borderRadius: "800px",
+                  display: "inline-block",
+                  color: "#fff",
+                  fontWeight: "600",
+                  fontSize: "1rem",
+                  textAlign: "center",
+                }}
               >
                 <span>{item.price}</span>
               </div>
-              <div className="food-content">
-                {/* Overlay */}
-                <div
-                  style={{
-                    position: "absolute",
-                    top: 0,
-                    left: 0,
-                    height: "100%",
-                    width: "100%",
-                    pointerEvents: "none",
-                    background:
-                      "linear-gradient(to right, rgba(0,0,0,0.3), rgba(0,0,0,0))",
-                    borderRadius: "inherit",
-                    zIndex: 0,
-                  }}
-                />
 
-                {/* Text content */}
-                <div style={{ position: "relative", zIndex: 1 }}>
-                  <h4 style={{ color: "#fff" }}>
-                    price was Rs. {item.startPrice}
-                  </h4>
+              <div className="food-content">
+                <div className="overlay" />
+
+                <div className="content">
+                  {item.startPrice && (
+                    <h4 className="text-white">Was Rs. {item.startPrice}</h4>
+                  )}
                   <h2 className="text-white">
                     {item.titleLines.map((line, i) => (
                       <React.Fragment key={i}>
@@ -86,7 +80,7 @@ const FoodBannerHome = ({ menuItems = [], isLoading, onAddToCart }) => {
                       <span className="button-icon">
                         <i className="flaticon-delivery" />
                       </span>
-                      <span className="button-text">order now</span>
+                      <span className="button-text">Order Now</span>
                     </span>
                   </button>
                 </div>
@@ -95,6 +89,28 @@ const FoodBannerHome = ({ menuItems = [], isLoading, onAddToCart }) => {
           </div>
         ))}
       </div>
+
+      <style jsx>{`
+        .overlay {
+          position: absolute;
+          top: 0;
+          left: 0;
+          height: 100%;
+          width: 100%;
+          pointer-events: none;
+          background: linear-gradient(
+            to right,
+            rgba(0, 0, 0, 0.3),
+            rgba(0, 0, 0, 0)
+          );
+          border-radius: inherit;
+          z-index: 0;
+        }
+        .content {
+          position: relative;
+          z-index: 1;
+        }
+      `}</style>
     </section>
   );
 };

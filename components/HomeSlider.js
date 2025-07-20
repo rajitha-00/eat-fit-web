@@ -2,8 +2,11 @@
 
 import React, { useEffect, useRef, useCallback, useMemo } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
+import Image from "next/image";
 import { sliderProps } from "@/utility/sliderProps";
 import { foodkingUtility } from "@/utility";
+
+import "swiper/css";
 
 const TARGET_ITEMS = [
   "Chicken Teriyaki Bowl",
@@ -11,24 +14,26 @@ const TARGET_ITEMS = [
   "Beef Burger Bowl",
 ];
 
+const localHeroImages = {
+  "chicken teriyaki bowl": "/assets/hero/chicken-teriyaki-bowl.svg",
+  "minced chicken noodles": "/assets/hero/Minced Chicken Noodles.svg",
+  "beef burger bowl": "/assets/hero/Beef Burger bowl.svg",
+};
+
+// Replace this with a real tiny base64 blur placeholder or a very small image
+const blurPlaceholder =
+  "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQIW2Nk+M9QDwADggF4gbCLrQAAAABJRU5ErkJggg==";
+
 export const HomeSlider3 = ({ menuItems = [], isLoading, onAddToCart }) => {
   const swiperRef = useRef(null);
-  const duration = "1";
+  const animationDuration = "1";
 
-  // Map for hero images (use your nice local images here)
-  const localHeroImages = {
-    "Chicken Teriyaki Bowl": "/assets/hero/chicken-teriyaki-bowl.svg",
-    "Minced Chicken Noodles": "/assets/hero/Minced Chicken Noodles.svg",
-    "Beef Burger bowl": "/assets/hero/Beef Burger bowl.svg",
-  };
-
-  // Filter items with matching names and valid webPrice
   const slides = useMemo(() => {
-    const targetLower = TARGET_ITEMS.map((x) => x.toLowerCase());
+    const targetSet = new Set(TARGET_ITEMS.map((x) => x.toLowerCase()));
     return menuItems.filter(
       (item) =>
         item.name &&
-        targetLower.includes(item.name.toLowerCase().trim()) &&
+        targetSet.has(item.name.toLowerCase().trim()) &&
         typeof item.webPrice === "number" &&
         !isNaN(item.webPrice)
     );
@@ -37,14 +42,17 @@ export const HomeSlider3 = ({ menuItems = [], isLoading, onAddToCart }) => {
   const handleAnimations = useCallback(() => {
     const el = swiperRef.current?.el || swiperRef.current?.wrapperEl;
     if (!el) return;
-    const slidesEls = el.querySelectorAll(".hero-slider .swiper-slide");
-    foodkingUtility.sliderAnimation(slidesEls);
+    const slideElements = el.querySelectorAll(".hero-slider .swiper-slide");
+    foodkingUtility.sliderAnimation(slideElements);
   }, []);
 
   useEffect(() => {
     const swiper = swiperRef.current;
     if (!swiper) return;
+
     swiper.on("slideChange", handleAnimations);
+    handleAnimations();
+
     return () => {
       swiper.off("slideChange", handleAnimations);
     };
@@ -53,23 +61,29 @@ export const HomeSlider3 = ({ menuItems = [], isLoading, onAddToCart }) => {
   if (isLoading) return null;
 
   return (
-    <>
-      <section className="hero-section-3">
-        <div className="pegi-wrp">
-          <div className="pegi-number" />
-        </div>
+    <section className="hero-section-3">
+      <div className="pegi-wrp">
+        <div className="pegi-number" />
+      </div>
 
-        <Swiper
-          {...sliderProps.hero}
-          onSwiper={(swiper) => (swiperRef.current = swiper)}
-          className="swiper hero-slider"
-        >
-          {slides.map((item) => (
-            <SwiperSlide key={item.id || item.name}>
+      <Swiper
+        {...sliderProps.hero}
+        onSwiper={(swiper) => (swiperRef.current = swiper)}
+        className="swiper hero-slider"
+      >
+        {slides.map((item, index) => {
+          const imgSrc =
+            localHeroImages[item.name.toLowerCase()] ||
+            "/assets/img/hero/default-pizza.png";
+
+          return (
+            <SwiperSlide key={item._id || item.name}>
               <div
-                className="hero-3 bg-cover"
+                className="hero-3"
                 style={{
-                  backgroundImage: 'url("/assets/img/hero/hero-bg-3.jpg")',
+                  background:
+                    "linear-gradient(135deg, #1b3a1a 0%, #276437 50%, #1b3a1a 100%)",
+                  transition: "background 0.5s ease",
                 }}
               >
                 <div className="container">
@@ -78,14 +92,14 @@ export const HomeSlider3 = ({ menuItems = [], isLoading, onAddToCart }) => {
                       <div className="hero-content">
                         <h1
                           data-animation="fadeInUp"
-                          data-duration={duration}
+                          data-duration={animationDuration}
                           data-delay=".4s"
                         >
                           {item.name}
                         </h1>
                         <h4
                           data-animation="fadeInUp"
-                          data-duration={duration}
+                          data-duration={animationDuration}
                           data-delay=".8s"
                         >
                           Start Your Order Just Only LKR{" "}
@@ -96,7 +110,7 @@ export const HomeSlider3 = ({ menuItems = [], isLoading, onAddToCart }) => {
                             onClick={() => onAddToCart(item)}
                             className="theme-btn bg-yellow border-radius-none"
                             data-animation="fadeInUp"
-                            data-duration={duration}
+                            data-duration={animationDuration}
                             data-delay="1s"
                           >
                             <span className="button-content-wrapper d-flex align-items-center">
@@ -110,14 +124,17 @@ export const HomeSlider3 = ({ menuItems = [], isLoading, onAddToCart }) => {
 
                     <div className="col-xl-7 col-lg-7 mt-5 mt-lg-0">
                       <div className="pizza-image">
-                        <img
-                          src={
-                            localHeroImages[item.name] ||
-                            "/assets/img/hero/default-pizza.png"
-                          }
+                        <Image
+                          src={imgSrc}
                           alt={item.name}
+                          width={500}
+                          height={500}
                           className="img-fluid"
-                          style={{ maxWidth: "500px" }}
+                          priority={index === 0}
+                          fetchPriority={index === 0 ? "high" : "auto"}
+                          placeholder="blur"
+                          blurDataURL={blurPlaceholder}
+                          style={{ maxWidth: "500px", height: "auto" }}
                         />
                       </div>
                     </div>
@@ -125,9 +142,9 @@ export const HomeSlider3 = ({ menuItems = [], isLoading, onAddToCart }) => {
                 </div>
               </div>
             </SwiperSlide>
-          ))}
-        </Swiper>
-      </section>
-    </>
+          );
+        })}
+      </Swiper>
+    </section>
   );
 };

@@ -1,4 +1,5 @@
 "use client";
+
 import { foodkingUtility } from "@/utility";
 import { useEffect } from "react";
 
@@ -7,33 +8,40 @@ const Preloader = () => {
     foodkingUtility.preloader();
   }, []);
 
+  const letters = ["E", "A", "T", "F", "I", "T", ];
+
   return (
-    <div id="preloader" className="preloader">
+    <div
+      id="preloader"
+      className="preloader"
+      role="alert"
+      aria-live="assertive"
+      aria-busy="true"
+    >
       <div className="animation-preloader">
-        <div className="spinner"></div>
-        <div className="txt-loading">
-          <span data-text-preloader="E" className="letters-loading">
-            E
-          </span>
-          <span data-text-preloader="A" className="letters-loading">
-            A
-          </span>
-          <span data-text-preloader={"T"} className="letters-loading">
-            T
-          </span>
-          <span data-text-preloader="F" className="letters-loading">
-            F
-          </span>
-          <span data-text-preloader="I" className="letters-loading">
-            I
-          </span>
-          <span data-text-preloader="T" className="letters-loading">
-            T
-          </span>
+        <div className="spinner" aria-hidden="true" />
+        <div className="txt-loading" aria-label="Loading Eat Fit">
+          {letters.map((letter, i) => (
+            <span
+              key={i}
+              data-text-preloader={letter}
+              className="letters-loading"
+              style={{ animationDelay: `${i * 0.15}s` }}
+            >
+              {letter}
+            </span>
+          ))}
         </div>
-        <p className="text-center">Loading</p>
+        <p
+          className="text-center"
+          aria-live="polite"
+          style={{ marginTop: "1rem" }}
+        >
+          Loading...
+        </p>
       </div>
-      <div className="loader">
+
+      <div className="loader" aria-hidden="true">
         <div className="row">
           <div className="col-3 loader-section section-left">
             <div className="bg" />
@@ -52,4 +60,5 @@ const Preloader = () => {
     </div>
   );
 };
+
 export default Preloader;

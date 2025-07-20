@@ -1,4 +1,5 @@
 "use client";
+
 import { AddToCartModal } from "@/components/AddonCartModel";
 import Features from "@/components/Home/Features";
 import FoodBanerHome from "@/components/Home/FoodBanerHome";
@@ -13,35 +14,38 @@ import { addToCart } from "@/lib/api/cartSlice";
 import { setLoading } from "@/lib/api/loadingSlice";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
+import Head from "next/head";
+
 const features = [
   {
-    icon: "assets/img/icon/01.svg",
+    icon: "/assets/img/icon/01.svg",
     title: "Best Quality Food",
     desc: "We use fresh, premium ingredients and chef-crafted recipes for a truly unforgettable meal.",
     delay: ".3s",
   },
   {
-    icon: "assets/img/icon/02.svg",
+    icon: "/assets/img/icon/02.svg",
     title: "Fast Delivery",
     desc: "Hot and fresh to your door in record time—your cravings satisfied before you know it.",
     delay: ".5s",
   },
   {
-    icon: "assets/img/icon/03.svg",
+    icon: "/assets/img/icon/03.svg",
     title: "Money-Back Guarantee",
     desc: "Not delighted? We’ll refund your order—no questions asked.",
     delay: ".7s",
   },
   {
-    icon: "assets/img/icon/04.svg",
+    icon: "/assets/img/icon/04.svg",
     title: "100% Natural",
     desc: "All dishes are made with organic, preservative-free ingredients for healthy eating.",
     delay: ".9s",
   },
 ];
-const page = () => {
+
+const Page = () => {
   const dispatch = useDispatch();
-  const { isLoading, data: menuItems } = useGetMenuItemsQuery();
+  const { isLoading, data: menuItems = [] } = useGetMenuItemsQuery();
   const [modalItem, setModalItem] = useState(null);
 
   useEffect(() => {
@@ -51,7 +55,7 @@ const page = () => {
   if (isLoading) return null;
 
   const handleAddToCart = (item) => {
-    if (item.addons && item.addons.length > 0) {
+    if (item.addons?.length > 0) {
       const preparedAddons = item.addons.map((a) => ({
         ...a,
         name: a.name || `Addon #${a.ingredientId}`,
@@ -68,16 +72,23 @@ const page = () => {
           selectedAddons: [],
         })
       );
+      // Replace alert with non-blocking notification later
       alert(`${item.name} added to cart!`);
     }
   };
+
   return (
     <FoodKingLayout header={2} footer={2}>
+      <Head>
+        <link rel="preload" as="image" href="/assets/img/hero/hero-bg-3.jpg" />
+      </Head>
+
       <HomeSlider3
         menuItems={menuItems}
         isLoading={isLoading}
         onAddToCart={handleAddToCart}
       />
+
       <section
         style={{
           position: "relative",
@@ -96,7 +107,7 @@ const page = () => {
           style={{
             position: "relative",
             zIndex: 2,
-            backgroundColor: "rgba(66, 156, 90, 0.15)", // soft brand green with opacity
+            backgroundColor: "rgba(66, 156, 90, 0.15)",
             backdropFilter: "blur(12px)",
             padding: "48px 56px",
             borderRadius: "24px",
@@ -105,7 +116,7 @@ const page = () => {
             maxWidth: "720px",
             width: "100%",
             textAlign: "center",
-            color: "#276437", // deeper green for text for easier reading
+            color: "#276437",
             animation: "pulseGlow 4s ease-in-out infinite",
           }}
         >
@@ -194,8 +205,8 @@ const page = () => {
         onAddToCart={handleAddToCart}
       />
       <Features features={features} />
-      {/* <CeoMessage /> */}
       <InstagramBannerSlider />
+
       {modalItem && (
         <AddToCartModal
           item={modalItem}
@@ -221,4 +232,5 @@ const page = () => {
     </FoodKingLayout>
   );
 };
-export default page;
+
+export default Page;

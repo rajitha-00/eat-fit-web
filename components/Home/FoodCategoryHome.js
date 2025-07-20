@@ -2,6 +2,7 @@
 
 import React, { useMemo } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation"; // for client-side navigation
 
 const icons = [
   {
@@ -14,6 +15,7 @@ const icons = [
     type: "view", // <-- identify as 'view' action
   },
 ];
+
 const getRandomItems = (arr, count) => {
   const shuffled = [...arr].sort(() => 0.5 - Math.random());
   return shuffled.slice(0, count);
@@ -24,7 +26,16 @@ export const FoodCategoryHome = ({
   isLoading,
   onAddToCart,
 }) => {
+  const router = useRouter();
+
   const randomItems = useMemo(() => getRandomItems(menuItems, 8), [menuItems]);
+
+  // Define handleAddToCart for icon button usage
+  const handleAddToCart = (item) => {
+    if (typeof onAddToCart === "function") {
+      onAddToCart(item);
+    }
+  };
 
   return (
     <section
@@ -137,7 +148,7 @@ export const FoodCategoryHome = ({
                               if (ic.type === "add_to_cart") {
                                 handleAddToCart(item);
                               } else if (ic.type === "view") {
-                                window.location.href = `/shop/${item._id}`;
+                                router.push(`/shop/${item._id}`);
                               }
                             }}
                             style={{
@@ -153,6 +164,8 @@ export const FoodCategoryHome = ({
                               textDecoration: "none",
                               boxShadow: "0 4px 8px rgba(0,0,0,0.1)",
                             }}
+                            aria-label={ic.label || ic.type}
+                            type="button"
                           >
                             <i className={ic.iconClass} aria-hidden="true"></i>
                           </button>
@@ -192,19 +205,19 @@ export const FoodCategoryHome = ({
                     onClick={() => onAddToCart(item)}
                     style={{
                       padding: "10px 28px",
-                      backgroundColor: "#429c5a", // Royal Emerald green
+                      backgroundColor: "#429c5a",
                       color: "#fff",
                       border: "none",
-                      borderRadius: 24, // More rounded, Apple-like
+                      borderRadius: 24,
                       cursor: "pointer",
                       fontWeight: 600,
                       fontSize: 16,
                       userSelect: "none",
-                      boxShadow: "0 4px 12px rgba(80, 200, 120, 0.4)", // subtle glow
+                      boxShadow: "0 4px 12px rgba(80, 200, 120, 0.4)",
                       transition: "background-color 0.3s, box-shadow 0.3s",
                     }}
                     onMouseEnter={(e) => {
-                      e.currentTarget.style.backgroundColor = "#3CA760"; // darker green on hover
+                      e.currentTarget.style.backgroundColor = "#3CA760";
                       e.currentTarget.style.boxShadow =
                         "0 6px 16px rgba(60, 167, 96, 0.6)";
                     }}
@@ -213,6 +226,7 @@ export const FoodCategoryHome = ({
                       e.currentTarget.style.boxShadow =
                         "0 4px 12px rgba(80, 200, 120, 0.4)";
                     }}
+                    type="button"
                   >
                     Add to Cart
                   </button>
