@@ -23,7 +23,7 @@ const ProductTopBar = ({
       }}
     >
       <div style={{ fontSize: 16, fontWeight: 600, color: "#1d1d1f" }}>
-        Showing <span style={{ color: "#429c5a" }}>{total}</span> result
+        Showing <span style={{ color: "#2A774C" }}>{total}</span> result
         {total !== 1 ? "s" : ""}
       </div>
 
@@ -46,7 +46,7 @@ const ProductTopBar = ({
             borderRadius: 10,
             border: "1px solid #d2d2d7",
             outlineOffset: 2,
-            outlineColor: "#429c5a",
+            outlineColor: "#2A774C",
             transition: "border-color 0.3s ease",
             width: 220,
             fontFamily:
@@ -60,8 +60,8 @@ const ProductTopBar = ({
           onClick={onSortChange}
           style={{
             backgroundColor: "transparent",
-            border: "1.5px solid #429c5a",
-            color: "#429c5a",
+            border: "1.5px solid #2A774C",
+            color: "#2A774C",
             borderRadius: 10,
             padding: "8px 16px",
             fontWeight: 600,

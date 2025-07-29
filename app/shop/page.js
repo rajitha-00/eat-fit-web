@@ -187,10 +187,10 @@ export default function ShopPage() {
                   padding: "8px 18px",
                   borderRadius: 9999,
                   border: "1.5px solid",
-                  borderColor: menuCat === "All" ? "#429c5a" : "#ccc",
+                  borderColor: menuCat === "All" ? "#2A774C" : "#ccc",
                   backgroundColor:
-                    menuCat === "All" ? "#e6f0ff" : "transparent",
-                  color: menuCat === "All" ? "#429c5a" : "#555",
+                    menuCat === "All" ? "#E8F5EE" : "transparent",
+                  color: menuCat === "All" ? "#2A774C" : "#555",
                   fontWeight: menuCat === "All" ? 600 : 500,
                   cursor: "pointer",
                   userSelect: "none",
@@ -220,10 +220,10 @@ export default function ShopPage() {
                     padding: "8px 18px",
                     borderRadius: 9999,
                     border: "1.5px solid",
-                    borderColor: menuCat === cat ? "#429c5a" : "#ccc",
+                    borderColor: menuCat === cat ? "#2A774C" : "#ccc",
                     backgroundColor:
-                      menuCat === cat ? "#e6f0ff" : "transparent",
-                    color: menuCat === cat ? "#429c5a" : "#555",
+                      menuCat === cat ? "#E8F5EE" : "transparent",
+                    color: menuCat === cat ? "#2A774C" : "#555",
                     fontWeight: menuCat === cat ? 600 : 500,
                     cursor: "pointer",
                     userSelect: "none",
@@ -387,7 +387,7 @@ export default function ShopPage() {
                         onClick={() => handleAddToCart(item)}
                         style={{
                           padding: "10px 28px",
-                          backgroundColor: "#429c5a", // Royal Emerald green
+                          backgroundColor: "#2A774C", // Darker green for better contrast
                           color: "#fff",
                           border: "none",
                           borderRadius: 24, // More rounded, Apple-like
@@ -395,16 +395,16 @@ export default function ShopPage() {
                           fontWeight: 600,
                           fontSize: 16,
                           userSelect: "none",
-                          boxShadow: "0 4px 12px rgba(80, 200, 120, 0.4)", // subtle glow
+                          boxShadow: "0 4px 12px rgba(42, 119, 76, 0.4)", // subtle glow
                           transition: "background-color 0.3s, box-shadow 0.3s",
                         }}
                         onMouseEnter={(e) => {
-                          e.currentTarget.style.backgroundColor = "#3CA760"; // darker green on hover
+                          e.currentTarget.style.backgroundColor = "#1B5C3B"; // darker green on hover
                           e.currentTarget.style.boxShadow =
-                            "0 6px 16px rgba(60, 167, 96, 0.6)";
+                            "0 6px 16px rgba(42, 119, 76, 0.6)";
                         }}
                         onMouseLeave={(e) => {
-                          e.currentTarget.style.backgroundColor = "#429c5a";
+                          e.currentTarget.style.backgroundColor = "#2A774C";
                           e.currentTarget.style.boxShadow =
                             "0 4px 12px rgba(80, 200, 120, 0.4)";
                         }}
@@ -464,12 +464,12 @@ export default function ShopPage() {
                           padding: "6px 14px",
                           borderRadius: 8,
                           border: isActive
-                            ? "2px solid #429c5a"
+                            ? "2px solid #2A774C"
                             : "1px solid #ccc",
-                          backgroundColor: isActive ? "#e6f0ff" : "#fff",
+                          backgroundColor: isActive ? "#E8F5EE" : "#fff",
                           cursor: "pointer",
                           fontWeight: isActive ? 700 : 500,
-                          color: isActive ? "#429c5a" : "#333",
+                          color: isActive ? "#2A774C" : "#333",
                           fontSize: 14,
                           userSelect: "none",
                         }}

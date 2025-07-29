@@ -71,27 +71,33 @@ export const NextSaleBanner = ({ menuItems = [], isLoading, onAddToCart }) => {
                 flex: "1 1 35%",
                 minWidth: "280px",
                 height: "100%",
-                background:
-                  "linear-gradient(135deg, rgba(255 255 255 / 0.85), rgba(255 255 255 / 0.7))",
-                padding: "2.5rem 2rem",
-                boxShadow: "0 12px 24px rgb(0 0 0 / 0.1)",
+                background: "linear-gradient(180deg, #1a1a1a 0%, #2d2d2d 100%)",
+                padding: "3rem 2.5rem",
+                boxShadow:
+                  "8px 8px 0 rgba(255, 59, 48, 0.3), -1px -1px 0 rgba(255, 255, 255, 0.1)",
                 position: "relative",
-                color: "#111",
+                color: "#fff",
                 display: "flex",
                 flexDirection: "column",
                 justifyContent: "center",
                 fontWeight: 500,
+                backdropFilter: "blur(10px)",
+                borderRadius: "0px",
+                border: "2px solid #333",
               }}
             >
               <h4
                 style={{
-                  fontWeight: 600,
-                  fontSize: "2rem",
+                  fontWeight: 700,
+                  fontSize: "1.8rem",
                   marginBottom: "0.5rem",
-                  color: "#666",
-                  letterSpacing: "0.1em",
+                  color: "#ff3b30",
+                  letterSpacing: "0.15em",
                   textTransform: "uppercase",
                   userSelect: "none",
+                  position: "relative",
+                  paddingLeft: "12px",
+                  borderLeft: "4px solid #ff3b30",
                 }}
               >
                 Deal Of The Day
@@ -99,10 +105,14 @@ export const NextSaleBanner = ({ menuItems = [], isLoading, onAddToCart }) => {
 
               <h2
                 style={{
-                  fontWeight: 700,
-                  fontSize: "3rem",
+                  fontWeight: 800,
+                  fontSize: "3.5rem",
                   lineHeight: 1.1,
                   marginBottom: "1rem",
+                  background: "linear-gradient(90deg, #fff 0%, #e0e0e0 100%)",
+                  WebkitBackgroundClip: "text",
+                  WebkitTextFillColor: "transparent",
+                  textShadow: "2px 2px 0 rgba(0,0,0,0.1)",
                 }}
               >
                 {current?.name || "Tasty Meal"}
@@ -116,20 +126,41 @@ export const NextSaleBanner = ({ menuItems = [], isLoading, onAddToCart }) => {
                   marginBottom: "1rem",
                 }}
               >
-                <span style={{ fontWeight: 400, color: "#444" }}>
-                  special price{" "}
+                <span
+                  style={{
+                    fontWeight: 500,
+                    color: "#999",
+                    display: "block",
+                    fontSize: "1rem",
+                    letterSpacing: "0.1em",
+                    marginBottom: "4px",
+                  }}
+                >
+                  SPECIAL PRICE
                 </span>
-                Rs. {current.webPrice?.toFixed(0) || "0"}
+                <span
+                  style={{
+                    background:
+                      "linear-gradient(90deg, #ff3b30 0%, #ff8674 100%)",
+                    WebkitBackgroundClip: "text",
+                    WebkitTextFillColor: "transparent",
+                    fontWeight: "800",
+                  }}
+                >
+                  Rs. {current.webPrice?.toFixed(0) || "0"}
+                </span>
               </h3>
 
               <p
                 style={{
                   fontWeight: 400,
                   fontSize: "1.5rem",
-                  color: "#555",
-                  lineHeight: 1.5,
-                  marginBottom: "2rem",
+                  color: "#b0b0b0",
+                  lineHeight: 1.6,
+                  marginBottom: "2.5rem",
                   userSelect: "none",
+                  borderLeft: "2px solid #333",
+                  paddingLeft: "1rem",
                 }}
               >
                 {current.description?.slice(0, 250) ||
@@ -139,17 +170,19 @@ export const NextSaleBanner = ({ menuItems = [], isLoading, onAddToCart }) => {
               <button
                 onClick={() => onAddToCart(current)}
                 style={{
-                  padding: "12px 32px",
+                  padding: "16px 40px",
                   backgroundColor: "#ff3b30",
                   color: "white",
-                  borderRadius: "9999px",
-                  fontWeight: 600,
-                  fontSize: "1rem",
+                  borderRadius: "0",
+                  fontWeight: 700,
+                  fontSize: "1.1rem",
                   alignSelf: "start",
-                  boxShadow: "0 4px 12px rgb(255 59 48 / 0.4)",
-                  transition: "background-color 0.3s ease",
-                  border: "none",
+                  boxShadow: "4px 4px 0 rgba(0,0,0,0.3)",
+                  transition: "all 0.2s ease",
+                  border: "2px solid #ff3b30",
                   cursor: "pointer",
+                  textTransform: "uppercase",
+                  letterSpacing: "0.1em",
                 }}
                 onMouseEnter={(e) =>
                   (e.currentTarget.style.backgroundColor = "#e53228")

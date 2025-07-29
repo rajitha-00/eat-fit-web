@@ -1,11 +1,24 @@
 // utility/index.js
 
 export const foodkingUtility = {
-  // Initialize WOW.js animations
+  // Modern scroll animations using Intersection Observer
   scrollAnimation: () => {
     if (typeof window === "undefined") return;
-    const { WOW } = require("wowjs");
-    new WOW().init();
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("animate");
+          }
+        });
+      },
+      { threshold: 0.1 }
+    );
+
+    document.querySelectorAll("[data-animation]").forEach((el) => {
+      observer.observe(el);
+    });
   },
 
   // Toggle "sticky" on your header when you scroll past 250px

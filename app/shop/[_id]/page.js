@@ -4,7 +4,7 @@ import { useParams } from "next/navigation";
 import FoodKingLayout from "@/layouts/FoodKingLayout";
 import Cta from "@/components/Cta";
 import { useState } from "react";
-import { Tabs, Tab } from "react-bootstrap";
+import { Tabs, Tab } from "@/components/Tabs";
 import {
   useGetMenuItemQuery,
   useGetIngredientsQuery,

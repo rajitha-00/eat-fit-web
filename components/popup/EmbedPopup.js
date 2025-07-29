@@ -1,7 +1,6 @@
 "use client";
 import useClickOutside from "@/utility/useClickOutside";
 import { Fragment, useEffect, useState } from "react";
-import ReactPlayer from "react-player";
 
 const EmbedPopup_ = ({ close, videoID }) => {
   const domNode = useClickOutside(() => close(false));
@@ -34,7 +33,14 @@ const EmbedPopup_ = ({ close, videoID }) => {
                   src={videoID}
                 ></iframe>
               ) : (
-                <ReactPlayer url={videoID} playing={true} />
+                <iframe
+                  src={videoID.replace("watch?v=", "embed/")}
+                  width="100%"
+                  height="100%"
+                  frameBorder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                ></iframe>
               )}
             </div>
           </div>

@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
-const BASE_URL = "https://eatfit-possytem.onrender.com/api";
+const BASE_URL = "https://eatfit-possytem-production.up.railway.app/api";
 
 export const api = createApi({
   reducerPath: "api",

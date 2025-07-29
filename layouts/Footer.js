@@ -3,10 +3,10 @@ import React from "react";
 import Link from "next/link";
 
 const footerShapes = [
-  { className: "footer-shape", src: "assets/hero/chicken-teriyaki-bowl.svg" },
+  { className: "footer-shape", src: "/assets/hero/chicken-teriyaki-bowl.svg" },
   {
     className: "footer-shape-2",
-    src: "assets/hero/Minced Chicken Noodles.svg",
+    src: "/assets/hero/Minced Chicken Noodles.svg",
   },
 ];
 
@@ -90,7 +90,7 @@ const Footer = () => (
               }}
             >
               <img
-                src="assets/img/logo/logo-3.svg"
+                src="/assets/img/logo/logo-3.svg"
                 alt="logo"
                 style={{ height: "40px", objectFit: "contain" }}
                 draggable={false}
@@ -221,11 +221,11 @@ const Footer = () => (
         userSelect: "none",
       }}
     >
-      © Copyright <span style={{ color: "#429c5a" }}>2025</span>{" "}
+      © Copyright <span style={{ color: "#2A774C" }}>2025</span>{" "}
       <Link href="/">
         <div
           style={{
-            color: "#429c5a",
+            color: "#2A774C",
             textDecoration: "none",
             fontWeight: 600,
             cursor: "pointer",
@@ -248,9 +248,9 @@ const Footer = () => (
         width: "48px",
         height: "48px",
         borderRadius: "50%",
-        background: "linear-gradient(145deg, #429c5a, #0061d5)",
+        background: "linear-gradient(145deg, #2A774C, #1B5C3B)",
         border: "none",
-        boxShadow: "0 6px 16px rgba(10,132,255,0.6)",
+        boxShadow: "0 6px 16px rgba(42,119,76,0.6)",
         color: "#fff",
         fontSize: "1.25rem",
         cursor: "pointer",
