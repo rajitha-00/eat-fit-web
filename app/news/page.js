@@ -15,7 +15,7 @@ const Page = () => {
             <div className="col-12 col-lg-12">
               <article
                 style={{
-                  maxWidth: 880,
+                  maxWidth: 1400,
                   margin: "auto",
                   fontFamily:
                     "-apple-system, BlinkMacSystemFont, 'San Francisco', 'Segoe UI', Roboto, Helvetica, Arial, sans-serif",
@@ -154,7 +154,7 @@ const Page = () => {
                     }}
                   >
                     <img
-                      src="https://images.unsplash.com/photo-1543362906-acfc16c67564?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"
+                      src="https://images.pexels.com/photos/5591663/pexels-photo-5591663.jpeg"
                       alt="Chef preparing healthy meal"
                       style={{
                         width: "100%",
@@ -164,7 +164,7 @@ const Page = () => {
                       }}
                     />
                     <img
-                      src="https://images.unsplash.com/photo-1607081692251-d689f1b9af84?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"
+                      src="https://images.pexels.com/photos/33158371/pexels-photo-33158371.jpeg"
                       alt="Nutritionist planning meals"
                       style={{
                         width: "100%",
@@ -210,7 +210,7 @@ const Page = () => {
                     }}
                   >
                     <img
-                      src="https://images.unsplash.com/photo-1547592180-85f173990554?ixlib=rb-1.2.1&auto=format&fit=crop&w=1200&q=80"
+                      src="https://images.pexels.com/photos/2543270/pexels-photo-2543270.jpeg"
                       alt="Modern kitchen with healthy ingredients"
                       style={{
                         width: "100%",
@@ -244,7 +244,7 @@ const Page = () => {
                   </p>
 
                   <img
-                    src="https://img.freepik.com/free-photo/top-view-healthy-meals-composition_23-2149245403.jpg"
+                    src="https://images.pexels.com/photos/6740511/pexels-photo-6740511.jpeg"
                     alt="Eat Fit healthy meals"
                     style={{
                       borderRadius: "20px",
@@ -374,7 +374,7 @@ const Page = () => {
                   </p>
 
                   <img
-                    src="https://img.freepik.com/free-photo/vegetables-balanced-diet-food_144627-8991.jpg"
+                    src="https://images.pexels.com/photos/6740517/pexels-photo-6740517.jpeg"
                     alt="Balanced plate"
                     style={{
                       borderRadius: "20px",

@@ -6,26 +6,50 @@ const Cta = () => {
         backgroundImage: 'url("assets/img/banner/main-cta-bg-2.jpg")',
         backgroundSize: "cover",
         backgroundPosition: "center",
-        padding: "6rem 2rem",
+        padding: "8rem 2rem",
         fontFamily:
           "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif",
-        color: "#e6f0ea", // soft light text
+        color: "#ffffff",
         userSelect: "none",
         overflow: "hidden",
-        borderRadius: "12px",
-        margin: "20px",
+        borderRadius: "24px",
+        margin: "40px 20px",
+        boxShadow: "0 20px 40px rgba(0, 0, 0, 0.15)",
+        transition: "transform 0.3s ease",
+      }}
+      onMouseEnter={(e) => {
+        e.currentTarget.style.transform = "translateY(-5px)";
+      }}
+      onMouseLeave={(e) => {
+        e.currentTarget.style.transform = "translateY(0)";
       }}
       aria-label="Call to action banner for fast delivery challenge"
     >
-      {/* Dark transparent overlay with emerald tint */}
+      {/* Gradient overlay for better contrast */}
       <div
         style={{
           position: "absolute",
           inset: 0,
-          background: "rgba(22, 77, 35, 0.75)", // medium-dark emerald translucent
+          background:
+            "linear-gradient(135deg, rgba(22, 77, 35, 0.95), rgba(19, 55, 28, 0.85))",
+          backdropFilter: "blur(4px)",
           pointerEvents: "none",
-          borderRadius: "12px",
+          borderRadius: "24px",
           zIndex: 0,
+        }}
+      />
+
+      {/* Decorative elements */}
+      <div
+        style={{
+          position: "absolute",
+          top: "20px",
+          right: "20px",
+          width: "120px",
+          height: "120px",
+          border: "2px solid rgba(255, 255, 255, 0.1)",
+          borderRadius: "50%",
+          zIndex: 1,
         }}
       />
 
@@ -41,32 +65,64 @@ const Cta = () => {
         <span
           style={{
             display: "inline-block",
-            color: "#7ed082", // medium emerald bright
-            fontWeight: 700,
-            letterSpacing: "2px",
+            color: "#9EFFB1",
+            fontWeight: 600,
+            letterSpacing: "3px",
             fontSize: "1.1rem",
             textTransform: "uppercase",
-            marginBottom: "1rem",
+            marginBottom: "1.5rem",
+            padding: "8px 16px",
+            background: "rgba(255, 255, 255, 0.1)",
+            borderRadius: "30px",
+            backdropFilter: "blur(8px)",
             userSelect: "text",
+            textShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
           }}
         >
-          crispy, every bite taste
+          healthy meals delivered fresh
         </span>
 
         <h2
           style={{
-            color: "#e6f0ea",
+            color: "#ffffff",
             fontWeight: 800,
-            fontSize: "3.5rem",
+            fontSize: "4rem",
             lineHeight: 1.1,
-            margin: 0,
+            margin: "0 0 1rem 0",
             userSelect: "text",
+            textShadow: "0 2px 8px rgba(0, 0, 0, 0.2)",
+            letterSpacing: "-1px",
           }}
         >
-          30 minutes fast
+          Serving All
           <br />
-          <span style={{ color: "#7ed082" }}>delivery</span> challenge
+          <span
+            style={{
+              color: "#9EFFB1",
+              position: "relative",
+              display: "inline-block",
+              textShadow: "0 2px 8px rgba(158, 255, 177, 0.3)",
+            }}
+          >
+            Colombo
+          </span>{" "}
+          Areas
         </h2>
+
+        <p
+          style={{
+            color: "rgba(255, 255, 255, 0.9)",
+            fontSize: "1.2rem",
+            margin: "0",
+            fontWeight: "500",
+            maxWidth: "600px",
+            margin: "0 auto",
+            textShadow: "0 1px 2px rgba(0, 0, 0, 0.1)",
+          }}
+        >
+          From Dehiwala to Kolpity, Nugegoda to Battaramulla - we've got your
+          healthy cravings covered
+        </p>
       </div>
     </section>
   );

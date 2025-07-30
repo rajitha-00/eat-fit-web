@@ -6,7 +6,7 @@ import FoodKingLayout from "@/layouts/FoodKingLayout";
 import { useGetMenuItemsQuery } from "@/lib/api/apiSlice";
 import { addToCart } from "@/lib/api/cartSlice";
 import { setLoading } from "@/lib/api/loadingSlice";
-import Link from "next/link";
+
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 
@@ -16,6 +16,16 @@ const page = () => {
   const [modalItem, setModalItem] = useState(null);
 
   useEffect(() => {
+    // Update document title for SEO
+    document.title = "About EatFit Kitchen - Healthy Food Delivery in Colombo";
+    // Add meta description
+    const metaDescription = document.querySelector('meta[name="description"]');
+    if (metaDescription) {
+      metaDescription.setAttribute(
+        "content",
+        "Discover EatFit Kitchen, Colombo's premier healthy food delivery service. Fresh ingredients, expert chefs, and nutrition-focused meals delivered to your doorstep."
+      );
+    }
     dispatch(setLoading(isLoading));
   }, [isLoading, dispatch]);
 
@@ -46,103 +56,443 @@ const page = () => {
       {/* Hero Section */}
       <section
         className="section-padding section-bg"
-        style={{ background: "#f9f9fb" }}
+        style={{
+          background: "linear-gradient(120deg, #FDFBFB 0%, #F7F5FB 100%)",
+          paddingTop: "120px",
+          paddingBottom: "120px",
+          position: "relative",
+          overflow: "hidden",
+        }}
       >
-        <div className="container">
+        {/* Background decorative elements */}
+        <div
+          style={{
+            position: "absolute",
+            top: "5%",
+            left: "5%",
+            width: "300px",
+            height: "300px",
+            background: "linear-gradient(45deg, #4CAF5033 0%, #8BC34A33 100%)",
+            borderRadius: "50%",
+            filter: "blur(80px)",
+            zIndex: 0,
+          }}
+        />
+        <div
+          style={{
+            position: "absolute",
+            bottom: "10%",
+            right: "5%",
+            width: "250px",
+            height: "250px",
+            background: "linear-gradient(45deg, #8BC34A33 0%, #4CAF5033 100%)",
+            borderRadius: "50%",
+            filter: "blur(80px)",
+            zIndex: 0,
+          }}
+        />
+        <div className="container" style={{ position: "relative", zIndex: 1 }}>
           <div className="row align-items-center">
-            {/* Left image */}
-            <div className="col-lg-6 mb-4 mb-lg-0">
+            {/* Left content */}
+            <div className="col-lg-6 pe-lg-5">
+              <div
+                style={{
+                  fontFamily:
+                    "'Poppins', -apple-system, BlinkMacSystemFont, sans-serif",
+                  maxWidth: "540px",
+                }}
+              >
+                <span
+                  style={{
+                    display: "inline-block",
+                    background:
+                      "linear-gradient(120deg, #4CAF5015 0%, #8BC34A15 100%)",
+                    color: "#2E7D32",
+                    padding: "10px 20px",
+                    borderRadius: "100px",
+                    fontSize: "0.875rem",
+                    fontWeight: "600",
+                    marginBottom: "1.5rem",
+                    letterSpacing: "1px",
+                    border: "1px solid rgba(107, 255, 114, 0.2)",
+                    boxShadow: "0 2px 10px rgba(255, 107, 107, 0.1)",
+                  }}
+                >
+                  WELCOME TO EATFIT KITCHEN
+                </span>
+                <h1
+                  className="fw-bold mb-4"
+                  style={{
+                    fontSize: "4rem",
+                    lineHeight: "1.1",
+                    background:
+                      "linear-gradient(120deg, #0b520dff 0%, #8BC34A 100%)",
+                    WebkitBackgroundClip: "text",
+                    WebkitTextFillColor: "transparent",
+                    fontFamily: "'Playfair Display', serif",
+                    marginBottom: "1.5rem",
+                  }}
+                >
+                  Crafting Health,
+                  <br />
+                  Serving <span style={{ fontStyle: "italic" }}>Happiness</span>
+                </h1>
+                <p
+                  className="lead mb-4"
+                  style={{
+                    color: "#2D3436",
+                    fontSize: "1.25rem",
+                    lineHeight: "1.8",
+                    fontWeight: "300",
+                    fontFamily: "'Poppins', sans-serif",
+                  }}
+                >
+                  Welcome to{" "}
+                  <b style={{ color: "#58af36ff" }}>EatFit Kitchen</b>, where
+                  culinary artistry meets nutritional science. We're not just a
+                  meal service; we're your partner in achieving a healthier,
+                  more vibrant lifestyle through thoughtfully crafted, delicious
+                  meals that energize your body and delight your taste buds.
+                </p>
+                <p
+                  style={{
+                    color: "#636E72",
+                    fontSize: "1.1rem",
+                    lineHeight: "1.6",
+                    marginBottom: "2rem",
+                  }}
+                >
+                  From farm-fresh ingredients to your doorstep in Colombo, we're
+                  revolutionizing the way you think about healthy eating.
+                </p>
+                <div className="d-flex gap-4 mb-5">
+                  <div
+                    style={{
+                      padding: "1.5rem",
+                      background:
+                        "linear-gradient(120deg, #4CAF5010 0%, #8BC34A10 100%)",
+                      borderRadius: "20px",
+                      border: "1px solid rgba(76, 175, 80, 0.1)",
+                      flex: 1,
+                    }}
+                  >
+                    <h3
+                      style={{
+                        color: "#4CAF50",
+                        fontWeight: "800",
+                        fontSize: "2.5rem",
+                        marginBottom: "0.5rem",
+                        fontFamily: "'Playfair Display', serif",
+                      }}
+                    >
+                      1000+
+                    </h3>
+                    <p
+                      style={{
+                        color: "#636E72",
+                        fontSize: "0.875rem",
+                        fontWeight: "500",
+                        marginBottom: 0,
+                      }}
+                    >
+                      Happy Customers
+                    </p>
+                  </div>
+                  <div
+                    style={{
+                      padding: "1.5rem",
+                      background:
+                        "linear-gradient(120deg, #8BC34A10 0%, #4CAF5010 100%)",
+                      borderRadius: "20px",
+                      border: "1px solid rgba(139, 195, 74, 0.1)",
+                      flex: 1,
+                    }}
+                  >
+                    <h3
+                      style={{
+                        color: "#8BC34A",
+                        fontWeight: "800",
+                        fontSize: "2.5rem",
+                        marginBottom: "0.5rem",
+                        fontFamily: "'Playfair Display', serif",
+                      }}
+                    >
+                      98%
+                    </h3>
+                    <p
+                      style={{
+                        color: "#636E72",
+                        fontSize: "0.875rem",
+                        fontWeight: "500",
+                        marginBottom: 0,
+                      }}
+                    >
+                      Satisfaction Rate
+                    </p>
+                  </div>
+                  <div
+                    style={{
+                      padding: "1.5rem",
+                      background:
+                        "linear-gradient(120deg, #4CAF5010 0%, #8BC34A10 100%)",
+                      borderRadius: "20px",
+                      border: "1px solid rgba(76, 175, 80, 0.1)",
+                      flex: 1,
+                    }}
+                  >
+                    <h3
+                      style={{
+                        color: "#4CAF50",
+                        fontWeight: "800",
+                        fontSize: "2.5rem",
+                        marginBottom: "0.5rem",
+                        fontFamily: "'Playfair Display', serif",
+                      }}
+                    >
+                      10-10
+                    </h3>
+                    <p
+                      style={{
+                        color: "#636E72",
+                        fontSize: "0.875rem",
+                        fontWeight: "500",
+                        marginBottom: 0,
+                      }}
+                    >
+                      Open Hours
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Right image */}
+            <div className="col-lg-6">
               <div
                 className="position-relative"
                 style={{
-                  borderRadius: "20px",
+                  borderRadius: "32px",
                   overflow: "hidden",
-                  boxShadow: "0 10px 40px rgba(0,0,0,0.05)",
+                  boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.15)",
+                  transform: "perspective(1000px) rotateY(-5deg)",
+                  transition: "transform 0.3s ease",
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.transform =
+                    "perspective(1000px) rotateY(0deg)";
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.transform =
+                    "perspective(1000px) rotateY(-5deg)";
                 }}
               >
                 <img
                   src="https://img.freepik.com/free-photo/top-view-table-full-delicious-food-composition_23-2149141340.jpg"
-                  alt="EatFit Kitchen"
+                  alt="EatFit Kitchen - Healthy Food Delivery in Colombo"
                   className="img-fluid w-100"
-                  style={{ objectFit: "cover", minHeight: 420 }}
+                  style={{
+                    objectFit: "cover",
+                    height: "600px",
+                  }}
                 />
-              </div>
-            </div>
-
-            {/* Right content */}
-            <div className="col-lg-6">
-              <div style={{ fontFamily: "-apple-system, BlinkMacSystemFont" }}>
-                <h2 className="fw-bold mb-3" style={{ lineHeight: 1.3 }}>
-                  EatFit Kitchen,
-                  <br />
-                  Where <span style={{ color: "#059669" }}>Freshness</span>{" "}
-                  Meets Fuel
-                </h2>
-                <p className="lead" style={{ color: "#4b4b4b" }}>
-                  At <b>EatFit</b>, food is more than a meal it's how we
-                  energize communities with clean, crave-worthy dishes.
-                </p>
-                <p style={{ color: "#555", fontSize: "1rem" }}>
-                  Every bite is made from farm-fresh ingredients, crafted by
-                  chefs who care about your goals and your tastebuds.
-                </p>
+                <div
+                  style={{
+                    position: "absolute",
+                    inset: 0,
+                    background:
+                      "linear-gradient(to bottom, transparent 50%, rgba(0,0,0,0.3))",
+                    borderRadius: "32px",
+                  }}
+                ></div>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Specials Banner */}
-      <section className="section-padding pt-0">
-        <div className="container">
-          <div className="row gy-4">
-            <div className="col-lg-7">
-              <div
-                className="p-4 text-center"
+      {/* Values Section */}
+      <section
+        style={{
+          padding: "100px 0",
+          background: "linear-gradient(120deg, #ffffff 0%, #F7F5FB 100%)",
+          position: "relative",
+          overflow: "hidden",
+        }}
+      >
+        <div
+          style={{
+            position: "absolute",
+            top: "15%",
+            right: "-5%",
+            width: "500px",
+            height: "500px",
+            background:
+              "radial-gradient(circle, rgba(78, 205, 196, 0.08) 0%, transparent 70%)",
+            borderRadius: "50%",
+            zIndex: 0,
+            animation: "float 15s infinite ease-in-out",
+          }}
+        />
+        <div className="container" style={{ position: "relative", zIndex: 1 }}>
+          <div className="text-center mb-5">
+            <span
+              style={{
+                display: "inline-block",
+                background:
+                  "linear-gradient(135deg, rgba(76, 175, 80, 0.08) 0%, rgba(139, 195, 74, 0.08) 100%)",
+                color: "#4CAF50",
+                padding: "12px 24px",
+                borderRadius: "100px",
+                fontSize: "0.9rem",
+                fontWeight: "600",
+                marginBottom: "1.5rem",
+                letterSpacing: "1.5px",
+                border: "1px solid rgba(76, 175, 80, 0.15)",
+                boxShadow: "0 4px 15px rgba(76, 175, 80, 0.08)",
+                backdropFilter: "blur(10px)",
+                transition: "all 0.3s ease",
+              }}
+              onMouseEnter={(e) => {
+                e.target.style.transform = "translateY(-2px)";
+                e.target.style.boxShadow = "0 6px 20px rgba(76, 175, 80, 0.12)";
+              }}
+              onMouseLeave={(e) => {
+                e.target.style.transform = "translateY(0)";
+                e.target.style.boxShadow = "0 4px 15px rgba(76, 175, 80, 0.08)";
+              }}
+            >
+              WHY CHOOSE US
+            </span>
+            <h2
+              className="fw-bold mb-4"
+              style={{
+                fontSize: "3.5rem",
+                background: "linear-gradient(135deg, #1a1a1a 0%, #4a4a4a 100%)",
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+                fontFamily: "'Playfair Display', serif",
+                maxWidth: "800px",
+                margin: "0 auto",
+              }}
+            >
+              Elevating Your Dining
+              <br />
+              <span
                 style={{
-                  background: "#ffffff",
-                  borderRadius: 24,
-                  boxShadow: "0 6px 24px rgba(0,0,0,0.04)",
-                  position: "relative",
-                  overflow: "hidden",
+                  background:
+                    "linear-gradient(135deg, #4CAF50 0%, #8BC34A 100%)",
+                  WebkitBackgroundClip: "text",
+                  WebkitTextFillColor: "transparent",
+                  fontStyle: "italic",
                 }}
               >
-                <h5 className="text-emerald-500 text-uppercase mb-1">
-                  Today’s Special
-                </h5>
-                <h2 className="fw-bold mb-1">
-                  Beef <span style={{ color: "#f59e0b" }}>Burger</span>
-                </h2>
-                <Link
-                  href="/shop"
-                  className="btn btn-outline-dark rounded-pill mt-3"
+                Experience
+              </span>
+            </h2>
+            <p
+              style={{
+                color: "#64748b",
+                fontSize: "1.2rem",
+                lineHeight: "1.9",
+                maxWidth: "650px",
+                margin: "0 auto 4rem",
+                fontFamily: "'Poppins', sans-serif",
+              }}
+            >
+              Our commitment to excellence goes beyond just great food. We're
+              dedicated to creating a seamless experience that delights you at
+              every touchpoint.
+            </p>
+          </div>
+
+          <div className="row g-4">
+            {[
+              {
+                icon: "🌱",
+                title: "Fresh Ingredients",
+                description:
+                  "We source the freshest, highest-quality ingredients from local suppliers to ensure every meal is nutritious and delicious.",
+                gradient: "135deg, #00C853 0%, #69F0AE 100%",
+              },
+              {
+                icon: "⚡",
+                title: "Quick Delivery",
+                description:
+                  "Our efficient delivery network ensures your meals arrive fresh and on time, throughout the Colombo area.",
+                gradient: "135deg, #FF6F00 0%, #FFC107 100%",
+              },
+              {
+                icon: "💪",
+                title: "Nutrition Focused",
+                description:
+                  "Every meal is crafted with optimal macronutrient balance to support your health and fitness goals.",
+                gradient: "135deg, #1E88E5 0%, #64B5F6 100%",
+              },
+              {
+                icon: "♻️",
+                title: "Eco-Friendly",
+                description:
+                  "We use sustainable packaging and practices to minimize our environmental impact while serving you better.",
+                gradient: "135deg, #43A047 0%, #81C784 100%",
+              },
+            ].map((value, index) => (
+              <div key={index} className="col-md-6 col-lg-3">
+                <div
+                  style={{
+                    padding: "2.8rem",
+                    background: "rgba(255, 255, 255, 0.95)",
+                    borderRadius: "28px",
+                    backdropFilter: "blur(20px)",
+                    border: "1px solid rgba(78, 175, 80, 0.08)",
+                    boxShadow: "0 15px 35px -5px rgba(78, 175, 80, 0.08)",
+                    height: "100%",
+                    transition: "all 0.4s cubic-bezier(0.4, 0, 0.2, 1)",
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.transform = "translateY(-12px)";
+                    e.currentTarget.style.boxShadow =
+                      "0 20px 45px -5px rgba(78, 175, 80, 0.15)";
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.transform = "translateY(0)";
+                    e.currentTarget.style.boxShadow =
+                      "0 15px 35px -5px rgba(78, 175, 80, 0.08)";
+                  }}
                 >
-                  Explore Menu
-                </Link>
+                  <div
+                    style={{
+                      fontSize: "3rem",
+                      marginBottom: "1.5rem",
+                      background: `linear-gradient(${value.gradient})`,
+                      WebkitBackgroundClip: "text",
+                      WebkitTextFillColor: "transparent",
+                    }}
+                  >
+                    {value.icon}
+                  </div>
+                  <h3
+                    style={{
+                      fontSize: "1.4rem",
+                      fontWeight: "700",
+                      marginBottom: "1.2rem",
+                      color: "#1e293b",
+                    }}
+                  >
+                    {value.title}
+                  </h3>
+                  <p
+                    style={{
+                      fontSize: "1rem",
+                      color: "#64748b",
+                      lineHeight: "1.7",
+                      marginBottom: 0,
+                    }}
+                  >
+                    {value.description}
+                  </p>
+                </div>
               </div>
-            </div>
-            <div className="col-lg-5">
-              <div
-                className="p-4"
-                style={{
-                  background: "#ecfdf5", // emerald-50
-                  borderRadius: 24,
-                  boxShadow: "0 6px 24px rgba(0,0,0,0.04)",
-                  position: "relative",
-                  overflow: "hidden",
-                }}
-              >
-                <h5 className="text-emerald-600">Crispy, every bite counts</h5>
-                <h3 className="fw-bold">Clean Fuel Meal</h3>
-                <p className="text-muted">Satisfy cravings the EatFit way.</p>
-                <Link
-                  href="/shop"
-                  className="btn btn-success rounded-pill mt-3"
-                >
-                  Order Now
-                </Link>
-              </div>
-            </div>
+            ))}
           </div>
         </div>
       </section>

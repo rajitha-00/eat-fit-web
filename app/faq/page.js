@@ -16,13 +16,13 @@ const FAQS = [
     id: "2",
     title: "Are your meals good for weight loss or muscle gain?",
     content:
-      "Absolutely! Whether you're cutting or bulking, we've got your goals covered. Each meal is crafted with your macros in mind—just pick from our weight loss, muscle gain, or balanced fuel options.",
+      "Absolutely! Whether you're cutting or bulking, we've got your goals covered. Each meal is crafted with your macros in mind just pick from our weight loss, muscle gain, or balanced fuel options.",
   },
   {
     id: "3",
     title: "Do you provide nutritional information?",
     content:
-      "Yes! Every EAT FIT meal comes with a full breakdown of calories, protein, carbs, fat, and sugar—so you know exactly what you're putting into your body.",
+      "Yes! Every EAT FIT meal comes with a full breakdown of calories, protein, carbs, fat, and sugar so you know exactly what you're putting into your body.",
   },
   {
     id: "4",
@@ -51,23 +51,84 @@ export default function FAQPage() {
     <FoodKingLayout header={2} footer={2}>
       <section
         className="faq-section section-padding"
-        style={{ background: "#f8fbfa" }}
+        style={{
+          background: "linear-gradient(120deg, #FDFBFB 0%, #f0f7f2 100%)",
+          position: "relative",
+          overflow: "hidden",
+          padding: "120px 0",
+        }}
       >
-        <div className="container">
+        {/* Decorative elements */}
+        <div
+          style={{
+            position: "absolute",
+            top: "5%",
+            left: "5%",
+            width: "300px",
+            height: "300px",
+            background: "linear-gradient(45deg, #4CAF5015 0%, #8BC34A15 100%)",
+            borderRadius: "50%",
+            filter: "blur(80px)",
+            zIndex: 0,
+          }}
+        />
+        <div
+          style={{
+            position: "absolute",
+            bottom: "10%",
+            right: "5%",
+            width: "250px",
+            height: "250px",
+            background: "linear-gradient(45deg, #8BC34A15 0%, #4CAF5015 100%)",
+            borderRadius: "50%",
+            filter: "blur(80px)",
+            zIndex: 0,
+          }}
+        />
+        <div className="container" style={{ position: "relative", zIndex: 1 }}>
           <div className="section-title text-center mb-5">
             <span
-              className="subtitle"
-              style={{ color: "#59c98d", fontWeight: 600 }}
+              style={{
+                display: "inline-block",
+                background:
+                  "linear-gradient(120deg, #4CAF5015 0%, #8BC34A15 100%)",
+                color: "#2E7D32",
+                padding: "10px 20px",
+                borderRadius: "100px",
+                fontSize: "0.875rem",
+                fontWeight: "600",
+                marginBottom: "1rem",
+                letterSpacing: "1px",
+                border: "1px solid rgba(76, 175, 80, 0.2)",
+                boxShadow: "0 2px 10px rgba(76, 175, 80, 0.1)",
+              }}
             >
               How can we help?
             </span>
             <h2
               className="title"
-              style={{ fontWeight: 700, color: "#232323", fontSize: "2.5em" }}
+              style={{
+                fontWeight: 800,
+                fontSize: "3rem",
+                background: "linear-gradient(120deg, #2E7D32 0%, #558B2F 100%)",
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+                fontFamily: "'Playfair Display', serif",
+                marginBottom: "1rem",
+              }}
             >
               Frequently Asked Questions
             </h2>
-            <p className="description mt-2" style={{ color: "#888" }}>
+            <p
+              className="description mt-2"
+              style={{
+                color: "#558B2F",
+                fontSize: "1.1rem",
+                fontFamily: "'Poppins', sans-serif",
+                maxWidth: "600px",
+                margin: "0 auto",
+              }}
+            >
               All your food delivery questions, answered in one place.
             </p>
           </div>
@@ -75,24 +136,35 @@ export default function FAQPage() {
           <div className="row justify-content-center">
             <div className="col-lg-8">
               <div
-                className="faq-content rounded-4 shadow-sm p-4"
-                style={{ background: "#fff" }}
+                className="faq-content rounded-4 p-4"
+                style={{
+                  background: "rgba(255, 255, 255, 0.8)",
+                  backdropFilter: "blur(10px)",
+                  border: "1px solid rgba(76, 175, 80, 0.1)",
+                  boxShadow: "0 10px 30px -5px rgba(76, 175, 80, 0.1)",
+                }}
               >
                 {FAQS.map((faq) => (
                   <div
                     key={faq.id}
                     className="faq-item mb-3"
                     style={{
-                      borderRadius: 14,
+                      borderRadius: 16,
                       boxShadow:
                         activeId === faq.id
-                          ? "0 2px 18px rgba(50,180,120,0.08)"
-                          : "none",
+                          ? "0 8px 24px rgba(76, 175, 80, 0.15)"
+                          : "0 4px 12px rgba(76, 175, 80, 0.05)",
                       border: `1.5px solid ${
-                        activeId === faq.id ? "#59c98d" : "#e6e9ef"
+                        activeId === faq.id
+                          ? "#4CAF50"
+                          : "rgba(76, 175, 80, 0.1)"
                       }`,
-                      background: activeId === faq.id ? "#f7fcfa" : "#fff",
-                      transition: "all 0.25s cubic-bezier(.39,.58,.57,1)",
+                      background:
+                        activeId === faq.id
+                          ? "linear-gradient(120deg, #4CAF5010 0%, #8BC34A10 100%)"
+                          : "rgba(255, 255, 255, 0.7)",
+                      transition: "all 0.3s ease",
+                      backdropFilter: "blur(8px)",
                     }}
                   >
                     <button
@@ -101,9 +173,9 @@ export default function FAQPage() {
                         setActiveId(activeId === faq.id ? null : faq.id)
                       }
                       style={{
-                        color: "#232323",
+                        color: activeId === faq.id ? "#2E7D32" : "#1E293B",
                         fontWeight: 600,
-                        fontSize: "1.15em",
+                        fontSize: "1.2em",
                         cursor: "pointer",
                         outline: "none",
                       }}
@@ -134,7 +206,13 @@ export default function FAQPage() {
                       }}
                     >
                       <p
-                        style={{ color: "#444", fontSize: "1.04em", margin: 0 }}
+                        style={{
+                          color: "#4B5563",
+                          fontSize: "1.1em",
+                          lineHeight: "1.6",
+                          margin: 0,
+                          fontFamily: "'Poppins', sans-serif",
+                        }}
                       >
                         {faq.content}
                       </p>
