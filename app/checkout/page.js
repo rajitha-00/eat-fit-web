@@ -43,14 +43,33 @@ const Page = () => {
         status: 'success'
       });
       
-      // Restore customer data from localStorage if available
-      const pendingOrder = JSON.parse(localStorage.getItem('pendingOrder') || '{}');
+      // Restore customer data from sessionStorage (where OnePay component stores it)
+      const pendingOrder = JSON.parse(sessionStorage.getItem('pendingOrder') || '{}');
+      console.log('Restoring from sessionStorage:', pendingOrder);
+      
       if (pendingOrder.customerName) {
         setCustomerName(pendingOrder.customerName);
         setCustomerPhone(pendingOrder.customerPhone);
         setCustomerEmail(pendingOrder.customerEmail);
         setOrderType(pendingOrder.orderType || 'Takeaway');
         setCustomerAddress(pendingOrder.customerAddress || '');
+        console.log('Customer data restored:', {
+          name: pendingOrder.customerName,
+          phone: pendingOrder.customerPhone,
+          email: pendingOrder.customerEmail
+        });
+      } else {
+        console.warn('No pending order data found in sessionStorage');
+        // Try to get from paymentTransaction as backup
+        const transactionDetails = JSON.parse(sessionStorage.getItem('paymentTransaction') || '{}');
+        if (transactionDetails.callbackData?.additional_data) {
+          try {
+            const additionalData = JSON.parse(transactionDetails.callbackData.additional_data);
+            console.log('Trying to restore from transaction data:', additionalData);
+          } catch (e) {
+            console.error('Failed to parse additional data:', e);
+          }
+        }
       }
       
       // Clean up URL parameters
@@ -71,24 +90,37 @@ const Page = () => {
   const dispatch = useDispatch();
   const router = useRouter();
   const handlePlaceOrder = async () => {
+    console.log('handlePlaceOrder called with:', {
+      customerName,
+      customerPhone,
+      customerEmail,
+      paymentSuccess,
+      paymentMethod
+    });
+    
     if (!customerName) {
+      console.error('Customer name is empty:', customerName);
       alert("Please enter your full name (first name and last name)");
       return;
     }
 
     if (!customerPhone) {
+      console.error('Customer phone is empty:', customerPhone);
       alert("Please enter your phone number");
       return;
     }
 
     if (!customerEmail || !customerEmail.includes('@')) {
+      console.error('Invalid email:', customerEmail);
       alert("Please enter a valid email address");
       return;
     }
 
     // Validate name has both first and last name
     const nameParts = customerName.trim().split(' ');
+    console.log('Name validation:', { customerName, nameParts, length: nameParts.length });
     if (nameParts.length < 2) {
+      console.error('Name validation failed:', nameParts);
       alert("Please enter both your first name and last name");
       return;
     }
@@ -297,7 +329,14 @@ const Page = () => {
                             value={customerName}
                             onChange={(e) => setCustomerName(e.target.value)}
                             disabled={paymentSuccess}
+                            title={`Current value: "${customerName}"`} // Debug helper
                           />
+                          {/* Debug info for production */}
+                          {customerName && (
+                            <small className="text-muted">
+                              Name parts: {customerName.split(' ').length} | Value: "{customerName}"
+                            </small>
+                          )}
                         </div>
                         <div className="col-md-6">
                           <input

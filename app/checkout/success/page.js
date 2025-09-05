@@ -59,7 +59,7 @@ const PaymentSuccessContent = () => {
     useEffect(() => {
         let pollInterval;
         let attempts = 0;
-        const maxAttempts = 30; // Poll for 30 seconds (30 attempts * 1 second)
+        const maxAttempts = 5; // Poll for 30 seconds (30 attempts * 1 second)
         
         const checkTransactionStatus = async () => {
             try {
