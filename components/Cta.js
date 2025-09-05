@@ -3,7 +3,7 @@ const Cta = () => {
     <section
       style={{
         position: "relative",
-        backgroundImage: 'url("assets/img/banner/main-cta-bg-2.jpg")',
+        backgroundImage: 'url("assets/img/hero/hero-bg-3.jpg")',
         backgroundSize: "cover",
         backgroundPosition: "center",
         padding: "8rem 2rem",

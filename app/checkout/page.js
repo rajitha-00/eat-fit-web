@@ -13,6 +13,8 @@ import { clearCart } from "@/lib/api/cartSlice";
 const Page = () => {
   const [mounted, setMounted] = useState(false);
   const cartItems = useSelector((state) => state.cart.items || []);
+  const dispatch = useDispatch();
+  const router = useRouter();
 
   const [paymentMethod, setPaymentMethod] = useState("Cash");
   const [customerName, setCustomerName] = useState("");
@@ -81,8 +83,7 @@ const Page = () => {
     );
     return sum + (item.price + addonTotal) * item.quantity;
   }, 0);
-  const dispatch = useDispatch();
-  const router = useRouter();
+  
   const handlePlaceOrder = async () => {
 
     
