@@ -45,7 +45,6 @@ const Page = () => {
       
       // Restore customer data from sessionStorage (where OnePay component stores it)
       const pendingOrder = JSON.parse(sessionStorage.getItem('pendingOrder') || '{}');
-      console.log('Restoring from sessionStorage:', pendingOrder);
       
       if (pendingOrder.customerName) {
         setCustomerName(pendingOrder.customerName);
@@ -53,11 +52,7 @@ const Page = () => {
         setCustomerEmail(pendingOrder.customerEmail);
         setOrderType(pendingOrder.orderType || 'Takeaway');
         setCustomerAddress(pendingOrder.customerAddress || '');
-        console.log('Customer data restored:', {
-          name: pendingOrder.customerName,
-          phone: pendingOrder.customerPhone,
-          email: pendingOrder.customerEmail
-        });
+
       } else {
         console.warn('No pending order data found in sessionStorage');
         // Try to get from paymentTransaction as backup
@@ -65,7 +60,6 @@ const Page = () => {
         if (transactionDetails.callbackData?.additional_data) {
           try {
             const additionalData = JSON.parse(transactionDetails.callbackData.additional_data);
-            console.log('Trying to restore from transaction data:', additionalData);
           } catch (e) {
             console.error('Failed to parse additional data:', e);
           }
@@ -90,13 +84,7 @@ const Page = () => {
   const dispatch = useDispatch();
   const router = useRouter();
   const handlePlaceOrder = async () => {
-    console.log('handlePlaceOrder called with:', {
-      customerName,
-      customerPhone,
-      customerEmail,
-      paymentSuccess,
-      paymentMethod
-    });
+
     
     if (!customerName) {
       console.error('Customer name is empty:', customerName);
@@ -118,7 +106,6 @@ const Page = () => {
 
     // Validate name has both first and last name
     const nameParts = customerName.trim().split(' ');
-    console.log('Name validation:', { customerName, nameParts, length: nameParts.length });
     if (nameParts.length < 2) {
       console.error('Name validation failed:', nameParts);
       alert("Please enter both your first name and last name");
@@ -405,17 +392,7 @@ const Page = () => {
                       {paymentMethod === "Online" && !paymentSuccess && (
                         <div className="p-2">
                           {/* Debug: Show what we're passing to OnePay */}
-                          {console.log('Passing to OnePay component:', {
-                            app_id: ONEPAY_CONFIG.APP_ID,
-                            amount: Number(total).toFixed(2),
-                            customer_details: {
-                                first_name: customerName.split(' ')[0] || 'Guest',
-                                last_name: customerName.split(' ').slice(1).join(' ') || 'Customer',
-                                email: customerEmail || 'guest@example.com',
-                                phone_number: customerPhone.startsWith('+') ? customerPhone : `+94${customerPhone.replace(/^0/, '')}`
-                            },
-                            apptoken: ONEPAY_CONFIG.APP_TOKEN
-                          })}
+                       
                           <OnePay
                             app_id={ONEPAY_CONFIG.APP_ID || 'ENKR11909605A5F43454D'} // Ensure app_id is always provided
                             amount={Number(total).toFixed(2)}
@@ -437,10 +414,7 @@ const Page = () => {
                             })}
                             apptoken={ONEPAY_CONFIG.APP_TOKEN}
                             redirect_url={window.location.origin + '/checkout/success'}
-                            onSuccess={(data) => {
-                              console.log('Payment initiated:', data);
-                              // Order will be created after successful payment in success page
-                            }}
+                           
                             onFailure={(error) => {
                               console.error('Payment failed:', error);
                               alert('Payment failed. Please try again.');

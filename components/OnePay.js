@@ -41,13 +41,7 @@ const OnePay = ({
             // Format: app_id + currency + amount + hash_salt (no separators)
             const hashInputString = `${app_id}${currency}${formattedAmount}${ONEPAY_CONFIG.HASH_SALT}`;
             
-            // Debug logging for hash generation
-            console.log('Hash Generation Details:');
-            console.log('APP_ID:', app_id);
-            console.log('Currency:', currency);
-            console.log('Formatted Amount:', formattedAmount);
-            console.log('Hash Salt:', ONEPAY_CONFIG.HASH_SALT);
-            console.log('Final Hash Input String:', hashInputString);
+          
 
             // Generate SHA-256 hash
             const encoder = new TextEncoder();
@@ -55,7 +49,6 @@ const OnePay = ({
             const hashBuffer = await crypto.subtle.digest('SHA-256', data);
             const hashArray = Array.from(new Uint8Array(hashBuffer));
             const hash = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
-            console.log('Generated hash:', hash);
             
             // Structure the payload according to OnePay API requirements
             const reference = `EAT-${Date.now()}`;
@@ -74,7 +67,6 @@ const OnePay = ({
                 hash: hash
             };
 
-            console.log('Creating payment with data:', paymentData);
 
             // Make API call to OnePay
             const response = await fetch(ONEPAY_CONFIG.API_URL, {
@@ -87,7 +79,6 @@ const OnePay = ({
             });
 
             const result = await response.json();
-            console.log('OnePay API Response:', result);
             
             if (response.ok && result.status === 200) {
                 // Extract gateway redirect URL from the response
@@ -110,7 +101,6 @@ const OnePay = ({
                     };
                     sessionStorage.setItem('pendingOrder', JSON.stringify(orderData));
                     
-                    console.log('Redirecting to payment gateway:', redirectUrl);
                     window.location.href = redirectUrl;
                     if (onSuccess) onSuccess(result);
                 } else {

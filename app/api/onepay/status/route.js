@@ -23,11 +23,7 @@ export async function GET(request) {
         if (transaction && transaction.status === 1 && transaction.status_message === 'SUCCESS') {
             // Don't mark as processed immediately - allow multiple checks
             // Mark as processed only when the order is actually created
-            console.log('Transaction found and verified:', trackingKey, {
-                transaction_id: transaction.transaction_id,
-                reference: transaction.reference,
-                status: transaction.status
-            });
+   
             
             return NextResponse.json({
                 success: true,
@@ -42,8 +38,7 @@ export async function GET(request) {
             });
         }
         
-        console.log('Transaction not found or not successful for key:', trackingKey);
-        console.log('Available transactions:', Array.from(successfulTransactions.keys()));
+      
         
         return NextResponse.json({
             success: false,

@@ -5,7 +5,6 @@ export async function POST() {
         // Clear all transactions
         global.successfulTransactions = new Map();
         
-        console.log('All transaction data cleared');
         
         return NextResponse.json({
             success: true,

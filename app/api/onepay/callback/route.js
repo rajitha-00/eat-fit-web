@@ -5,13 +5,11 @@ export async function POST(request) {
         // Get the callback payload from OnePay
         const callbackData = await request.json();
         
-        console.log('OnePay Callback Received:', callbackData);
         
         const { transaction_id, status, status_message, additional_data, reference } = callbackData;
         
         // Verify the transaction was successful
         if (status === 1 && status_message === 'SUCCESS') {
-            console.log('Payment successful for transaction:', transaction_id, 'Reference:', reference);
             
             // Store the successful transaction data using reference as key (with fallback to transaction_id)
             // We'll use a simple in-memory store for now (in production, use a database)
@@ -35,14 +33,12 @@ export async function POST(request) {
                 }
             }, 10 * 60 * 1000); // 10 minutes
             
-            console.log('Transaction stored successfully with key:', trackingKey);
             
             return NextResponse.json({ 
                 success: true, 
                 message: 'Callback processed successfully' 
             });
         } else {
-            console.log('Payment failed for transaction:', transaction_id, 'Status:', status_message);
             
             return NextResponse.json({ 
                 success: false, 

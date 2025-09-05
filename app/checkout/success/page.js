@@ -46,7 +46,6 @@ const PaymentSuccessContent = () => {
             checkoutUrl.searchParams.set('transaction_id', mockTransaction.transaction_id);
             checkoutUrl.searchParams.set('manual_confirmation', 'true');
             
-            console.log('Manual confirmation - redirecting to checkout');
             window.location.href = checkoutUrl.toString();
             
         } catch (error) {
@@ -75,16 +74,13 @@ const PaymentSuccessContent = () => {
                 }
                 
                 const reference = pendingOrder.reference;
-                console.log(`[Attempt ${attempts + 1}] Checking transaction status for reference:`, reference);
                 
                 // Poll our API to check if OnePay has sent a callback
                 const response = await fetch(`/api/onepay/status?reference=${reference}`);
                 const result = await response.json();
                 
-                console.log('Transaction status check result:', result);
                 
                 if (result.success && result.transaction) {
-                    console.log('Payment confirmed successful!', result.transaction);
                     clearInterval(pollInterval);
                     
                     // Redirect back to checkout page with success parameters
@@ -102,14 +98,12 @@ const PaymentSuccessContent = () => {
                     };
                     sessionStorage.setItem('paymentTransaction', JSON.stringify(transactionDetails));
                     
-                    console.log('Redirecting to checkout with success parameters');
                     window.location.href = checkoutUrl.toString();
                     return;
                 }
                 
                 attempts++;
                 setMessage(`Verifying payment... (${attempts}/${maxAttempts})`);
-                console.log(`Transaction status check attempt ${attempts}/${maxAttempts} - Result:`, result);
                 
                 if (attempts >= maxAttempts) {
                     clearInterval(pollInterval);

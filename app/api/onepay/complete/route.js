@@ -21,7 +21,6 @@ export async function POST(request) {
             transaction.orderCreated = true;
             transaction.orderCreatedAt = new Date().toISOString();
             
-            console.log('Transaction marked as processed:', trackingKey);
             
             return NextResponse.json({
                 success: true,

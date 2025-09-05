@@ -58,11 +58,7 @@ const MenuItemPage = () => {
           `Addon #${a.ingredientId}`,
       }));
       // Example: Open modal here or do something with addons
-      // For now, just console.log them
-      console.log(
-        "Addons available, open modal or handle selection:",
-        preparedAddons
-      );
+
       alert(`Please select addons for ${item.name} (modal not implemented)`);
     } else {
       dispatch(
