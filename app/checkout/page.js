@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Cta from "@/components/Cta";
 import FoodKingLayout from "@/layouts/FoodKingLayout";
+import OnePay from "@/components/OnePay";
+import { ONEPAY_CONFIG, generateHash } from "@/lib/config/onepay";
 import { useCreateOrderMutation } from "@/lib/api/apiSlice";
 import { useRouter } from "next/navigation";
 import { clearCart } from "@/lib/api/cartSlice";
@@ -15,12 +17,46 @@ const Page = () => {
   const [paymentMethod, setPaymentMethod] = useState("Cash");
   const [customerName, setCustomerName] = useState("");
   const [customerPhone, setCustomerPhone] = useState("");
+  const [customerEmail, setCustomerEmail] = useState("");
   const [orderType, setOrderType] = useState("Takeaway");
+  const [customerAddress, setCustomerAddress] = useState("");
+  const [paymentSuccess, setPaymentSuccess] = useState(false);
+  const [transactionData, setTransactionData] = useState(null);
 
   const [createOrder, { isLoading: placingOrder }] = useCreateOrderMutation();
 
   useEffect(() => {
     setMounted(true);
+    
+    // Check for payment success parameters in URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const paymentStatus = urlParams.get('payment_status');
+    const transactionId = urlParams.get('transaction_id');
+    const reference = urlParams.get('reference');
+    
+    if (paymentStatus === 'success' && transactionId) {
+      setPaymentSuccess(true);
+      setPaymentMethod("Online"); // Set payment method to Online
+      setTransactionData({
+        transactionId,
+        reference,
+        status: 'success'
+      });
+      
+      // Restore customer data from localStorage if available
+      const pendingOrder = JSON.parse(localStorage.getItem('pendingOrder') || '{}');
+      if (pendingOrder.customerName) {
+        setCustomerName(pendingOrder.customerName);
+        setCustomerPhone(pendingOrder.customerPhone);
+        setCustomerEmail(pendingOrder.customerEmail);
+        setOrderType(pendingOrder.orderType || 'Takeaway');
+        setCustomerAddress(pendingOrder.customerAddress || '');
+      }
+      
+      // Clean up URL parameters
+      const newUrl = window.location.pathname;
+      window.history.replaceState({}, '', newUrl);
+    }
   }, []);
 
   if (!mounted) return null;
@@ -35,8 +71,38 @@ const Page = () => {
   const dispatch = useDispatch();
   const router = useRouter();
   const handlePlaceOrder = async () => {
-    if (!customerName || !customerPhone) {
-      alert("Please fill out your name and phone number.");
+    if (!customerName) {
+      alert("Please enter your full name (first name and last name)");
+      return;
+    }
+
+    if (!customerPhone) {
+      alert("Please enter your phone number");
+      return;
+    }
+
+    if (!customerEmail || !customerEmail.includes('@')) {
+      alert("Please enter a valid email address");
+      return;
+    }
+
+    // Validate name has both first and last name
+    const nameParts = customerName.trim().split(' ');
+    if (nameParts.length < 2) {
+      alert("Please enter both your first name and last name");
+      return;
+    }
+
+    // Validate phone number
+    const phoneNumber = customerPhone.replace(/[^0-9+]/g, '');
+    if (phoneNumber.length < 9) {
+      alert("Please enter a valid phone number");
+      return;
+    }
+
+    // Validate address for Store Delivery
+    if (orderType === "Store Delivery" && !customerAddress.trim()) {
+      alert("Please enter your delivery address");
       return;
     }
 
@@ -46,11 +112,15 @@ const Page = () => {
       orderId: "",
       customerName,
       customerPhone,
+      customerEmail,
+      customerAddress: orderType === "Store Delivery" ? customerAddress : "",
       orderType,
       orderStatus: "Preparing",
       totalPrice,
       orderTime: Date.now(),
-      paymentMethod,
+      paymentMethod: paymentSuccess ? "Online" : paymentMethod,
+      paymentStatus: paymentSuccess ? "Paid" : "Pending",
+      transactionId: paymentSuccess ? transactionData?.transactionId : "",
       items: cartItems.map((item) => ({
         menuItemId: item.id,
         quantity: item.quantity,
@@ -80,6 +150,31 @@ const Page = () => {
           <div className="row">
             <div className="col-12">
               {/* CART SUMMARY */}
+              {paymentSuccess && (
+                <div
+                  style={{
+                    marginBottom: "20px",
+                    padding: "20px",
+                    border: "2px solid #28a745",
+                    borderRadius: "12px",
+                    backgroundColor: "#d4edda",
+                    color: "#155724"
+                  }}
+                >
+                  <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+                    <i className="fas fa-check-circle" style={{ fontSize: "24px", color: "#28a745" }}></i>
+                    <div>
+                      <h4 style={{ margin: 0, color: "#155724" }}>Payment Successful!</h4>
+                      <p style={{ margin: 0, marginTop: "5px" }}>
+                        Transaction ID: {transactionData?.transactionId}
+                      </p>
+                      <p style={{ margin: 0, marginTop: "5px", fontSize: "14px" }}>
+                        Please click "Place Order" below to complete your order.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              )}
               <div
                 style={{
                   marginBottom: "30px",
@@ -179,7 +274,8 @@ const Page = () => {
                             id={method}
                             value={method}
                             checked={paymentMethod === method}
-                            onChange={() => setPaymentMethod(method)}
+                            onChange={() => !paymentSuccess && setPaymentMethod(method)}
+                            disabled={paymentSuccess && method !== "Online"}
                           />
                           <label htmlFor={method}>{method}</label>
                         </div>
@@ -200,6 +296,7 @@ const Page = () => {
                             className="form-control"
                             value={customerName}
                             onChange={(e) => setCustomerName(e.target.value)}
+                            disabled={paymentSuccess}
                           />
                         </div>
                         <div className="col-md-6">
@@ -209,6 +306,17 @@ const Page = () => {
                             className="form-control"
                             value={customerPhone}
                             onChange={(e) => setCustomerPhone(e.target.value)}
+                            disabled={paymentSuccess}
+                          />
+                        </div>
+                        <div className="col-md-6">
+                          <input
+                            type="email"
+                            placeholder="Customer Email"
+                            className="form-control"
+                            value={customerEmail}
+                            onChange={(e) => setCustomerEmail(e.target.value)}
+                            disabled={paymentSuccess}
                           />
                         </div>
                         <div className="col-md-6">
@@ -216,6 +324,7 @@ const Page = () => {
                             className="form-select"
                             value={orderType}
                             onChange={(e) => setOrderType(e.target.value)}
+                            disabled={paymentSuccess}
                           >
                             <option value="Takeaway">Takeaway</option>
                             <option value="Store Delivery">
@@ -223,6 +332,19 @@ const Page = () => {
                             </option>
                           </select>
                         </div>
+                        {orderType === "Store Delivery" && (
+                          <div className="col-12">
+                            <textarea
+                              placeholder="Delivery Address"
+                              className="form-control"
+                              value={customerAddress}
+                              onChange={(e) => setCustomerAddress(e.target.value)}
+                              rows={3}
+                              style={{ resize: 'vertical' }}
+                              disabled={paymentSuccess}
+                            ></textarea>
+                          </div>
+                        )}
                       </div>
                     </div>
 
@@ -241,22 +363,90 @@ const Page = () => {
                           Pay in cash at pickup/delivery.
                         </div>
                       )}
-                      {paymentMethod === "Online" && (
+                      {paymentMethod === "Online" && !paymentSuccess && (
                         <div className="p-2">
-                          You will be redirected to the payment gateway.
+                          {/* Debug: Show what we're passing to OnePay */}
+                          {console.log('Passing to OnePay component:', {
+                            app_id: ONEPAY_CONFIG.APP_ID,
+                            amount: Number(total).toFixed(2),
+                            customer_details: {
+                                first_name: customerName.split(' ')[0] || 'Guest',
+                                last_name: customerName.split(' ').slice(1).join(' ') || 'Customer',
+                                email: customerEmail || 'guest@example.com',
+                                phone_number: customerPhone.startsWith('+') ? customerPhone : `+94${customerPhone.replace(/^0/, '')}`
+                            },
+                            apptoken: ONEPAY_CONFIG.APP_TOKEN
+                          })}
+                          <OnePay
+                            app_id={ONEPAY_CONFIG.APP_ID || 'ENKR11909605A5F43454D'} // Ensure app_id is always provided
+                            amount={Number(total).toFixed(2)}
+                            currency="LKR"
+                            name="EatFit Order Payment"
+                            customer_details={{
+                                first_name: customerName.split(' ')[0] || 'Guest',
+                                last_name: customerName.split(' ').slice(1).join(' ') || 'Customer',
+                                email: customerEmail || 'guest@example.com',
+                                phone_number: customerPhone.startsWith('+') ? customerPhone : `+94${customerPhone.replace(/^0/, '')}`
+                            }}
+                            interval="MONTH"
+                            interval_count={1}
+                            additional_data={JSON.stringify({
+                                orderType,
+                                items: cartItems.map(item => item.name).join(', '),
+                                orderId: Date.now().toString(),
+                                customerAddress: orderType === "Store Delivery" ? customerAddress : ""
+                            })}
+                            apptoken={ONEPAY_CONFIG.APP_TOKEN}
+                            redirect_url={window.location.origin + '/checkout/success'}
+                            onSuccess={(data) => {
+                              console.log('Payment initiated:', data);
+                              // Order will be created after successful payment in success page
+                            }}
+                            onFailure={(error) => {
+                              console.error('Payment failed:', error);
+                              alert('Payment failed. Please try again.');
+                            }}
+                          />
+                        </div>
+                      )}
+                      {paymentMethod === "Online" && paymentSuccess && (
+                        <div className="p-3 text-center">
+                          <div className="alert alert-success">
+                            <i className="fas fa-check-circle"></i> Payment completed successfully!
+                            <br />
+                            <small>Transaction ID: {transactionData?.transactionId}</small>
+                          </div>
                         </div>
                       )}
                     </div>
 
                     <div className="mt-4">
-                      <button
-                        type="button"
-                        className="btn btn-dark w-100 py-2 fs-5"
-                        onClick={handlePlaceOrder}
-                        disabled={placingOrder}
-                      >
-                        {placingOrder ? "Placing..." : "Place Order"}
-                      </button>
+                      {/* Hide Place Order button if Online payment is selected but not completed */}
+                      {!(paymentMethod === "Online" && !paymentSuccess) && (
+                        <button
+                          type="button"
+                          className={`btn w-100 py-2 fs-5 ${paymentSuccess ? 'btn-success' : 'btn-dark'}`}
+                          onClick={handlePlaceOrder}
+                          disabled={placingOrder}
+                        >
+                          {placingOrder ? "Placing..." : paymentSuccess ? "Complete Order (Payment Successful)" : "Place Order"}
+                        </button>
+                      )}
+                      
+                      {/* Show message when Online payment is selected but not completed */}
+                      {paymentMethod === "Online" && !paymentSuccess && (
+                        <div className="text-center">
+                          <div className="alert alert-info">
+                            <i className="fas fa-info-circle"></i> Please complete your online payment using the OnePay gateway above to proceed with your order.
+                          </div>
+                        </div>
+                      )}
+                      
+                      {paymentSuccess && (
+                        <p className="text-center mt-2 text-success">
+                          <small><i className="fas fa-info-circle"></i> Your payment has been processed successfully. Click above to create your order.</small>
+                        </p>
+                      )}
                     </div>
                   </div>
                 </div>
