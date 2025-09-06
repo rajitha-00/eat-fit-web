@@ -7,6 +7,9 @@ const bundleAnalyzer = withBundleAnalyzer({
 
 const nextConfig = {
   reactStrictMode: true,
+  images: {
+    domains: ["www.designnetrix.com"],
+  },
 };
 
 export default bundleAnalyzer(nextConfig);

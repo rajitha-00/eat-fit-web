@@ -1,6 +1,7 @@
 "use client";
 import React from "react";
 import Link from "next/link";
+import Image from "next/image";
 
 const footerShapes = [
   { className: "footer-shape", src: "/assets/hero/chicken-teriyaki-bowl.svg" },
@@ -234,7 +235,20 @@ const Footer = () => (
           EATFIT
         </div>
       </Link>
-      . All Rights Reserved.
+      Developed by{" "}
+      <a
+        href="https://www.designnetrix.com/"
+        style={{ color: "#429c5a", textDecoration: "none" }}
+      >
+        {" "}
+        <Image
+          src="https://www.designnetrix.com/_next/image?url=%2Flogo_white.png&w=256&q=75"
+          alt="DesignNetrix"
+          width={100}
+          height={40}
+          className="w-32 h-auto sm:w-40 "
+        />
+      </a>
     </div>
 
     {/* Scroll to top button */}
