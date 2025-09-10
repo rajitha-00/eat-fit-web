@@ -18,7 +18,7 @@ import "swiper/css/autoplay";
 
 import ReduxProviderWrapper from "@/lib/ReduxProviderWrapper";
 import Preloader from "@/layouts/Preloader";
-import { Down } from "@/components/Down";
+import MaintenancePage from "@/components/Down";
 
 export const metadata = {
   title:
@@ -64,7 +64,7 @@ export default function RootLayout({ children }) {
           <Preloader />
           {/* {children} */}
           {/* Creative Maintenance Page */}
-          <Down />
+          <MaintenancePage />
         </ReduxProviderWrapper>
       </body>
     </html>
