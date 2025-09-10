@@ -46,7 +46,6 @@ const Page = () => {
           selectedAddons: [],
         })
       );
-      // Replace alert with non-blocking notification later
       alert(`${item.name} added to cart!`);
     }
   };
