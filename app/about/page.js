@@ -17,16 +17,67 @@ const page = () => {
 
   useEffect(() => {
     // Update document title for SEO
-    document.title = "About EatFit Kitchen - Healthy Food Delivery in Colombo";
+    document.title =
+      "About EatFit Rajagiriya | Colombo's Leading Healthy Food Delivery | Since 2020";
     // Add meta description
     const metaDescription = document.querySelector('meta[name="description"]');
     if (metaDescription) {
       metaDescription.setAttribute(
         "content",
-        "Discover EatFit Kitchen, Colombo's premier healthy food delivery service. Fresh ingredients, expert chefs, and nutrition-focused meals delivered to your doorstep."
+        "EatFit Rajagiriya is Colombo's premier healthy food delivery service since 2020. Organic ingredients, weight management programs, nutritionist-designed meals delivered across Colombo."
       );
     }
+
+    // Add structured data for the About page
+    const script = document.createElement("script");
+    script.type = "application/ld+json";
+    script.text = JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "AboutPage",
+      mainEntity: {
+        "@type": "Restaurant",
+        name: "EatFit Rajagiriya",
+        description:
+          "EatFit Rajagiriya has been Colombo's leading healthy food delivery service since 2020, specializing in organic weight management meals and fitness nutrition.",
+        foundingDate: "2020",
+        address: {
+          "@type": "PostalAddress",
+          addressLocality: "Rajagiriya, Colombo",
+          addressCountry: "LK",
+        },
+        servesCuisine: [
+          "Healthy",
+          "Organic",
+          "Weight Loss",
+          "Weight Gain",
+          "Fitness Nutrition",
+        ],
+        priceRange: "$$",
+        areaServed: "Colombo District",
+        knowsAbout: [
+          "Weight Loss Nutrition",
+          "Weight Gain Meals",
+          "Organic Food Preparation",
+          "Fitness Meal Planning",
+          "Healthy Food Delivery",
+        ],
+      },
+    });
+    document.head.appendChild(script);
+
     dispatch(setLoading(isLoading));
+
+    return () => {
+      // Cleanup
+      const scripts = document.querySelectorAll(
+        'script[type="application/ld+json"]'
+      );
+      scripts.forEach((script) => {
+        if (script.text.includes("AboutPage")) {
+          script.remove();
+        }
+      });
+    };
   }, [isLoading, dispatch]);
 
   if (isLoading) return null;

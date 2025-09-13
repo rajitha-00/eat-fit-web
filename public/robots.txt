@@ -1,0 +1,75 @@
+# Robots.txt for EatFit Rajagiriya - Optimized for SEO and GEO
+# https://eatfit.lk/robots.txt
+
+# Allow all search engine bots including AI crawlers
+User-agent: *
+Allow: /
+
+# Specific permissions for AI and search engine bots
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 1
+
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 1
+
+# OpenAI SearchBot for ChatGPT integration
+User-agent: OAI-SearchBot
+Allow: /
+Crawl-delay: 1
+
+# Google AI bots for Gemini
+User-agent: Google-Extended
+Allow: /
+Crawl-delay: 1
+
+# Claude AI bot
+User-agent: ClaudeBot
+Allow: /
+Crawl-delay: 1
+
+# Other AI bots
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: GPTBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+# Facebook crawler for social sharing
+User-agent: facebookexternalhit
+Allow: /
+
+# Twitter crawler
+User-agent: Twitterbot
+Allow: /
+
+# LinkedIn crawler
+User-agent: LinkedInBot
+Allow: /
+
+# Disallow admin and private areas
+Disallow: /admin/
+Disallow: /api/
+Disallow: /private/
+Disallow: /_next/
+Disallow: /checkout/success/
+Disallow: /checkout/failed/
+
+# Allow important pages for indexing
+Allow: /about
+Allow: /shop
+Allow: /gallery
+Allow: /news
+Allow: /faq
+Allow: /contact
+
+# Sitemap location
+Sitemap: https://eatfit.lk/sitemap.xml
+Sitemap: https://eatfit.lk/sitemap-0.xml
+
+# Host directive
+Host: https://eatfit.lk

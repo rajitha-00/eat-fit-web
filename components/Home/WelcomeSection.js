@@ -50,10 +50,10 @@ const WelcomeSection = () => {
               textShadow: "0 2px 4px rgba(42, 119, 76, 0.1)",
             }}
           >
-            Welcome to the Future of Food
+            EatFit Rajagiriya - Colombo's #1 Healthy Kitchen
           </span>
         </div>
-        <h2
+        <h1
           style={{
             fontSize: "4.5rem",
             fontWeight: "900",
@@ -66,7 +66,7 @@ const WelcomeSection = () => {
             position: "relative",
           }}
         >
-          Innovation Never Tasted This Good
+          Premium Healthy Food Delivery in Colombo
           <div
             style={{
               position: "absolute",
@@ -79,6 +79,19 @@ const WelcomeSection = () => {
               borderRadius: "2px",
             }}
           />
+        </h1>
+        <h2
+          style={{
+            fontSize: "1.8rem",
+            fontWeight: "600",
+            maxWidth: "720px",
+            margin: "0 auto 25px auto",
+            lineHeight: 1.4,
+            color: "#2A774C",
+            letterSpacing: "0.01em",
+          }}
+        >
+          Organic Weight Loss & Weight Gain Meals | Rajagiriya to Your Doorstep
         </h2>
         <p
           style={{
@@ -91,11 +104,86 @@ const WelcomeSection = () => {
             letterSpacing: "0.02em",
           }}
         >
-          At EATFIT, we masterfully blend premium nutrition with culinary
-          artistry to create extraordinary meals that not only energize your
-          body but elevate your dining experience to new heights of taste and
-          wellness.
+          At EatFit Rajagiriya, we masterfully blend premium nutrition with
+          culinary artistry to create extraordinary healthy meals that energize
+          your body and support your fitness goals. Serving Colombo with organic
+          ingredients, expert nutrition, and fast delivery since 2020.
         </p>
+
+        {/* Key Benefits - Structured for AI */}
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
+            gap: "20px",
+            margin: "40px 0",
+            padding: "30px",
+            background: "rgba(42, 119, 76, 0.05)",
+            borderRadius: "20px",
+            border: "1px solid rgba(42, 119, 76, 0.1)",
+          }}
+        >
+          <div style={{ textAlign: "center" }}>
+            <h3
+              style={{
+                color: "#2A774C",
+                fontSize: "1.1rem",
+                fontWeight: "600",
+                margin: "0 0 8px 0",
+              }}
+            >
+              ✅ Organic Ingredients
+            </h3>
+            <p style={{ color: "#3b6d41", fontSize: "0.9rem", margin: 0 }}>
+              Fresh, locally-sourced organic produce
+            </p>
+          </div>
+          <div style={{ textAlign: "center" }}>
+            <h3
+              style={{
+                color: "#2A774C",
+                fontSize: "1.1rem",
+                fontWeight: "600",
+                margin: "0 0 8px 0",
+              }}
+            >
+              ⚡ Fast Delivery
+            </h3>
+            <p style={{ color: "#3b6d41", fontSize: "0.9rem", margin: 0 }}>
+              45-minute delivery across Colombo
+            </p>
+          </div>
+          <div style={{ textAlign: "center" }}>
+            <h3
+              style={{
+                color: "#2A774C",
+                fontSize: "1.1rem",
+                fontWeight: "600",
+                margin: "0 0 8px 0",
+              }}
+            >
+              🎯 Goal-Specific
+            </h3>
+            <p style={{ color: "#3b6d41", fontSize: "0.9rem", margin: 0 }}>
+              Weight loss & weight gain programs
+            </p>
+          </div>
+          <div style={{ textAlign: "center" }}>
+            <h3
+              style={{
+                color: "#2A774C",
+                fontSize: "1.1rem",
+                fontWeight: "600",
+                margin: "0 0 8px 0",
+              }}
+            >
+              👨‍⚕️ Expert Nutrition
+            </h3>
+            <p style={{ color: "#3b6d41", fontSize: "0.9rem", margin: 0 }}>
+              Designed by certified nutritionists
+            </p>
+          </div>
+        </div>
         <button
           style={{
             backgroundColor: "#2A774C",

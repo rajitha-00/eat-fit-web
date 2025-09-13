@@ -74,6 +74,15 @@ const Page = () => {
     }
   }, []);
 
+  // Effect to handle payment method when order type changes
+  useEffect(() => {
+    if (orderType === "Store Delivery") {
+      // For delivery, only online payment is allowed
+      setPaymentMethod("Online");
+    }
+    // For takeaway, allow user to choose - don't force any specific method
+  }, [orderType]);
+
   if (!mounted) return null;
 
   const total = cartItems.reduce((sum, item) => {
@@ -178,17 +187,34 @@ const Page = () => {
                     border: "2px solid #28a745",
                     borderRadius: "12px",
                     backgroundColor: "#d4edda",
-                    color: "#155724"
+                    color: "#155724",
                   }}
                 >
-                  <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-                    <i className="fas fa-check-circle" style={{ fontSize: "24px", color: "#28a745" }}></i>
+                  <div
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "10px",
+                    }}
+                  >
+                    <i
+                      className="fas fa-check-circle"
+                      style={{ fontSize: "24px", color: "#28a745" }}
+                    ></i>
                     <div>
-                      <h4 style={{ margin: 0, color: "#155724" }}>Payment Successful!</h4>
+                      <h4 style={{ margin: 0, color: "#155724" }}>
+                        Payment Successful!
+                      </h4>
                       <p style={{ margin: 0, marginTop: "5px" }}>
                         Transaction ID: {transactionData?.transactionId}
                       </p>
-                      <p style={{ margin: 0, marginTop: "5px", fontSize: "14px" }}>
+                      <p
+                        style={{
+                          margin: 0,
+                          marginTop: "5px",
+                          fontSize: "14px",
+                        }}
+                      >
                         Please click "Place Order" below to complete your order.
                       </p>
                     </div>
@@ -285,21 +311,80 @@ const Page = () => {
                 <div className="col-md-5 col-lg-4 col-xl-3">
                   <div className="checkout-radio">
                     <p className="primary-text">Select Payment Method</p>
+                    
+                    {/* Payment method information */}
+                    <div className="payment-info-wrapper mb-3">
+                      {orderType === "Takeaway" && (
+                        <div className="alert alert-warning mb-2" style={{ fontSize: '0.85rem', padding: '8px 12px' }}>
+                          <i className="fas fa-store me-2"></i> 
+                          <strong>Takeaway Orders:</strong> Cash or Online payment available
+                        </div>
+                      )}
+                      {orderType === "Store Delivery" && (
+                        <div className="alert alert-info mb-2" style={{ fontSize: '0.85rem', padding: '8px 12px' }}>
+                          <i className="fas fa-truck me-2"></i> 
+                          <strong>Delivery Orders:</strong> Online payment only
+                        </div>
+                      )}
+                    </div>
+
                     <div className="checkout-radio-wrapper">
-                      {["Cash", "Online", "Bank Transfer"].map((method) => (
-                        <div className="checkout-radio-single" key={method}>
+                      {/* Cash payment - only available for takeaway */}
+                      {orderType === "Takeaway" && (
+                        <div className="checkout-radio-single">
                           <input
                             type="radio"
                             className="form-check-input"
-                            id={method}
-                            value={method}
-                            checked={paymentMethod === method}
-                            onChange={() => !paymentSuccess && setPaymentMethod(method)}
-                            disabled={paymentSuccess && method !== "Online"}
+                            id="Cash"
+                            value="Cash"
+                            checked={paymentMethod === "Cash"}
+                            onChange={() => !paymentSuccess && setPaymentMethod("Cash")}
+                            disabled={paymentSuccess && paymentMethod !== "Cash"}
                           />
-                          <label htmlFor={method}>{method}</label>
+                          <label htmlFor="Cash">
+                            💵 Cash Payment
+                            <small className="d-block text-muted">Pay when you collect your order</small>
+                          </label>
                         </div>
-                      ))}
+                      )}
+                      
+                      {/* Online payment - available for both takeaway and delivery */}
+                      <div className="checkout-radio-single">
+                        <input
+                          type="radio"
+                          className="form-check-input"
+                          id="Online"
+                          value="Online"
+                          checked={paymentMethod === "Online"}
+                          onChange={() => !paymentSuccess && setPaymentMethod("Online")}
+                          disabled={paymentSuccess && paymentMethod !== "Online"}
+                        />
+                        <label htmlFor="Online">
+                          💳 Online Payment
+                          <small className="d-block text-muted">
+                            {orderType === "Takeaway" 
+                              ? "Pay online for faster checkout" 
+                              : "Required for delivery orders"}
+                          </small>
+                        </label>
+                      </div>
+
+                      {/* Show disabled cash option for delivery with explanation */}
+                      {orderType === "Store Delivery" && (
+                        <div className="checkout-radio-single" style={{ opacity: 0.5 }}>
+                          <input
+                            type="radio"
+                            className="form-check-input"
+                            id="CashDisabled"
+                            value="Cash"
+                            disabled={true}
+                          />
+                          <label htmlFor="CashDisabled" style={{ cursor: 'not-allowed' }}>
+                            💵 Cash Payment
+                            <small className="d-block text-danger">Not available for delivery orders</small>
+                          </label>
+                        </div>
+                      )}
                     </div>
                   </div>
                 </div>
@@ -322,7 +407,8 @@ const Page = () => {
                           {/* Debug info for production */}
                           {customerName && (
                             <small className="text-muted">
-                              Name parts: {customerName.split(' ').length} | Value: "{customerName}"
+                              Name parts: {customerName.split(" ").length} |
+                              Value: "{customerName}"
                             </small>
                           )}
                         </div>
@@ -365,9 +451,11 @@ const Page = () => {
                               placeholder="Delivery Address"
                               className="form-control"
                               value={customerAddress}
-                              onChange={(e) => setCustomerAddress(e.target.value)}
+                              onChange={(e) =>
+                                setCustomerAddress(e.target.value)
+                              }
                               rows={3}
-                              style={{ resize: 'vertical' }}
+                              style={{ resize: "vertical" }}
                               disabled={paymentSuccess}
                             ></textarea>
                           </div>
@@ -377,48 +465,68 @@ const Page = () => {
 
                     <div className="checkout-single checkout-single-bg mt-3">
                       <h4>Payment Info</h4>
-                      {paymentMethod === "Bank Transfer" && (
-                        <div className="p-2">
-                          Transfer to:
-                          <br />
-                          <strong>Account No:</strong> 1234567890 <br />
-                          <strong>Bank:</strong> Eat Fit Bank
-                        </div>
-                      )}
                       {paymentMethod === "Cash" && (
                         <div className="p-2">
-                          Pay in cash at pickup/delivery.
+                          <div className="alert alert-success">
+                            <i className="fas fa-money-bill-wave"></i> 
+                            <strong> Cash Payment Selected</strong>
+                            <br />
+                            Pay in cash when you pick up your order at our Rajagiriya location.
+                            <br />
+                            <small className="text-muted">
+                              <i className="fas fa-info-circle"></i> Cash payment is only available for takeaway orders.
+                            </small>
+                          </div>
                         </div>
                       )}
                       {paymentMethod === "Online" && !paymentSuccess && (
                         <div className="p-2">
-                          {/* Debug: Show what we're passing to OnePay */}
-                       
+                          <div className="alert alert-info">
+                            <i className="fas fa-credit-card"></i> 
+                            <strong> Online Payment</strong>
+                            <br />
+                            {orderType === "Takeaway" 
+                              ? "Pay securely online for faster checkout. You can also pay cash at pickup."
+                              : "Secure online payment is required for all delivery orders."
+                            }
+                          </div>
                           <OnePay
-                            app_id={ONEPAY_CONFIG.APP_ID || 'ENKR11909605A5F43454D'} // Ensure app_id is always provided
+                            app_id={
+                              ONEPAY_CONFIG.APP_ID || "ENKR11909605A5F43454D"
+                            }
                             amount={Number(total).toFixed(2)}
                             currency="LKR"
                             name="EatFit Order Payment"
                             customer_details={{
-                                first_name: customerName.split(' ')[0] || 'Guest',
-                                last_name: customerName.split(' ').slice(1).join(' ') || 'Customer',
-                                email: customerEmail || 'guest@example.com',
-                                phone_number: customerPhone.startsWith('+') ? customerPhone : `+94${customerPhone.replace(/^0/, '')}`
+                              first_name: customerName.split(" ")[0] || "Guest",
+                              last_name:
+                                customerName.split(" ").slice(1).join(" ") ||
+                                "Customer",
+                              email: customerEmail || "guest@example.com",
+                              phone_number: customerPhone.startsWith("+")
+                                ? customerPhone
+                                : `+94${customerPhone.replace(/^0/, "")}`,
                             }}
                             interval="MONTH"
                             interval_count={1}
                             additional_data={JSON.stringify({
-                                orderType,
-                                items: cartItems.map(item => item.name).join(', '),
-                                orderId: Date.now().toString(),
-                                customerAddress: orderType === "Store Delivery" ? customerAddress : ""
+                              orderType,
+                              items: cartItems
+                                .map((item) => item.name)
+                                .join(", "),
+                              orderId: Date.now().toString(),
+                              customerAddress:
+                                orderType === "Store Delivery"
+                                  ? customerAddress
+                                  : "",
                             })}
                             apptoken={ONEPAY_CONFIG.APP_TOKEN}
-                            redirect_url={window.location.origin + '/checkout/success'}
-                           
+                            redirect_url={
+                              window.location.origin + "/checkout/success"
+                            }
                             onFailure={(error) => {
-                              console.error('Payment failed:', error);
-                              alert('Payment failed. Please try again.');
+                              console.error("Payment failed:", error);
+                              alert("Payment failed. Please try again.");
                             }}
                           />
                         </div>
@@ -426,9 +534,12 @@ const Page = () => {
                       {paymentMethod === "Online" && paymentSuccess && (
                         <div className="p-3 text-center">
                           <div className="alert alert-success">
-                            <i className="fas fa-check-circle"></i> Payment completed successfully!
+                            <i className="fas fa-check-circle"></i> Payment
+                            completed successfully!
                             <br />
-                            <small>Transaction ID: {transactionData?.transactionId}</small>
+                            <small>
+                              Transaction ID: {transactionData?.transactionId}
+                            </small>
                           </div>
                         </div>
                       )}
@@ -439,26 +550,38 @@ const Page = () => {
                       {!(paymentMethod === "Online" && !paymentSuccess) && (
                         <button
                           type="button"
-                          className={`btn w-100 py-2 fs-5 ${paymentSuccess ? 'btn-success' : 'btn-dark'}`}
+                          className={`btn w-100 py-2 fs-5 ${
+                            paymentSuccess ? "btn-success" : "btn-dark"
+                          }`}
                           onClick={handlePlaceOrder}
                           disabled={placingOrder}
                         >
-                          {placingOrder ? "Placing..." : paymentSuccess ? "Complete Order (Payment Successful)" : "Place Order"}
+                          {placingOrder
+                            ? "Placing..."
+                            : paymentSuccess
+                            ? "Complete Order (Payment Successful)"
+                            : "Place Order"}
                         </button>
                       )}
-                      
+
                       {/* Show message when Online payment is selected but not completed */}
                       {paymentMethod === "Online" && !paymentSuccess && (
                         <div className="text-center">
                           <div className="alert alert-info">
-                            <i className="fas fa-info-circle"></i> Please complete your online payment using the OnePay gateway above to proceed with your order.
+                            <i className="fas fa-info-circle"></i> Please
+                            complete your online payment using the OnePay
+                            gateway above to proceed with your order.
                           </div>
                         </div>
                       )}
-                      
+
                       {paymentSuccess && (
                         <p className="text-center mt-2 text-success">
-                          <small><i className="fas fa-info-circle"></i> Your payment has been processed successfully. Click above to create your order.</small>
+                          <small>
+                            <i className="fas fa-info-circle"></i> Your payment
+                            has been processed successfully. Click above to
+                            create your order.
+                          </small>
                         </p>
                       )}
                     </div>

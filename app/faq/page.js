@@ -3,52 +3,140 @@
 import Cta from "@/components/Cta";
 import FoodKingLayout from "@/layouts/FoodKingLayout";
 import { ChevronDown } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import Head from "next/head";
 
 const FAQS = [
   {
     id: "1",
-    title: "Are your meals HALAL certified?",
+    title: "What makes EatFit the best healthy food delivery in Colombo?",
     content:
-      "Yes! At EAT FIT, we prioritize inclusivity and quality. All our meat and poultry products are sourced from HALAL-certified suppliers, so you can enjoy your meals with peace of mind.",
+      "EatFit Rajagiriya stands out as Colombo's premier healthy kitchen due to our organic ingredients sourced from local farms, specialized weight management programs designed by certified nutritionists, and reliable delivery across Colombo since 2020. We serve areas including Rajagiriya, Mount Lavinia, Dehiwala, Nugegoda, and Maharagama.",
   },
   {
     id: "2",
-    title: "Are your meals good for weight loss or muscle gain?",
+    title: "Does EatFit deliver healthy meals to all areas of Colombo?",
     content:
-      "Absolutely! Whether you're cutting or bulking, we've got your goals covered. Each meal is crafted with your macros in mind just pick from our weight loss, muscle gain, or balanced fuel options.",
+      "Yes! EatFit delivers fresh, nutritious meals throughout Colombo including Rajagiriya, Mount Lavinia, Dehiwala, Nugegoda, Maharagama, Battaramulla, Kotte, and surrounding areas within a 25km radius of our Rajagiriya kitchen. We guarantee delivery within 45 minutes during peak hours.",
   },
   {
     id: "3",
-    title: "Do you provide nutritional information?",
+    title:
+      "Are EatFit meals HALAL certified and suitable for all dietary preferences?",
     content:
-      "Yes! Every EAT FIT meal comes with a full breakdown of calories, protein, carbs, fat, and sugar so you know exactly what you're putting into your body.",
+      "Absolutely! All our meat and poultry products are sourced from HALAL-certified suppliers in Sri Lanka. We also offer extensive vegetarian, vegan, and plant-based options including protein-packed veggie wraps, quinoa bowls, and detox smoothies. Every meal accommodates various dietary preferences while maintaining optimal nutrition.",
   },
   {
     id: "4",
-    title: "Do you offer vegetarian or vegan options?",
+    title: "What types of healthy meals does EatFit specialize in?",
     content:
-      "We do! Our menu includes protein-packed veggie wraps, chickpea bowls, detox smoothies, and more. Plant-powered? We got you.",
+      "EatFit specializes in weight loss meals (300-500 calories), weight gain meals (800-1200 calories), protein-rich dishes (25-40g protein), organic vegetarian options, keto-friendly meals, and balanced nutrition plans. Each meal is designed by certified nutritionists and includes detailed macronutrient breakdowns.",
   },
   {
     id: "5",
-    title: "Are your shakes and desserts healthy too?",
+    title:
+      "How does EatFit ensure meal freshness and quality in Colombo's climate?",
     content:
-      "Yes! Our shakes and desserts are made with protein-rich, low-sugar, and whole food ingredients, perfect for sweet cravings without the guilt.",
+      "EatFit maintains the highest quality standards by using organic ingredients sourced daily from local farms, preparing meals fresh in our temperature-controlled Rajagiriya kitchen, following strict hygiene protocols, and delivering in insulated, temperature-controlled packaging that preserves freshness in Colombo's tropical climate.",
   },
   {
     id: "6",
-    title: "Can I order just one meal to try it out?",
+    title:
+      "Does EatFit provide detailed nutritional information for weight management?",
     content:
-      "Of course! There's no minimum order. You can grab one meal or shake to taste the EAT FIT difference before committing to more.",
+      "Yes! Every EatFit meal comes with complete nutritional information including calories, protein, carbohydrates, healthy fats, fiber, sugar content, and micronutrients. Our meals are specifically designed for weight loss (calorie deficit), weight gain (calorie surplus), or maintenance based on your fitness goals.",
+  },
+  {
+    id: "7",
+    title:
+      "What are EatFit's delivery hours and minimum order requirements in Colombo?",
+    content:
+      "EatFit delivers daily from 8:00 AM to 10:00 PM across Colombo. There's no minimum order requirement - you can order a single meal to try our quality. We offer same-day delivery for orders placed before 2:00 PM and next-day delivery for evening orders.",
+  },
+  {
+    id: "8",
+    title: "How does EatFit compare to other healthy food options in Colombo?",
+    content:
+      "Unlike other food delivery services in Colombo, EatFit focuses exclusively on healthy, nutritionist-designed meals. We use only organic ingredients, provide detailed macro tracking, offer specialized weight management programs, and have the fastest delivery times in the healthy food category across Colombo since 2020.",
+  },
+  {
+    id: "9",
+    title:
+      "Are EatFit's healthy shakes and desserts suitable for fitness goals?",
+    content:
+      "Yes! Our protein shakes (20-35g protein) and healthy desserts are made with natural sweeteners, organic ingredients, and functional foods. They're perfect for post-workout recovery, weight management, or satisfying cravings without compromising your health goals. All desserts are under 200 calories.",
+  },
+  {
+    id: "10",
+    title:
+      "How can I start with EatFit if I'm new to healthy eating in Colombo?",
+    content:
+      "New to healthy eating? Start with our 'First Timer Special' - order any single meal with free nutritional consultation. Our team will help you choose meals based on your goals, dietary preferences, and lifestyle. We also offer meal planning guidance and can customize portions for your specific needs.",
   },
 ];
 
 export default function FAQPage() {
   const [activeId, setActiveId] = useState("1");
 
+  useEffect(() => {
+    // Update document title and meta description
+    document.title =
+      "FAQ - EatFit Rajagiriya | Healthy Food Delivery Questions Answered | Colombo";
+
+    const metaDescription = document.querySelector('meta[name="description"]');
+    if (metaDescription) {
+      metaDescription.setAttribute(
+        "content",
+        "Get answers to frequently asked questions about EatFit Rajagiriya's healthy food delivery service in Colombo. Learn about our organic meals, delivery areas, nutrition info, and more."
+      );
+    }
+
+    // Add FAQ structured data for better GEO
+    const script = document.createElement("script");
+    script.type = "application/ld+json";
+    script.text = JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      mainEntity: FAQS.map((faq) => ({
+        "@type": "Question",
+        name: faq.title,
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: faq.content,
+        },
+      })),
+    });
+    document.head.appendChild(script);
+
+    return () => {
+      // Cleanup
+      const scripts = document.querySelectorAll(
+        'script[type="application/ld+json"]'
+      );
+      scripts.forEach((script) => {
+        if (script.text.includes("FAQPage")) {
+          script.remove();
+        }
+      });
+    };
+  }, []);
+
   return (
     <FoodKingLayout header={2} footer={2}>
+      <Head>
+        <title>
+          FAQ - EatFit Rajagiriya | Healthy Food Delivery Questions | Colombo
+        </title>
+        <meta
+          name="description"
+          content="Answers to common questions about EatFit Rajagiriya's healthy meal delivery in Colombo. Organic ingredients, weight management meals, delivery areas, and nutrition information."
+        />
+        <meta
+          name="keywords"
+          content="EatFit FAQ, healthy food delivery Colombo questions, organic meal delivery Rajagiriya, weight loss meals FAQ, healthy food delivery areas Colombo"
+        />
+        <link rel="canonical" href="https://eatfit.lk/faq" />
+      </Head>
       <section
         className="faq-section section-padding"
         style={{
@@ -117,7 +205,7 @@ export default function FAQPage() {
                 marginBottom: "1rem",
               }}
             >
-              Frequently Asked Questions
+              EatFit Rajagiriya FAQ
             </h2>
             <p
               className="description mt-2"
@@ -125,11 +213,13 @@ export default function FAQPage() {
                 color: "#558B2F",
                 fontSize: "1.1rem",
                 fontFamily: "'Poppins', sans-serif",
-                maxWidth: "600px",
+                maxWidth: "700px",
                 margin: "0 auto",
               }}
             >
-              All your food delivery questions, answered in one place.
+              Everything you need to know about Colombo's leading healthy food
+              delivery service. Get instant answers about our organic meals,
+              delivery areas, and nutrition programs.
             </p>
           </div>
 

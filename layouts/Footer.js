@@ -163,9 +163,9 @@ const Footer = () => (
             color: "rgba(255,255,255,0.7)",
           }}
         >
-          Sri Jayawardanepura Mawatha,
+          5th Floor,
           <br />
-          Sri Jayewardenepura Kotte,
+          Jana Jaya City Mall, Rajagiriya,
           <br />
           Western
         </p>
@@ -184,7 +184,7 @@ const Footer = () => (
         </a>
         <br />
         <a
-          href="tel:+94703364646"
+          href="tel:+94777287672"
           style={{
             color: "#429c5a",
             textDecoration: "none",
@@ -192,7 +192,7 @@ const Footer = () => (
             userSelect: "text",
           }}
         >
-          +94 703 364 646
+          +94 777 287 672
         </a>
         <ul
           style={{

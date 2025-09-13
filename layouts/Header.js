@@ -24,7 +24,8 @@ const Menus = ({ textColor }) => (
       { label: "Blog", href: "/news" },
       { label: "About Us", href: "/about" },
       { label: "Faq's", href: "/faq" },
-      { label: "Gallery", href: "/gallery" },
+      // { label: "Gallery", href: "/gallery" },
+      // { label: "Food", href: "/healthy-food-guide-colombo" },
     ].map((item, index) => (
       <li key={index}>
         <Link
