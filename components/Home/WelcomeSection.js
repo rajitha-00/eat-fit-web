@@ -1,208 +1,120 @@
+import { motion } from "framer-motion";
+import styles from "./WelcomeSection.module.css";
+
 const WelcomeSection = () => {
   return (
-    <section
-      style={{
-        position: "relative",
-        width: "100%",
-        overflow: "hidden",
-        marginTop: "-20px",
-        fontFamily:
-          "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif",
-        background: "linear-gradient(135deg, #f0faf6 0%, #e8f5ed 100%)",
-        padding: "80px 20px",
-        display: "flex",
-        justifyContent: "center",
-        backgroundImage: `url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%232A774C' fill-opacity='0.05'%3E%3Cpath d='M15 25h10v10H15zM35 45h10v10H35z'/%3E%3Cpath d='M25 15c-5.5 0-10 4.5-10 10s4.5 10 10 10 10-4.5 10-10-4.5-10-10-10zm0 15c-2.8 0-5-2.2-5-5s2.2-5 5-5 5 2.2 5 5-2.2 5-5 5z'/%3E%3Cpath d='M65 35c-1.1 0-2 .9-2 2v6h-6c-1.1 0-2 .9-2 2s.9 2 2 2h6v6c0 1.1.9 2 2 2s2-.9 2-2v-6h6c1.1 0 2-.9 2-2s-.9-2-2-2h-6v-6c0-1.1-.9-2-2-2z'/%3E%3Cpath d='M85 25h-10c-1.1 0-2 .9-2 2v6c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2v-6c0-1.1-.9-2-2-2zm-2 6h-6v-2h6v2z'/%3E%3C/g%3E%3C/svg%3E"),
-          radial-gradient(circle at 15% 15%, rgba(42, 119, 76, 0.08) 0%, transparent 60%),
-          radial-gradient(circle at 85% 85%, rgba(42, 119, 76, 0.08) 0%, transparent 60%),
-          linear-gradient(135deg, #f0faf6 0%, #e8f5ed 100%)`,
-        backgroundBlendMode: "soft-light, screen, screen, normal",
-      }}
+    <motion.section
+      className={styles.welcomeSection}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.6 }}
     >
-      <div
-        style={{
-          position: "relative",
-          zIndex: 2,
-          background: "rgba(255, 255, 255, 0.92)",
-          backdropFilter: "blur(25px) saturate(180%)",
-          padding: "70px",
-          borderRadius: "40px",
-          border: "1px solid rgba(255, 255, 255, 0.9)",
-          boxShadow:
-            "0 25px 60px rgba(42, 119, 76, 0.18), 0 10px 30px rgba(42, 119, 76, 0.15), inset 0 1px 2px rgba(255, 255, 255, 0.9)",
-          maxWidth: "720px",
-          width: "100%",
-          textAlign: "center",
-          color: "#1B5C3B",
-          animation: "pulseGlow 4s ease-in-out infinite",
-        }}
+      <motion.div
+        className={styles.container}
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8, delay: 0.2 }}
       >
-        <div style={{ marginBottom: "32px" }}>
-          <span
-            style={{
-              fontSize: "1.4rem",
-              color: "#2A774C",
-              fontWeight: "700",
-              textTransform: "uppercase",
-              letterSpacing: "0.15em",
-              display: "block",
-              marginBottom: "16px",
-              textShadow: "0 2px 4px rgba(42, 119, 76, 0.1)",
-            }}
+        <div className={styles.heading}>
+          <motion.span
+            className={styles.subHeading}
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.3 }}
           >
             EatFit Rajagiriya - Colombo's #1 Healthy Kitchen
-          </span>
+          </motion.span>
         </div>
-        <h1
-          style={{
-            fontSize: "4.5rem",
-            fontWeight: "900",
-            marginBottom: "32px",
-            lineHeight: 1.05,
-            letterSpacing: "0.01em",
-            background: "linear-gradient(135deg, #1B5C3B 0%, #2A774C 100%)",
-            WebkitBackgroundClip: "text",
-            WebkitTextFillColor: "transparent",
-            position: "relative",
-          }}
+
+        <motion.h1
+          className={styles.mainTitle}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.4 }}
         >
           Premium Healthy Food Delivery in Colombo
-          <div
-            style={{
-              position: "absolute",
-              bottom: "-10px",
-              left: "50%",
-              transform: "translateX(-50%)",
-              width: "80px",
-              height: "4px",
-              background: "#2A774C",
-              borderRadius: "2px",
-            }}
-          />
-        </h1>
-        <h2
-          style={{
-            fontSize: "1.8rem",
-            fontWeight: "600",
-            maxWidth: "720px",
-            margin: "0 auto 25px auto",
-            lineHeight: 1.4,
-            color: "#2A774C",
-            letterSpacing: "0.01em",
-          }}
+          <div className={styles.underline} />
+        </motion.h1>
+
+        <motion.h2
+          className={styles.subtitle}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.5 }}
         >
           Organic Weight Loss & Weight Gain Meals | Rajagiriya to Your Doorstep
-        </h2>
-        <p
-          style={{
-            fontSize: "1.5rem",
-            fontWeight: "500",
-            maxWidth: "720px",
-            margin: "0 auto 40px auto",
-            lineHeight: 1.5,
-            color: "#3b6d41",
-            letterSpacing: "0.02em",
-          }}
+        </motion.h2>
+
+        <motion.p
+          className={styles.description}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.6 }}
         >
           At EatFit Rajagiriya, we masterfully blend premium nutrition with
           culinary artistry to create extraordinary healthy meals that energize
           your body and support your fitness goals. Serving Colombo with organic
-          ingredients, expert nutrition, and fast delivery since 2020.
-        </p>
+          ingredients, expert nutrition, and fast delivery since 2025.
+        </motion.p>
 
-        {/* Key Benefits - Structured for AI */}
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
-            gap: "20px",
-            margin: "40px 0",
-            padding: "30px",
-            background: "rgba(42, 119, 76, 0.05)",
-            borderRadius: "20px",
-            border: "1px solid rgba(42, 119, 76, 0.1)",
-          }}
+        <motion.div
+          className={styles.benefitsGrid}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.7 }}
         >
-          <div style={{ textAlign: "center" }}>
-            <h3
-              style={{
-                color: "#2A774C",
-                fontSize: "1.1rem",
-                fontWeight: "600",
-                margin: "0 0 8px 0",
-              }}
-            >
-              ✅ Organic Ingredients
-            </h3>
-            <p style={{ color: "#3b6d41", fontSize: "0.9rem", margin: 0 }}>
+          <motion.div
+            className={styles.benefitItem}
+            whileHover={{ scale: 1.05 }}
+            transition={{ duration: 0.3 }}
+          >
+            <h3 className={styles.benefitTitle}>✅ Organic Ingredients</h3>
+            <p className={styles.benefitText}>
               Fresh, locally-sourced organic produce
             </p>
-          </div>
-          <div style={{ textAlign: "center" }}>
-            <h3
-              style={{
-                color: "#2A774C",
-                fontSize: "1.1rem",
-                fontWeight: "600",
-                margin: "0 0 8px 0",
-              }}
-            >
-              ⚡ Fast Delivery
-            </h3>
-            <p style={{ color: "#3b6d41", fontSize: "0.9rem", margin: 0 }}>
+          </motion.div>
+
+          <motion.div
+            className={styles.benefitItem}
+            whileHover={{ scale: 1.05 }}
+            transition={{ duration: 0.3 }}
+          >
+            <h3 className={styles.benefitTitle}>⚡ Fast Delivery</h3>
+            <p className={styles.benefitText}>
               45-minute delivery across Colombo
             </p>
-          </div>
-          <div style={{ textAlign: "center" }}>
-            <h3
-              style={{
-                color: "#2A774C",
-                fontSize: "1.1rem",
-                fontWeight: "600",
-                margin: "0 0 8px 0",
-              }}
-            >
-              🎯 Goal-Specific
-            </h3>
-            <p style={{ color: "#3b6d41", fontSize: "0.9rem", margin: 0 }}>
+          </motion.div>
+
+          <motion.div
+            className={styles.benefitItem}
+            whileHover={{ scale: 1.05 }}
+            transition={{ duration: 0.3 }}
+          >
+            <h3 className={styles.benefitTitle}>🎯 Goal-Specific</h3>
+            <p className={styles.benefitText}>
               Weight loss & weight gain programs
             </p>
-          </div>
-          <div style={{ textAlign: "center" }}>
-            <h3
-              style={{
-                color: "#2A774C",
-                fontSize: "1.1rem",
-                fontWeight: "600",
-                margin: "0 0 8px 0",
-              }}
-            >
-              👨‍⚕️ Expert Nutrition
-            </h3>
-            <p style={{ color: "#3b6d41", fontSize: "0.9rem", margin: 0 }}>
+          </motion.div>
+
+          <motion.div
+            className={styles.benefitItem}
+            whileHover={{ scale: 1.05 }}
+            transition={{ duration: 0.3 }}
+          >
+            <h3 className={styles.benefitTitle}>👨‍⚕️ Expert Nutrition</h3>
+            <p className={styles.benefitText}>
               Designed by certified nutritionists
             </p>
-          </div>
-        </div>
-        <button
-          style={{
-            backgroundColor: "#2A774C",
-            color: "white",
-            fontWeight: "600",
-            fontSize: "1.25rem",
-            padding: "16px 48px",
-            borderRadius: "48px",
-            border: "none",
-            cursor: "pointer",
-            boxShadow: "0 8px 24px rgba(42,119,76,0.4)",
-            transition: "background-color 0.3s ease",
-          }}
-          onMouseEnter={(e) =>
-            (e.currentTarget.style.backgroundColor = "#1B5C3B")
-          }
-          onMouseLeave={(e) =>
-            (e.currentTarget.style.backgroundColor = "#2A774C")
-          }
+          </motion.div>
+        </motion.div>
+
+        <motion.button
+          className={styles.exploreButton}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.8 }}
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
           onClick={() =>
             window.scrollTo({
               top: document.body.scrollHeight,
@@ -212,27 +124,9 @@ const WelcomeSection = () => {
           aria-label="See our menu"
         >
           Explore Our Menu
-        </button>
-      </div>
-
-      <style jsx>{`
-        @keyframes pulseGlow {
-          0%,
-          100% {
-            box-shadow: 0 25px 60px rgba(42, 119, 76, 0.18),
-              0 10px 30px rgba(42, 119, 76, 0.15),
-              inset 0 1px 2px rgba(255, 255, 255, 0.9);
-            transform: translateY(0);
-          }
-          50% {
-            box-shadow: 0 30px 70px rgba(42, 119, 76, 0.25),
-              0 15px 40px rgba(42, 119, 76, 0.2),
-              inset 0 1px 2px rgba(255, 255, 255, 0.9);
-            transform: translateY(-5px);
-          }
-        }
-      `}</style>
-    </section>
+        </motion.button>
+      </motion.div>
+    </motion.section>
   );
 };
 
