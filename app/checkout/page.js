@@ -59,11 +59,12 @@ const Page = () => {
     }
   }, []);
 
-  useEffect(() => {
-    if (orderType === "Store Delivery") {
-      setPaymentMethod("Online");
-    }
-  }, [orderType]);
+  // TEMPORARILY DISABLED - Online payments
+  // useEffect(() => {
+  //   if (orderType === "Store Delivery") {
+  //     setPaymentMethod("Online");
+  //   }
+  // }, [orderType]);
 
   if (!mounted) return null;
 
@@ -592,7 +593,26 @@ const Page = () => {
                   Payment
                 </h2>
 
-                {orderType === "Takeaway" && (
+                {/* TEMPORARILY DISABLED - Online payments notice */}
+                <div
+                  style={{
+                    backgroundColor: "#fef2f2",
+                    borderLeft: "3px solid #ef4444",
+                    borderRadius: "2px",
+                    padding: "12px",
+                    fontSize: "12px",
+                    marginBottom: "12px",
+                  }}
+                >
+                  <div style={{ fontWeight: "600", color: "#991b1b", marginBottom: "6px" }}>
+                    ⚠️ Online Payments Temporarily Unavailable
+                  </div>
+                  <div style={{ color: "#dc2626", lineHeight: "1.5" }}>
+                    Please contact the shop directly to place your order. We apologize for the inconvenience.
+                  </div>
+                </div>
+
+                {/* {orderType === "Takeaway" && (
                   <div
                     style={{
                       backgroundColor: "#fef3c7",
@@ -610,9 +630,10 @@ const Page = () => {
                       Cash or online available
                     </div>
                   </div>
-                )}
+                )} */}
 
-                {orderType === "Store Delivery" && (
+                {/* TEMPORARILY DISABLED - Delivery order notice */}
+                {/* {orderType === "Store Delivery" && (
                   <>
                     <div
                       style={{
@@ -682,7 +703,7 @@ const Page = () => {
                       </label>
                     </div>
                   </>
-                )}
+                )} */}
 
                 {/* Payment Options */}
                 <div
@@ -740,7 +761,8 @@ const Page = () => {
                     </label>
                   )}
 
-                  <label
+                  {/* TEMPORARILY DISABLED - Online payment option */}
+                  {/* <label
                     style={{
                       display: "flex",
                       alignItems: "center",
@@ -786,7 +808,7 @@ const Page = () => {
                           : "Required"}
                       </div>
                     </div>
-                  </label>
+                  </label> */}
                 </div>
               </div>
 
