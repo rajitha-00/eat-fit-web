@@ -388,9 +388,9 @@ export default function RootLayout({ children }) {
       <body>
         <ReduxProviderWrapper>
           <Preloader />
-          {children}
+          {/* {children} */}
           {/* Creative Maintenance Page */}
-          {/* <MaintenancePage /> */}
+          <MaintenancePage />
         </ReduxProviderWrapper>
       </body>
     </html>
