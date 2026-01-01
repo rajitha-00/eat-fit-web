@@ -222,7 +222,7 @@ const Footer = () => (
         userSelect: "none",
       }}
     >
-      © Copyright <span style={{ color: "#2A774C" }}>2025</span>{" "}
+      © Copyright <span style={{ color: "#2A774C" }}>2026</span>{" "}
       <Link href="/">
         <div
           style={{
