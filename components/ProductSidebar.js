@@ -2,90 +2,105 @@
 import { useEffect, useState } from "react";
 
 export const CATEGORY_DATA = [
-  { name: "Weight Gain" },
-  { name: "Weight Loss" },
-  { name: "Wraps" },
-  { name: "Desserts" },
-  { name: "Cheat Meal" },
-  { name: "Kottu" },
+  { name: "Weight Gain", icon: "💪" },
+  { name: "Weight Loss", icon: "🏃" },
+  { name: "Wraps", icon: "🌯" },
+  { name: "Desserts", icon: "🍰" },
+  { name: "Cheat Meal", icon: "🍔" },
+  { name: "Kottu", icon: "🍲" },
 ];
 
 export default function ProductSidebar({ selectedCategory, onCategoryChange }) {
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
-    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    const checkMobile = () => setIsMobile(window.innerWidth < 992);
     checkMobile();
     window.addEventListener("resize", checkMobile);
     return () => window.removeEventListener("resize", checkMobile);
   }, []);
 
-  const allSelected = !CATEGORY_DATA.some(
-    (cat) => cat.name === selectedCategory
-  );
+  const allSelected =
+    !selectedCategory ||
+    selectedCategory === "All" ||
+    !CATEGORY_DATA.some((cat) => cat.name === selectedCategory);
 
-  // ✅ Mobile UI: scrollable tabs
+  // Mobile / Tablet horizontal scrollable pill bar
   if (isMobile) {
     return (
       <div
         style={{
+          display: "flex",
+          gap: "8px",
           overflowX: "auto",
-          WebkitOverflowScrolling: "touch", // smooth scroll on iOS
-          whiteSpace: "nowrap",
-          padding: "12px 16px",
-          backgroundColor: "#fff",
-          borderBottom: "1px solid #eee",
-          scrollbarWidth: "none", // Firefox
-          msOverflowStyle: "none", // IE/Edge
+          WebkitOverflowScrolling: "touch",
+          padding: "10px 4px 14px 4px",
+          scrollbarWidth: "none",
+          msOverflowStyle: "none",
         }}
-        className="mobile-tab-scroll"
+        className="mobile-category-scroll"
       >
         <style jsx>{`
-          .mobile-tab-scroll::-webkit-scrollbar {
-            display: none; // Chrome/Safari/Edge
+          .mobile-category-scroll::-webkit-scrollbar {
+            display: none;
           }
         `}</style>
 
         <button
-          onClick={() => onCategoryChange("")}
+          onClick={() => onCategoryChange("All")}
           style={{
-            display: "inline-block",
+            display: "inline-flex",
+            alignItems: "center",
+            gap: "6px",
             padding: "8px 16px",
-            marginRight: 8,
-            borderRadius: 999,
-            backgroundColor: allSelected ? "#429c5a" : "#f1f1f1",
-            color: allSelected ? "#fff" : "#333",
-            fontWeight: allSelected ? 600 : 500,
-            fontSize: 14,
+            borderRadius: "999px",
+            backgroundColor: allSelected ? "#2A774C" : "#ffffff",
+            color: allSelected ? "#ffffff" : "#475569",
+            fontWeight: 700,
+            fontSize: "13px",
             cursor: "pointer",
             whiteSpace: "nowrap",
-            transition: "all 0.2s ease-in-out",
+            border: allSelected
+              ? "1px solid #2A774C"
+              : "1px solid #e2e8f0",
+            boxShadow: allSelected
+              ? "0 4px 12px rgba(42, 119, 76, 0.25)"
+              : "0 2px 4px rgba(0, 0, 0, 0.03)",
+            transition: "all 0.2s ease",
           }}
         >
-          All
+          <span>✨</span> All Categories
         </button>
 
-        {CATEGORY_DATA.map(({ name }) => {
+        {CATEGORY_DATA.map(({ name, icon }) => {
           const isSelected = selectedCategory === name;
           return (
             <button
               key={name}
               onClick={() => onCategoryChange(name)}
               style={{
-                display: "inline-block",
+                display: "inline-flex",
+                alignItems: "center",
+                gap: "6px",
                 padding: "8px 16px",
-                marginRight: 8,
-                borderRadius: 999,
-                backgroundColor: isSelected ? "#429c5a" : "#f1f1f1",
-                color: isSelected ? "#fff" : "#333",
-                fontWeight: isSelected ? 600 : 500,
-                fontSize: 14,
+                borderRadius: "999px",
+                backgroundColor: isSelected ? "#2A774C" : "#ffffff",
+                color: isSelected ? "#ffffff" : "#475569",
+                fontWeight: 700,
+                fontSize: "13px",
                 cursor: "pointer",
                 whiteSpace: "nowrap",
-                transition: "all 0.2s ease-in-out",
+                border: isSelected
+                  ? "1px solid #2A774C"
+                  : "1px solid #e2e8f0",
+                boxShadow: isSelected
+                  ? "0 4px 12px rgba(42, 119, 76, 0.25)"
+                  : "0 2px 4px rgba(0, 0, 0, 0.03)",
+                transition: "all 0.2s ease",
               }}
             >
-              {name}
+              <span>{icon}</span>
+              <span>{name}</span>
             </button>
           );
         })}
@@ -93,30 +108,58 @@ export default function ProductSidebar({ selectedCategory, onCategoryChange }) {
     );
   }
 
-  // ✅ Desktop UI: sidebar
+  // Desktop Sidebar
   return (
     <aside
       style={{
-        width: 280,
-        background: "#fff",
-        borderRadius: 14,
-        boxShadow: "0 8px 24px rgba(0,0,0,0.1)",
-        padding: 20,
-        fontFamily:
-          '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif',
+        width: "100%",
+        maxWidth: "280px",
+        backgroundColor: "#ffffff",
+        borderRadius: "20px",
+        boxShadow: "0 4px 20px rgba(0, 0, 0, 0.04)",
+        border: "1px solid #e2e8f0",
+        padding: "24px 18px",
+        position: "sticky",
+        top: "100px",
       }}
     >
-      <h3
+      <div
         style={{
-          marginBottom: 24,
-          fontWeight: 700,
-          fontSize: 18,
-          letterSpacing: 1.2,
-          color: "#111",
+          display: "flex",
+          alignItems: "center",
+          gap: "8px",
+          marginBottom: "20px",
+          paddingBottom: "14px",
+          borderBottom: "1px solid #f1f5f9",
         }}
       >
-        Categories
-      </h3>
+        <div
+          style={{
+            width: "32px",
+            height: "32px",
+            borderRadius: "10px",
+            backgroundColor: "#e8f5ee",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            color: "#2A774C",
+            fontSize: "14px",
+          }}
+        >
+          <i className="far fa-utensils"></i>
+        </div>
+        <h4
+          style={{
+            margin: 0,
+            fontWeight: 800,
+            fontSize: "17px",
+            color: "#0f172a",
+            letterSpacing: "-0.3px",
+          }}
+        >
+          Categories
+        </h4>
+      </div>
 
       <ul
         style={{
@@ -125,30 +168,61 @@ export default function ProductSidebar({ selectedCategory, onCategoryChange }) {
           margin: 0,
           display: "flex",
           flexDirection: "column",
-          gap: 12,
+          gap: "6px",
         }}
       >
         <li>
           <button
-            onClick={() => onCategoryChange("")}
+            onClick={() => onCategoryChange("All")}
             style={{
               all: "unset",
               cursor: "pointer",
-              fontWeight: allSelected ? 700 : 500,
-              color: allSelected ? "#429c5a" : "#555",
-              padding: "8px 16px",
-              borderRadius: 10,
-              backgroundColor: allSelected
-                ? "rgba(0,122,255,0.1)"
-                : "transparent",
+              boxSizing: "border-box",
               width: "100%",
+              padding: "10px 14px",
+              borderRadius: "12px",
+              fontWeight: allSelected ? 700 : 600,
+              fontSize: "14px",
+              color: allSelected ? "#2A774C" : "#475569",
+              backgroundColor: allSelected ? "#e8f5ee" : "transparent",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+              transition: "all 0.2s ease",
+              borderLeft: allSelected ? "3px solid #2A774C" : "3px solid transparent",
+            }}
+            onMouseEnter={(e) => {
+              if (!allSelected) {
+                e.currentTarget.style.backgroundColor = "#f8fafc";
+                e.currentTarget.style.color = "#0f172a";
+              }
+            }}
+            onMouseLeave={(e) => {
+              if (!allSelected) {
+                e.currentTarget.style.backgroundColor = "transparent";
+                e.currentTarget.style.color = "#475569";
+              }
             }}
           >
-            All Categories
+            <span style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+              <span>✨</span>
+              <span>All Items</span>
+            </span>
+            {allSelected && (
+              <span
+                style={{
+                  fontSize: "12px",
+                  color: "#2A774C",
+                  fontWeight: 800,
+                }}
+              >
+                ●
+              </span>
+            )}
           </button>
         </li>
 
-        {CATEGORY_DATA.map(({ name }) => {
+        {CATEGORY_DATA.map(({ name, icon }) => {
           const isSelected = selectedCategory === name;
           return (
             <li key={name}>
@@ -157,17 +231,48 @@ export default function ProductSidebar({ selectedCategory, onCategoryChange }) {
                 style={{
                   all: "unset",
                   cursor: "pointer",
-                  fontWeight: isSelected ? 700 : 500,
-                  color: isSelected ? "#429c5a" : "#555",
-                  padding: "8px 16px",
-                  borderRadius: 10,
-                  backgroundColor: isSelected
-                    ? "rgba(0,122,255,0.1)"
-                    : "transparent",
+                  boxSizing: "border-box",
                   width: "100%",
+                  padding: "10px 14px",
+                  borderRadius: "12px",
+                  fontWeight: isSelected ? 700 : 600,
+                  fontSize: "14px",
+                  color: isSelected ? "#2A774C" : "#475569",
+                  backgroundColor: isSelected ? "#e8f5ee" : "transparent",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                  transition: "all 0.2s ease",
+                  borderLeft: isSelected ? "3px solid #2A774C" : "3px solid transparent",
+                }}
+                onMouseEnter={(e) => {
+                  if (!isSelected) {
+                    e.currentTarget.style.backgroundColor = "#f8fafc";
+                    e.currentTarget.style.color = "#0f172a";
+                  }
+                }}
+                onMouseLeave={(e) => {
+                  if (!isSelected) {
+                    e.currentTarget.style.backgroundColor = "transparent";
+                    e.currentTarget.style.color = "#475569";
+                  }
                 }}
               >
-                {name}
+                <span style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+                  <span>{icon}</span>
+                  <span>{name}</span>
+                </span>
+                {isSelected && (
+                  <span
+                    style={{
+                      fontSize: "12px",
+                      color: "#2A774C",
+                      fontWeight: 800,
+                    }}
+                  >
+                    ●
+                  </span>
+                )}
               </button>
             </li>
           );

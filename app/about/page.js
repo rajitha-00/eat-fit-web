@@ -9,6 +9,7 @@ import { setLoading } from "@/lib/api/loadingSlice";
 
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
+import { toast } from "react-toastify";
 
 const page = () => {
   const dispatch = useDispatch();
@@ -99,7 +100,10 @@ const page = () => {
           selectedAddons: [],
         })
       );
-      alert(`${item.name} added to cart!`);
+      toast.success(`${item.name} added to cart!`, {
+        icon: "🥗",
+        position: "bottom-right",
+      });
     }
   };
   return (

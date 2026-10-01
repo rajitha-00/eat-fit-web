@@ -19,6 +19,16 @@ import "swiper/css/autoplay";
 import ReduxProviderWrapper from "@/lib/ReduxProviderWrapper";
 import Preloader from "@/layouts/Preloader";
 import MaintenancePage from "@/components/Down";
+import { Quicksand } from "next/font/google";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
+const quicksand = Quicksand({
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700"],
+  variable: "--font-quicksand",
+  display: "swap",
+});
 
 export const metadata = {
   title:
@@ -102,7 +112,7 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
+    <html lang="en" className={quicksand.variable}>
       <head>
         {/* Enhanced SEO and GEO Meta Tags */}
         <meta name="geo.region" content="LK-11" />
@@ -385,12 +395,24 @@ export default function RootLayout({ children }) {
           }}
         />
       </head>
-      <body>
+      <body className={quicksand.className}>
         <ReduxProviderWrapper>
           <Preloader />
-          {/* {children} */}
+          {children} 
+          <ToastContainer
+            position="bottom-right"
+            autoClose={2500}
+            hideProgressBar={false}
+            newestOnTop
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+            theme="light"
+          />
           {/* Creative Maintenance Page */}
-          <MaintenancePage />
+          {/* <MaintenancePage /> */}
         </ReduxProviderWrapper>
       </body>
     </html>

@@ -1,9 +1,7 @@
 'use client';
 import { useState } from 'react';
-import { ONEPAY_CONFIG } from '@/lib/config/onepay';
 
 const OnePay = ({
-  app_id,
   amount,
   currency = "LKR",
   name,
@@ -11,7 +9,6 @@ const OnePay = ({
   interval = "MONTH",
   interval_count = 1,
   additional_data,
-  apptoken,
   redirect_url,
   onSuccess,
   onFailure,
@@ -20,106 +17,75 @@ const OnePay = ({
   const [isLoading, setIsLoading] = useState(false);
 
   // Format amount to have exactly 2 decimal places
-  const formatAmount = (amount) => {
-    return Number(amount).toFixed(2);
+  const formatAmount = (val) => {
+    return Number(val).toFixed(2);
   };
-
-  if (!app_id) {
-    console.error("OnePay Error: app_id is required");
-    throw new Error("app_id is required for OnePay integration");
-  }
-
-  // SHA-256 hash generation function for OnePay (removed as it's not being used)
 
   const createPayment = async () => {
     setIsLoading(true);
 
     try {
-      // Format amount to exactly 2 decimal places
       const formattedAmount = formatAmount(amount);
+      let parsedAdditional = {};
+      try {
+        parsedAdditional =
+          typeof additional_data === "string"
+            ? JSON.parse(additional_data)
+            : additional_data || {};
+      } catch {
+        parsedAdditional = {};
+      }
 
-      // Create the concatenated string for hash generation
-      // Format: app_id + currency + amount + hash_salt (no separators)
-      const hashInputString = `${app_id}${currency}${formattedAmount}${ONEPAY_CONFIG.HASH_SALT}`;
+      const redirectTarget =
+        redirect_url || `${window.location.origin}/checkout/success`;
 
-      // Generate SHA-256 hash
-      const encoder = new TextEncoder();
-      const data = encoder.encode(hashInputString);
-      const hashBuffer = await crypto.subtle.digest("SHA-256", data);
-      const hashArray = Array.from(new Uint8Array(hashBuffer));
-      const hash = hashArray
-        .map((b) => b.toString(16).padStart(2, "0"))
-        .join("");
-
-      // Structure the payload according to OnePay API requirements
-      const reference = `EAT-${Date.now()}`;
-      const paymentData = {
-        app_id: app_id,
-        reference: reference,
-        amount: Number(formattedAmount),
-        currency: currency,
-        customer_first_name: customer_details?.first_name || "Guest",
-        customer_last_name: customer_details?.last_name || "Customer",
-        customer_email: customer_details?.email || "guest@example.com",
-        customer_phone_number: customer_details?.phone_number || "+94771234567",
-        transaction_redirect_url:
-          redirect_url || window.location.origin + "/checkout/success",
-        callback_url: window.location.origin + "/api/onepay/callback", // Add callback URL
-        additional_data: additional_data || {},
-        hash: hash,
-      };
-
-      // Make API call to OnePay
-      const response = await fetch(ONEPAY_CONFIG.API_URL, {
+      // Secure server-side checkout (server handles API tokens, hash generation, and credentials)
+      const serverRes = await fetch("/api/onepay/checkout", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: ONEPAY_CONFIG.APP_TOKEN, // Use APP_TOKEN for authorization
-        },
-        body: JSON.stringify(paymentData),
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          amount: formattedAmount,
+          currency,
+          customer_details,
+          additional_data: parsedAdditional,
+          redirect_url: redirectTarget,
+        }),
       });
 
-      const result = await response.json();
+      const serverData = await serverRes.json();
 
-      if (response.ok && result.status === 200) {
-        // Extract gateway redirect URL from the response
-        const redirectUrl = result.data?.gateway?.redirect_url;
-        if (redirectUrl) {
-          // Store the order details in sessionStorage before redirecting
-          const orderData = {
-            orderId: "",
-            reference: reference, // Store the reference for tracking
-            customerName: `${customer_details.first_name} ${customer_details.last_name}`,
-            customerPhone: customer_details.phone_number,
-            customerEmail: customer_details.email,
-            customerAddress: JSON.parse(additional_data)?.customerAddress || "",
-            orderType: JSON.parse(additional_data)?.orderType || "Takeaway",
-            orderStatus: "Preparing",
-            totalPrice: Number(amount),
-            orderTime: Date.now(),
-            paymentMethod: "Online",
-            items: JSON.parse(additional_data)?.items || [],
-          };
-          sessionStorage.setItem("pendingOrder", JSON.stringify(orderData));
-
-          window.location.href = redirectUrl;
-          if (onSuccess) onSuccess(result);
-        } else {
-          console.error("Missing redirect URL in response:", result);
-          if (onFailure) onFailure(new Error("Payment gateway URL not found"));
-          alert("Error: Payment gateway URL not found");
-        }
-      } else {
-        console.error("Payment creation failed:", result);
-        if (onFailure) onFailure(result);
-        alert(
-          "Payment creation failed: " + (result.message || "Unknown error")
+      if (!serverRes.ok || !serverData.success || !serverData.redirect_url) {
+        throw new Error(
+          serverData.message || "Failed to initialize payment gateway"
         );
       }
+
+      const redirectUrl = serverData.redirect_url;
+      const reference = serverData.reference || `EAT-${Date.now()}`;
+
+      // Save pending order details in sessionStorage before redirecting
+      const orderData = {
+        orderId: "",
+        reference: reference,
+        customerName: `${customer_details?.first_name || "Guest"} ${customer_details?.last_name || "Customer"}`.trim(),
+        customerPhone: customer_details?.phone_number || "",
+        customerEmail: customer_details?.email || "",
+        customerAddress: parsedAdditional.customerAddress || "",
+        orderType: parsedAdditional.orderType || "Takeaway",
+        orderStatus: "Preparing",
+        totalPrice: Number(amount),
+        orderTime: Date.now(),
+        paymentMethod: "Online",
+        items: parsedAdditional.items || [],
+      };
+      sessionStorage.setItem("pendingOrder", JSON.stringify(orderData));
+
+      if (onSuccess) onSuccess({ redirectUrl, reference });
+      window.location.href = redirectUrl;
     } catch (error) {
       console.error("Error creating payment:", error);
       if (onFailure) onFailure(error);
-      alert("Error creating payment: " + error.message);
+      alert("Error creating payment: " + (error.message || "Please try again"));
     } finally {
       setIsLoading(false);
     }
@@ -133,12 +99,29 @@ const OnePay = ({
       style={{
         opacity: disabled ? 0.5 : 1,
         cursor: disabled ? "not-allowed" : "pointer",
+        display: "inline-flex",
+        alignItems: "center",
+        justifyContent: "center",
+        gap: "8px",
+        fontWeight: 600,
+        borderRadius: "12px",
+        padding: "12px 24px",
+        transition: "all 0.3s ease",
       }}
     >
-      {isLoading ? "Processing..." : "Pay with OnePay"}
+      {isLoading ? (
+        <>
+          <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+          <span>Connecting to Gateway...</span>
+        </>
+      ) : (
+        <>
+          <i className="far fa-shield-check"></i>
+          <span>Pay Securely with OnePay</span>
+        </>
+      )}
     </button>
   );
 };
 
 export default OnePay;
-

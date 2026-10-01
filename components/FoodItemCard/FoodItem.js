@@ -1,4 +1,5 @@
 "use client";
+import React, { useState } from "react";
 import Link from "next/link";
 
 const FoodItem = ({
@@ -7,326 +8,355 @@ const FoodItem = ({
   icons = [],
   router,
   styles = {},
-  handleAddToCart,
 }) => {
-  // Default styles that can be overridden via props
-  const defaultStyles = {
-    container: {
-      backgroundColor: "#fff",
-      borderRadius: "20px",
-      boxShadow: "0 10px 30px rgba(0,0,0,0.08)",
-      overflow: "hidden",
-      transition: "all 0.4s ease",
-      position: "relative",
-      border: "1px solid rgba(0,0,0,0.03)",
-      ...styles.container,
-    },
-    imageWrapper: {
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "center",
-      height: "280px",
-      backgroundColor: "#f8f9fa",
-      position: "relative",
-      overflow: "hidden",
-      ...styles.imageWrapper,
-    },
-    image: {
-      width: "100%",
-      height: "280px",
-      objectFit: "cover",
-      borderTopLeftRadius: "20px",
-      borderTopRightRadius: "20px",
-      transition: "transform 0.5s ease",
-      ...styles.image,
-    },
-    category: {
-      position: "absolute",
-      top: "16px",
-      left: "16px",
-      backgroundColor: "rgba(255, 255, 255, 0.95)",
-      padding: "6px 12px",
-      borderRadius: "20px",
-      fontSize: "12px",
-      fontWeight: "600",
-      color: "#2A774C",
-      textTransform: "uppercase",
-      letterSpacing: "0.5px",
-      boxShadow: "0 2px 8px rgba(0,0,0,0.06)",
-      zIndex: 1,
-    },
-    iconContainer: {
-      position: "absolute",
-      top: "16px",
-      right: "16px",
-      display: "flex",
-      flexDirection: "column",
-      gap: "8px",
-      ...styles.iconContainer,
-    },
-    iconList: {
-      display: "flex",
-      flexDirection: "column",
-      gap: 8,
-      margin: 0,
-      padding: 0,
-      listStyle: "none",
-      ...styles.iconList,
-    },
-    iconButton: {
-      backgroundColor: "rgba(255, 255, 255, 0.95)",
-      backdropFilter: "blur(8px)",
-      borderRadius: "12px",
-      padding: "12px",
-      display: "inline-flex",
-      alignItems: "center",
-      justifyContent: "center",
-      color: "#2A774C",
-      fontSize: 18,
-      textDecoration: "none",
-      boxShadow: "0 4px 12px rgba(0,0,0,0.08)",
-      border: "1px solid rgba(42, 119, 76, 0.1)",
-      transition: "all 0.3s ease",
-      ...styles.iconButton,
-    },
-    details: {
-      padding: "24px",
-      textAlign: "left",
-      backgroundColor: "#fff",
-      position: "relative",
-      zIndex: 1,
-      display: "flex",
-      flexDirection: "column",
-      height: "calc(100% - 280px)", // Subtract image height
-      ...styles.details,
-    },
-    title: {
-      fontSize: "22px",
-      fontWeight: 700,
-      margin: "0 0 8px",
-      color: "#1a1a1a",
-      lineHeight: 1.3,
-      ...styles.title,
-    },
-    titleLink: {
-      color: "#1a1a1a",
-      textDecoration: "none",
-      transition: "color 0.3s ease",
-      ...styles.titleLink,
-    },
-    nutritionInfo: {
-      display: "flex",
-      flexWrap: "wrap",
-      gap: "8px",
-      marginBottom: "16px",
-      justifyContent: "space-between",
-      ...styles.nutritionInfo,
-    },
-    nutritionItem: {
-      display: "flex",
-      flexDirection: "column",
-      alignItems: "center",
-      gap: "2px",
-      padding: "6px 8px",
-      backgroundColor: "#f8f9fa",
-      borderRadius: "8px",
-      minWidth: "65px",
-      flex: "1 1 auto",
-    },
-    nutritionLabel: {
-      fontSize: "11px",
-      color: "#666",
-      fontWeight: 500,
-    },
-    nutritionValue: {
-      fontSize: "14px",
-      color: "#2A774C",
-      fontWeight: 700,
-    },
-    priceWrapper: {
-      display: "flex",
-      flexDirection: "column",
-      gap: "4px",
-      marginBottom: "16px",
-    },
-    price: {
-      fontSize: "24px",
-      color: "#2A774C",
-      fontWeight: 700,
-      display: "flex",
-      alignItems: "center",
-      gap: "8px",
-      ...styles.price,
-    },
-    originalPrice: {
-      fontSize: "16px",
-      color: "#666",
-      textDecoration: "line-through",
-      fontWeight: 500,
-    },
-    actionButtons: {
-      display: "flex",
-      gap: "12px",
-      width: "100%",
-      marginTop: "auto", // Push buttons to bottom
-    },
-    addToCartButton: {
-      flex: 1,
-      padding: "14px",
-      backgroundColor: "#2A774C",
-      color: "#fff",
-      border: "none",
-      borderRadius: "12px",
-      cursor: "pointer",
-      fontWeight: 600,
-      fontSize: "15px",
-      userSelect: "none",
-      boxShadow: "0 4px 16px rgba(42, 119, 76, 0.2)",
-      transition: "all 0.3s ease",
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "center",
-      gap: "8px",
-      ...styles.addToCartButton,
-    },
-    viewDetailsButton: {
-      flex: 1,
-      padding: "14px",
-      backgroundColor: "#fff",
-      color: "#2A774C",
-      border: "1px solid #2A774C",
-      borderRadius: "12px",
-      cursor: "pointer",
-      fontWeight: 600,
-      fontSize: "15px",
-      userSelect: "none",
-      transition: "all 0.3s ease",
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "center",
-      gap: "8px",
-      ...styles.viewDetailsButton,
-    },
-    buttonIcon: {
-      fontSize: "16px",
-    },
-  };
+  const [isHovered, setIsHovered] = useState(false);
+  const [imgSrc, setImgSrc] = useState(
+    item.imageurl || "/assets/img/food/default-food.png"
+  );
+
+  const calories = item.nutrition?.[0]?.calories;
+  const protein = item.nutrition?.[0]?.protein;
+  const carbs = item.nutrition?.[0]?.carbs;
+  const fat = item.nutrition?.[0]?.fat;
 
   return (
     <div
       key={item._id}
-      style={defaultStyles.container}
-      onMouseEnter={(e) =>
-        (e.currentTarget.style.transform = "translateY(-4px)")
-      }
-      onMouseLeave={(e) => (e.currentTarget.style.transform = "translateY(0)")}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+      style={{
+        backgroundColor: "#ffffff",
+        borderRadius: "20px",
+        overflow: "hidden",
+        border: "1px solid rgba(226, 232, 240, 0.9)",
+        boxShadow: isHovered
+          ? "0 20px 35px -8px rgba(42, 119, 76, 0.16), 0 8px 16px -4px rgba(0, 0, 0, 0.04)"
+          : "0 4px 16px rgba(0, 0, 0, 0.04)",
+        transform: isHovered ? "translateY(-6px)" : "translateY(0)",
+        transition: "all 0.35s cubic-bezier(0.16, 1, 0.3, 1)",
+        position: "relative",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "space-between",
+        height: "100%",
+        fontFamily: "var(--font-quicksand), 'Quicksand', sans-serif",
+        ...styles.container,
+      }}
     >
-      <div style={defaultStyles.imageWrapper}>
+      {/* Top Image Area */}
+      <div
+        style={{
+          position: "relative",
+          width: "100%",
+          height: "230px",
+          backgroundColor: "#f1f5f9",
+          overflow: "hidden",
+        }}
+      >
+        {/* Category Pill */}
         {item.mainCategory && (
-          <div style={defaultStyles.category}>{item.mainCategory}</div>
-        )}
-        <img
-          src={item.imageurl || "/assets/img/food/default-food.png"}
-          alt={item.name}
-          style={defaultStyles.image}
-        />
-      </div>
-
-      {/* Product Details */}
-      <div style={defaultStyles.details}>
-        <h4 style={defaultStyles.title}>
-          <Link
-            href={`/shop/${item._id}`}
-            style={defaultStyles.titleLink}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.color = "#2A774C";
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.color = "#1a1a1a";
+          <div
+            style={{
+              position: "absolute",
+              top: "14px",
+              left: "14px",
+              backgroundColor: "rgba(255, 255, 255, 0.94)",
+              backdropFilter: "blur(8px)",
+              WebkitBackdropFilter: "blur(8px)",
+              padding: "5px 12px",
+              borderRadius: "999px",
+              fontSize: "11px",
+              fontWeight: 700,
+              color: "#2A774C",
+              letterSpacing: "0.5px",
+              textTransform: "uppercase",
+              boxShadow: "0 2px 8px rgba(0, 0, 0, 0.08)",
+              zIndex: 2,
+              border: "1px solid rgba(42, 119, 76, 0.15)",
             }}
           >
-            {item.name}
-          </Link>
-        </h4>
+            {item.mainCategory}
+          </div>
+        )}
 
-        {/* Nutrition Info */}
-        <div style={defaultStyles.nutritionInfo}>
-          <div style={defaultStyles.nutritionItem}>
-            <span style={defaultStyles.nutritionLabel}>Calories</span>
-            <span style={defaultStyles.nutritionValue}>
-              {item.nutrition?.[0]?.calories?.toFixed(0) || "N/A"}
-            </span>
+        {/* Halal / Diet Badge if applicable */}
+        {item.halal && (
+          <div
+            style={{
+              position: "absolute",
+              top: "14px",
+              right: "14px",
+              backgroundColor: "rgba(34, 197, 94, 0.92)",
+              backdropFilter: "blur(6px)",
+              color: "#ffffff",
+              padding: "4px 10px",
+              borderRadius: "999px",
+              fontSize: "11px",
+              fontWeight: 700,
+              display: "flex",
+              alignItems: "center",
+              gap: "4px",
+              zIndex: 2,
+              boxShadow: "0 2px 6px rgba(34, 197, 94, 0.3)",
+            }}
+          >
+            <span>✓</span> Halal
           </div>
-          <div style={defaultStyles.nutritionItem}>
-            <span style={defaultStyles.nutritionLabel}>Protein</span>
-            <span style={defaultStyles.nutritionValue}>
-              {item.nutrition?.[0]?.protein?.toFixed(1) || "N/A"}g
-            </span>
-          </div>
-          <div style={defaultStyles.nutritionItem}>
-            <span style={defaultStyles.nutritionLabel}>Carbs</span>
-            <span style={defaultStyles.nutritionValue}>
-              {item.nutrition?.[0]?.carbs?.toFixed(1) || "N/A"}g
-            </span>
-          </div>
-          <div style={defaultStyles.nutritionItem}>
-            <span style={defaultStyles.nutritionLabel}>Fat</span>
-            <span style={defaultStyles.nutritionValue}>
-              {item.nutrition?.[0]?.fat?.toFixed(1) || "N/A"}g
-            </span>
+        )}
+
+        {/* Product Image */}
+        <Link
+          href={`/shop/${item._id}`}
+          style={{ display: "block", width: "100%", height: "100%" }}
+        >
+          <img
+            src={imgSrc}
+            alt={item.name}
+            onError={() => setImgSrc("/assets/img/food/default-food.png")}
+            style={{
+              width: "100%",
+              height: "100%",
+              objectFit: "cover",
+              transform: isHovered ? "scale(1.06)" : "scale(1)",
+              transition: "transform 0.5s cubic-bezier(0.16, 1, 0.3, 1)",
+            }}
+          />
+        </Link>
+      </div>
+
+      {/* Content & Details */}
+      <div
+        style={{
+          padding: "20px",
+          display: "flex",
+          flexDirection: "column",
+          flexGrow: 1,
+          justifyContent: "space-between",
+          gap: "16px",
+        }}
+      >
+        <div>
+          {/* Sub-Category or Tag */}
+          {item.menuCategory && (
+            <div
+              style={{
+                fontSize: "12px",
+                fontWeight: 600,
+                color: "#64748b",
+                marginBottom: "4px",
+                textTransform: "capitalize",
+              }}
+            >
+              {item.menuCategory}
+            </div>
+          )}
+
+          {/* Title */}
+          <h3
+            style={{
+              fontSize: "19px",
+              fontWeight: 700,
+              color: "#0f172a",
+              margin: "0 0 12px 0",
+              lineHeight: 1.35,
+            }}
+          >
+            <Link
+              href={`/shop/${item._id}`}
+              style={{
+                color: "#0f172a",
+                textDecoration: "none",
+                transition: "color 0.2s ease",
+              }}
+              onMouseEnter={(e) => (e.currentTarget.style.color = "#2A774C")}
+              onMouseLeave={(e) => (e.currentTarget.style.color = "#0f172a")}
+            >
+              {item.name}
+            </Link>
+          </h3>
+
+          {/* Macro Nutrition Grid */}
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(4, 1fr)",
+              gap: "6px",
+              padding: "10px 8px",
+              backgroundColor: "#f8fafc",
+              borderRadius: "12px",
+              border: "1px solid #e2e8f0",
+            }}
+          >
+            <div style={{ textAlign: "center" }}>
+              <div style={{ fontSize: "10px", color: "#64748b", fontWeight: 600 }}>
+                CAL
+              </div>
+              <div
+                style={{
+                  fontSize: "13px",
+                  fontWeight: 700,
+                  color: "#0f172a",
+                  marginTop: "2px",
+                }}
+              >
+                {calories != null ? `${Math.round(calories)}` : "—"}
+              </div>
+            </div>
+
+            <div style={{ textAlign: "center" }}>
+              <div style={{ fontSize: "10px", color: "#64748b", fontWeight: 600 }}>
+                PRO
+              </div>
+              <div
+                style={{
+                  fontSize: "13px",
+                  fontWeight: 700,
+                  color: "#2A774C",
+                  marginTop: "2px",
+                }}
+              >
+                {protein != null ? `${Number(protein).toFixed(0)}g` : "—"}
+              </div>
+            </div>
+
+            <div style={{ textAlign: "center" }}>
+              <div style={{ fontSize: "10px", color: "#64748b", fontWeight: 600 }}>
+                CARB
+              </div>
+              <div
+                style={{
+                  fontSize: "13px",
+                  fontWeight: 700,
+                  color: "#f59e0b",
+                  marginTop: "2px",
+                }}
+              >
+                {carbs != null ? `${Number(carbs).toFixed(0)}g` : "—"}
+              </div>
+            </div>
+
+            <div style={{ textAlign: "center" }}>
+              <div style={{ fontSize: "10px", color: "#64748b", fontWeight: 600 }}>
+                FAT
+              </div>
+              <div
+                style={{
+                  fontSize: "13px",
+                  fontWeight: 700,
+                  color: "#ef4444",
+                  marginTop: "2px",
+                }}
+              >
+                {fat != null ? `${Number(fat).toFixed(0)}g` : "—"}
+              </div>
+            </div>
           </div>
         </div>
 
-        {/* Price Section */}
-        <div style={defaultStyles.priceWrapper}>
-          <div style={defaultStyles.price}>
-            <span>Rs. {item.webPrice?.toFixed(2) || "0.00"}</span>
-            {item.uberPrice && (
-              <span style={defaultStyles.originalPrice}>
+        {/* Bottom Section: Price & Action Buttons */}
+        <div>
+          {/* Price */}
+          <div
+            style={{
+              display: "flex",
+              alignItems: "baseline",
+              gap: "8px",
+              marginBottom: "14px",
+            }}
+          >
+            <span
+              style={{
+                fontSize: "22px",
+                fontWeight: 800,
+                color: "#2A774C",
+                letterSpacing: "-0.5px",
+              }}
+            >
+              Rs. {item.webPrice ? item.webPrice.toFixed(2) : "0.00"}
+            </span>
+            {item.uberPrice && item.uberPrice > item.webPrice && (
+              <span
+                style={{
+                  fontSize: "14px",
+                  color: "#94a3b8",
+                  textDecoration: "line-through",
+                  fontWeight: 500,
+                }}
+              >
                 Rs. {item.uberPrice.toFixed(2)}
               </span>
             )}
           </div>
-        </div>
 
-        {/* Action Buttons */}
-        <div style={defaultStyles.actionButtons}>
-          <button
-            onClick={() => onAddToCart(item)}
-            style={defaultStyles.addToCartButton}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.backgroundColor = "#205c3b";
-              e.currentTarget.style.transform = "translateY(-2px)";
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.backgroundColor = "#2A774C";
-              e.currentTarget.style.transform = "translateY(0)";
-            }}
-            type="button"
-          >
-            <i
-              className="far fa-shopping-cart"
-              style={defaultStyles.buttonIcon}
-            ></i>
-            Add to Cart
-          </button>
+          {/* Action Buttons */}
+          <div style={{ display: "flex", gap: "8px" }}>
+            <button
+              onClick={() => onAddToCart(item)}
+              type="button"
+              style={{
+                flex: 1.3,
+                padding: "11px 14px",
+                backgroundColor: "#2A774C",
+                color: "#ffffff",
+                border: "none",
+                borderRadius: "12px",
+                cursor: "pointer",
+                fontWeight: 700,
+                fontSize: "13px",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                gap: "6px",
+                boxShadow: "0 4px 12px rgba(42, 119, 76, 0.25)",
+                transition: "all 0.25s ease",
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.backgroundColor = "#1e5a39";
+                e.currentTarget.style.transform = "translateY(-1px)";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.backgroundColor = "#2A774C";
+                e.currentTarget.style.transform = "translateY(0)";
+              }}
+            >
+              <i className="far fa-shopping-cart" style={{ fontSize: "14px" }}></i>
+              Add to Cart
+            </button>
 
-          <button
-            onClick={() => router.push(`/shop/${item._id}`)}
-            style={defaultStyles.viewDetailsButton}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.backgroundColor = "#E8F5EE";
-              e.currentTarget.style.transform = "translateY(-2px)";
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.backgroundColor = "#fff";
-              e.currentTarget.style.transform = "translateY(0)";
-            }}
-            type="button"
-          >
-            <i className="far fa-eye" style={defaultStyles.buttonIcon}></i>
-            View Details
-          </button>
+            <button
+              onClick={() => {
+                if (router) {
+                  router.push(`/shop/${item._id}`);
+                }
+              }}
+              type="button"
+              aria-label="View Details"
+              style={{
+                padding: "11px 14px",
+                backgroundColor: "#e8f5ee",
+                color: "#2A774C",
+                border: "1px solid rgba(42, 119, 76, 0.2)",
+                borderRadius: "12px",
+                cursor: "pointer",
+                fontWeight: 700,
+                fontSize: "13px",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                gap: "5px",
+                transition: "all 0.25s ease",
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.backgroundColor = "#d3ede0";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.backgroundColor = "#e8f5ee";
+              }}
+            >
+              <i className="far fa-eye" style={{ fontSize: "14px" }}></i>
+              <span>Details</span>
+            </button>
+          </div>
         </div>
       </div>
     </div>

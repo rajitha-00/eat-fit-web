@@ -2,6 +2,7 @@
 import { addToCart } from "@/lib/api/cartSlice";
 import Link from "next/link";
 import { useDispatch } from "react-redux";
+import { toast } from "react-toastify";
 
 export default function ProductCard({
   id,
@@ -23,7 +24,10 @@ export default function ProductCard({
         image,
       })
     );
-    alert(`${name} added to cart!`);
+    toast.success(`${name} added to cart!`, {
+      icon: "🥗",
+      position: "bottom-right",
+    });
   };
 
   return (

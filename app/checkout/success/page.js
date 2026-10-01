@@ -3,7 +3,6 @@ import { useEffect, useState, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useDispatch } from 'react-redux';
 import FoodKingLayout from "@/layouts/FoodKingLayout";
-import { ONEPAY_CONFIG } from '@/lib/config/onepay';
 import { useCreateOrderMutation } from '@/lib/api/apiSlice';
 import { clearCart } from '@/lib/api/cartSlice';
 

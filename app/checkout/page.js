@@ -5,7 +5,6 @@ import { useDispatch, useSelector } from "react-redux";
 import Cta from "@/components/Cta";
 import FoodKingLayout from "@/layouts/FoodKingLayout";
 import OnePay from "@/components/OnePay";
-import { ONEPAY_CONFIG, generateHash } from "@/lib/config/onepay";
 import { useCreateOrderMutation } from "@/lib/api/apiSlice";
 import { useRouter } from "next/navigation";
 import { clearCart } from "@/lib/api/cartSlice";
@@ -893,7 +892,6 @@ const Page = () => {
                   </div>
 
                   <OnePay
-                    app_id={ONEPAY_CONFIG.APP_ID || "ENKR11909605A5F43454D"}
                     amount={Number(total).toFixed(2)}
                     currency="LKR"
                     name="EatFit Order Payment"
@@ -916,7 +914,6 @@ const Page = () => {
                       customerAddress:
                         orderType === "Store Delivery" ? customerAddress : "",
                     })}
-                    apptoken={ONEPAY_CONFIG.APP_TOKEN}
                     redirect_url={window.location.origin + "/checkout/success"}
                     onFailure={(error) => {
                       console.error("Payment failed:", error);

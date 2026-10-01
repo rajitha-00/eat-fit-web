@@ -16,6 +16,7 @@ import { setLoading } from "@/lib/api/loadingSlice";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import Head from "next/head";
+import { toast } from "react-toastify";
 
 const Page = () => {
   const dispatch = useDispatch();
@@ -46,7 +47,10 @@ const Page = () => {
           selectedAddons: [],
         })
       );
-      alert(`${item.name} added to cart!`);
+      toast.success(`${item.name} added to cart!`, {
+        icon: "🥗",
+        position: "bottom-right",
+      });
     }
   };
 
@@ -99,7 +103,10 @@ const Page = () => {
                 selectedAddons: itemWithAddons.selectedAddons,
               })
             );
-            alert(`${itemWithAddons.name} added to cart!`);
+            toast.success(`${itemWithAddons.name} added to cart!`, {
+              icon: "🥗",
+              position: "bottom-right",
+            });
             setModalItem(null);
           }}
           onClose={() => setModalItem(null)}

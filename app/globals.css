@@ -1,6 +1,69 @@
-@import url("https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap");
 
-/* image popup */
+:root {
+  --font-quicksand: 'Quicksand', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --color-primary: #2A774C;
+  --color-primary-dark: #1e5a39;
+  --color-primary-light: #e8f5ee;
+  --color-accent: #f59e0b;
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.04);
+  --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 16px 36px rgba(42, 119, 76, 0.12);
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+}
+
+html, body, button, input, select, textarea,
+h1, h2, h3, h4, h5, h6, p, span, a, label, li, table, th, td {
+  font-family: var(--font-quicksand), 'Quicksand', sans-serif !important;
+}
+
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  scroll-behavior: smooth;
+  color: #1e293b;
+  background-color: #f8fafc;
+}
+
+/* Smooth selection */
+::selection {
+  background-color: rgba(42, 119, 76, 0.2);
+  color: #2A774C;
+}
+
+/* Smooth custom scrollbars */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 999px;
+  transition: background 0.3s ease;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* Toast styling override to match Quicksand & EatFit green theme */
+.Toastify__toast {
+  font-family: var(--font-quicksand), 'Quicksand', sans-serif !important;
+  border-radius: 14px !important;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1) !important;
+}
+
+.Toastify__toast--success {
+  background: #2A774C !important;
+  color: #ffffff !important;
+}
+
+/* Image popup */
 img.mfp-img {
   box-shadow: 0 0 8px rgba(0, 0, 0, 0.6);
   position: absolute;
